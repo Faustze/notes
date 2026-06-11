@@ -42,6 +42,9 @@ jobs:
           OBSIDIAN_VAULT_TOKEN: ${{ secrets.OBSIDIAN_VAULT_TOKEN }}
         run: bash scripts/sync-obsidian-notes.sh
 
+      - name: Install Quartz plugins
+        run: npx tsx ./quartz/plugins/loader/install-plugins.ts
+
       - name: Build Quartz
         run: npx quartz build
 
