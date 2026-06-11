@@ -8,10 +8,13 @@ VAULT_REPO="https://github.com/Faustze/Obsidian-Notes.git"
 TEMP_DIR=$(mktemp -d)
 CONTENT_DIR="content/obsidian-notes"
 
-echo "📥 Клонирую Obsidian-Vault..."
+echo "📥 Клонирую Obsidian-Vault (только public/)..."
 git clone --depth 1 --filter=blob:none --sparse "$VAULT_REPO" "$TEMP_DIR" 2>/dev/null
 
 cd "$TEMP_DIR"
+
+# Настраиваем sparse-checkout только для public/
+git sparse-checkout set public 2>/dev/null
 
 # Проверяем наличие папки public
 if [ ! -d "public" ]; then
