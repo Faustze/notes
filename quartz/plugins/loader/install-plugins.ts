@@ -1,9 +1,14 @@
 #!/usr/bin/env node
+import fs from "fs"
+import path from "path"
+import YAML from "yaml"
 import { installPlugins, parsePluginSource } from "./gitLoader.js"
-import config from "../../../quartz.js"
 
 async function main() {
-  const quartzConfig: any = config
+  // Read config directly from YAML to avoid importing quartz.js (which pulls in SCSS)
+  const configPath = path.join(process.cwd(), "quartz.config.default.yaml")
+  const raw = fs.readFileSync(configPath, "utf-8")
+  const quartzConfig = YAML.parse(raw)
   const externalPlugins = quartzConfig.externalPlugins || []
 
   if (externalPlugins.length === 0) {

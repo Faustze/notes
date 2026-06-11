@@ -44,6 +44,8 @@ jobs:
 
       - name: Install Quartz plugins
         run: npx tsx ./quartz/plugins/loader/install-plugins.ts
+        env:
+          NODE_OPTIONS: "--no-warnings --experimental-require-module"
 
       - name: Build Quartz
         run: npx quartz build
