@@ -9,7 +9,10 @@ async function main() {
   const configPath = path.join(process.cwd(), "quartz.config.default.yaml")
   const raw = fs.readFileSync(configPath, "utf-8")
   const quartzConfig = YAML.parse(raw)
-  const externalPlugins = quartzConfig.externalPlugins || []
+  const plugins = quartzConfig.plugins || []
+  const externalPlugins = plugins
+    .filter((p: any) => p.source?.startsWith("github:"))
+    .map((p: any) => p.source)
 
   if (externalPlugins.length === 0) {
     console.log("No external plugins to install.")
