@@ -38,6 +38,8 @@ jobs:
         run: npm ci
 
       - name: Sync Obsidian Notes
+        env:
+          OBSIDIAN_VAULT_TOKEN: ${{ secrets.OBSIDIAN_VAULT_TOKEN }}
         run: bash scripts/sync-obsidian-notes.sh
 
       - name: Build Quartz

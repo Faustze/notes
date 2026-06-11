@@ -4,12 +4,19 @@
 
 set -euo pipefail
 
-VAULT_REPO="https://github.com/Faustze/Obsidian-Notes.git"
+VAULT_REPO="github.com/Faustze/Obsidian-Notes.git"
 TEMP_DIR=$(mktemp -d)
 CONTENT_DIR="content/obsidian-notes"
 
+# Используем OBSIDIAN_VAULT_TOKEN для аутентификации в CI
+if [ -n "${OBSIDIAN_VAULT_TOKEN:-}" ]; then
+    VAULT_URL="https://x-access-token:${OBSIDIAN_VAULT_TOKEN}@${VAULT_REPO}"
+else
+    VAULT_URL="https://${VAULT_REPO}"
+fi
+
 echo "📥 Клонирую Obsidian-Vault..."
-git clone --depth 1 "$VAULT_REPO" "$TEMP_DIR"
+git clone --depth 1 "$VAULT_URL" "$TEMP_DIR"
 
 cd "$TEMP_DIR"
 
