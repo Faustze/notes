@@ -6,10 +6,13 @@ on:
     branches: [main]
   # Ручной запуск
   workflow_dispatch:
+  # Автоматическая синхронизация каждые 6 часов
+  schedule:
+    - cron: "0 */6 * * *"
 
 # Разрешения для GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -41,6 +44,18 @@ jobs:
         env:
           OBSIDIAN_VAULT_TOKEN: ${{ secrets.OBSIDIAN_VAULT_TOKEN }}
         run: bash scripts/sync-obsidian-notes.sh
+
+      - name: Commit synced notes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add content/obsidian-notes/
+          if ! git diff --cached --quiet; then
+            git commit -m "sync: update obsidian notes [skip ci]"
+            git push
+          else
+            echo "No changes to commit"
+          fi
 
       - name: Install Quartz plugins
         run: npx tsx ./quartz/plugins/loader/install-plugins.ts
