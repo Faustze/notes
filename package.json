@@ -38,9 +38,9 @@
     "quartz": "./quartz/bootstrap-cli.mjs"
   },
   "dependencies": {
-    "@clack/prompts": "^0.11.0",
+    "@clack/prompts": "^1.5.1",
     "@floating-ui/dom": "^1.7.4",
-    "@myriaddreamin/rehype-typst": "^0.6.0",
+    "@myriaddreamin/rehype-typst": "^0.7.0",
     "@napi-rs/simple-git": "0.1.22",
     "ansi-truncate": "^1.4.0",
     "async-mutex": "^0.5.0",
@@ -49,7 +49,7 @@
     "github-slugger": "^2.0.0",
     "globby": "^16.1.0",
     "hast-util-to-jsx-runtime": "^2.3.6",
-    "isomorphic-git": "^1.36.3",
+    "isomorphic-git": "^1.38.5",
     "lightningcss": "^1.31.1",
     "micromorph": "^0.4.5",
     "minimatch": "^10.1.1",
@@ -61,7 +61,7 @@
     "remark-rehype": "^11.1.2",
     "rfdc": "^1.4.1",
     "serve-handler": "^6.1.6",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.1",
     "source-map-support": "^0.5.21",
     "to-vfile": "^8.0.0",
     "unified": "^11.0.5",
@@ -85,6 +85,6 @@
     "git-cz": "^4.9.0",
     "prettier": "^3.8.1",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   }
 }
