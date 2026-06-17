@@ -57,12 +57,19 @@ jobs:
             git checkout -b "$BRANCH"
             git commit -m "sync: update obsidian notes [skip ci]"
             git push origin "$BRANCH"
-            gh pr create \
-              --base main \
-              --head "$BRANCH" \
-              --title "sync: update obsidian notes" \
-              --body "Automated sync of Obsidian notes from vault." \
-              --label "automated" || true
+
+            # Check if PR already exists for this branch
+            EXISTING_PR=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
+            if [ -z "$EXISTING_PR" ]; then
+              gh pr create \
+                --base main \
+                --head "$BRANCH" \
+                --title "sync: update obsidian notes" \
+                --body "Automated sync of Obsidian notes from vault." || true
+            else
+              echo "PR #$EXISTING_PR already exists for branch $BRANCH"
+            fi
+
             git checkout main
           else
             echo "No changes to commit"
