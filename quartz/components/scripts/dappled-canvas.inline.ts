@@ -269,12 +269,17 @@ function initScene(container: HTMLElement) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-  let treeSeed = Math.floor(Math.random() * 1e9)
-  const tree = {
-    sceneType: -1, trunkCount: -1, leafBias: 1.4, leafFollow: 0.6,
-    rootOffset: 0.9, nTrees: 6, trunkWidth: 0.035, lenRatio: 16, maxLen: 0.4,
-    curl: 0.3, split3: 0.3, forkProb: 0.7, depthDrift: 0.4,
-    leader: 0.618, golden: 1, conserve: 0.95, endPx: 0.5,
+  let sceneSeed = Math.floor(Math.random() * 1e9)
+  const scene = {
+    nColumns: 5,        // number of columns/statues
+    columnWidth: 0.06,  // base width of columns
+    statueWidth: 0.08,  // width of statue figures
+    spacing: 0.18,      // horizontal spacing between elements
+    leanAmount: 0.02,   // how much columns lean (wind sway)
+    pedestalH: 0.06,    // height of pedestal
+    capitalH: 0.04,     // height of capital (top of column)
+    statueProb: 0.4,    // probability a column is replaced by a statue
+    archProb: 0.15,     // probability of an arch between two columns
   }
   const mulberry32 = (a: number) => () => {
     a |= 0; a = (a + 0x6d2b79f5) | 0
@@ -285,78 +290,120 @@ function initScene(container: HTMLElement) {
   const buildSegments = () => {
     const aspect = bw / Math.max(bh, 1)
     const pxPerUnit = bh
-    const rng = mulberry32(treeSeed)
+    const rng = mulberry32(sceneSeed)
     const segs: number[][] = []
-    const minW = tree.endPx / (2 * pxPerUnit)
-    const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v))
-    const GOLDEN = Math.PI * (3 - Math.sqrt(5))
-    const drift = (depth: number, amt: number) => Math.min(0.98, Math.max(0.02, depth + (rng() - 0.5) * amt))
-    const grow = (x: number, y: number, ang: number, width: number, curl: number, phase: number, depth: number) => {
-      if (width < minW || segs.length >= MAXSEG) return
-      const len = Math.min(width * tree.lenRatio, tree.maxLen) * (0.85 + rng() * 0.3)
-      const a = ang + curl + (rng() - 0.5) * 0.05
-      const ex = x + Math.cos(a) * len, ey = y + Math.sin(a) * len
-      const wEnd = width * 0.97
-      segs.push([x, y, ex, ey, width, wEnd, depth])
-      const totalA = wEnd * wEnd * tree.conserve
-      if (rng() >= tree.forkProb) {
-        grow(ex, ey, a, Math.sqrt(totalA), curl, phase + GOLDEN, drift(depth, tree.depthDrift * 0.25))
-        return
+
+    // Helper: add a segment [x1, y1, x2, y2, wStart, wEnd, depth]
+    const seg = (x1: number, y1: number, x2: number, y2: number, ws: number, we: number, d: number) => {
+      if (segs.length >= MAXSEG) return
+      segs.push([x1, y1, x2, y2, ws, we, d])
+    }
+
+    // Generate columns and statues across the canvas
+    const totalWidth = scene.nColumns * scene.spacing
+    const startX = (aspect - totalWidth) * 0.5 + scene.spacing * 0.5
+
+    for (let i = 0; i < scene.nColumns; i++) {
+      if (segs.length >= MAXSEG - 20) break
+
+      const cx = startX + i * scene.spacing + (rng() - 0.5) * 0.02
+      const isStatue = rng() < scene.statueProb
+      const baseDepth = 0.15 + rng() * 0.35  // varies per column for parallax
+
+      if (isStatue) {
+        // === STATUE ===
+        const sw = scene.statueWidth * (0.8 + rng() * 0.4)
+        const lean = (rng() - 0.5) * scene.leanAmount
+
+        // Pedestal
+        const pedY = 0.05
+        const pedH = scene.pedestalH * (0.8 + rng() * 0.4)
+        seg(cx - sw * 0.6, pedY, cx - sw * 0.55, pedY + pedH, sw * 1.2, sw * 1.1, baseDepth)
+        seg(cx + sw * 0.55, pedY, cx + sw * 0.6, pedY + pedH, sw * 1.1, sw * 1.2, baseDepth)
+
+        // Pedestal top slab
+        seg(cx - sw * 0.7, pedY + pedH, cx + sw * 0.7, pedY + pedH, sw * 1.4, sw * 1.4, baseDepth)
+
+        // Body (torso) — slightly tapered
+        const bodyH = pedY + pedH + 0.22 * (0.8 + rng() * 0.4)
+        const bodyLean = lean * 0.5
+        seg(cx - sw * 0.35 + bodyLean, pedY + pedH, cx - sw * 0.3 + bodyLean * 1.5, bodyH, sw * 0.7, sw * 0.6, baseDepth + 0.1)
+        seg(cx + sw * 0.3 + bodyLean, pedY + pedH, cx + sw * 0.3 + bodyLean * 1.5, bodyH, sw * 0.6, sw * 0.6, baseDepth + 0.1)
+
+        // Shoulders
+        const shoulderY = bodyH
+        const shoulderW = sw * (0.7 + rng() * 0.3)
+        seg(cx - shoulderW * 0.5 + bodyLean * 1.5, shoulderY, cx + shoulderW * 0.5 + bodyLean * 1.5, shoulderY, shoulderW, shoulderW, baseDepth + 0.15)
+
+        // Neck
+        const neckY = shoulderY + 0.04
+        seg(cx - sw * 0.12 + bodyLean * 1.8, shoulderY, cx - sw * 0.1 + bodyLean * 2, neckY, sw * 0.25, sw * 0.22, baseDepth + 0.2)
+        seg(cx + sw * 0.1 + bodyLean * 1.8, shoulderY, cx + sw * 0.1 + bodyLean * 2, neckY, sw * 0.22, sw * 0.22, baseDepth + 0.2)
+
+        // Head
+        const headY = neckY + 0.06
+        const headR = sw * 0.2
+        seg(cx + bodyLean * 2, neckY, cx + bodyLean * 2.2, headY, headR * 2, headR * 2, baseDepth + 0.25)
+
+      } else {
+        // === COLUMN ===
+        const cw = scene.columnWidth * (0.7 + rng() * 0.6)
+        const lean = (rng() - 0.5) * scene.leanAmount
+        const colH = 0.7 + rng() * 0.2
+
+        // Base / pedestal
+        const baseY = 0.02
+        seg(cx - cw * 0.7, baseY, cx - cw * 0.65, baseY + scene.pedestalH, cw * 1.4, cw * 1.3, baseDepth)
+        seg(cx + cw * 0.65, baseY, cx + cw * 0.7, baseY + scene.pedestalH, cw * 1.3, cw * 1.4, baseDepth)
+
+        // Shaft (main column body) — slightly tapered with entasis
+        const shaftTop = baseY + scene.pedestalH + colH
+        const entasis = cw * 0.08  // slight bulge in the middle
+        const topCW = cw * 0.85
+
+        // Left side of shaft with entasis
+        seg(cx - cw * 0.5, baseY + scene.pedestalH, cx - cw * 0.5 - entasis * 0.3, (baseY + scene.pedestalH + shaftTop) * 0.5, cw, cw * 0.95, baseDepth + 0.05)
+        seg(cx - cw * 0.5 - entasis * 0.3, (baseY + scene.pedestalH + shaftTop) * 0.5, cx - topCW * 0.5 + lean, shaftTop, cw * 0.95, topCW, baseDepth + 0.05)
+
+        // Right side of shaft with entasis
+        seg(cx + cw * 0.5, baseY + scene.pedestalH, cx + cw * 0.5 + entasis * 0.3, (baseY + scene.pedestalH + shaftTop) * 0.5, cw, cw * 0.95, baseDepth + 0.05)
+        seg(cx + cw * 0.5 + entasis * 0.3, (baseY + scene.pedestalH + shaftTop) * 0.5, cx + topCW * 0.5 + lean, shaftTop, cw * 0.95, topCW, baseDepth + 0.05)
+
+        // Capital (top of column) — wider, decorative
+        const capW = cw * 1.6
+        seg(cx - capW * 0.5 + lean * 0.5, shaftTop, cx - capW * 0.55 + lean, shaftTop + scene.capitalH, capW * 0.9, capW, baseDepth + 0.1)
+        seg(cx + capW * 0.5 + lean * 0.5, shaftTop, cx + capW * 0.55 + lean, shaftTop + scene.capitalH, capW * 0.9, capW, baseDepth + 0.1)
+
+        // Abacus (top slab)
+        const abacusW = cw * 1.8
+        seg(cx - abacusW * 0.5 + lean, shaftTop + scene.capitalH, cx + abacusW * 0.5 + lean, shaftTop + scene.capitalH, abacusW, abacusW, baseDepth + 0.12)
       }
-      const n = rng() < tree.split3 ? 3 : 2
-      const leaderA = totalA * (tree.leader * (0.92 + rng() * 0.16))
-      const wLeader = Math.sqrt(Math.min(totalA, leaderA))
-      grow(ex, ey, a, wLeader, curl, phase + GOLDEN, drift(depth, tree.depthDrift * 0.25))
-      let remA = Math.max(0, totalA - wLeader * wLeader)
-      for (let k = 0; k < n - 1; k++) {
-        const ac = k === n - 2 ? remA : remA * (0.45 + rng() * 0.25)
-        remA -= ac
-        const wc = Math.sqrt(ac)
-        if (wc < minW) continue
-        const ph = phase + (k + 1) * GOLDEN
-        const lat = tree.golden * Math.cos(ph) + (1 - tree.golden) * (rng() - 0.5) * 2
-        const side = lat >= 0 ? 1 : -1
-        const thin = 1 - Math.min(1, wc / Math.max(wEnd, 1e-6))
-        const sa = a + side * (0.35 + thin * 0.55) + (rng() - 0.5) * 0.15
-        grow(ex, ey, sa, wc, (rng() - 0.5) * tree.curl, ph, drift(depth, tree.depthDrift))
+
+      // Occasional arch between columns
+      if (i < scene.nColumns - 1 && rng() < scene.archProb && segs.length < MAXSEG - 10) {
+        const nextCx = startX + (i + 1) * scene.spacing + (rng() - 0.5) * 0.02
+        const archY = 0.15 + rng() * 0.1
+        const archH = 0.25 + rng() * 0.15
+        const archW = (nextCx - cx) * 0.5
+        const archCX = (cx + nextCx) * 0.5
+        const archThickness = scene.columnWidth * 0.3
+
+        // Arch segments (approximated with straight segments)
+        const nArchSegs = 6
+        for (let a = 0; a < nArchSegs; a++) {
+          const t1 = a / nArchSegs
+          const t2 = (a + 1) / nArchSegs
+          const angle1 = Math.PI * t1
+          const angle2 = Math.PI * t2
+          const x1 = archCX + Math.cos(angle1) * archW
+          const y1 = archY + Math.sin(angle1) * archH
+          const x2 = archCX + Math.cos(angle2) * archW
+          const y2 = archY + Math.sin(angle2) * archH
+          seg(x1, y1, x2, y2, archThickness, archThickness, baseDepth + 0.08)
+        }
       }
     }
-    const SCENES = [
-      { edges: [2], fx: 0.33, top: true, gx: 0, gy: 1 },
-      { edges: [2, 0], fx: 0.33, top: true, gx: -0.7, gy: 0.7 },
-      { edges: [2, 1], fx: 0.67, top: true, gx: 0.7, gy: 0.7 },
-      { edges: [3, 1], fx: 0.67, top: false, gx: 0.7, gy: -0.7 },
-      { edges: [3, 0], fx: 0.33, top: false, gx: -0.7, gy: -0.7 },
-    ]
-    const sceneIdx = tree.sceneType >= 0 ? Math.min(4, Math.round(tree.sceneType)) : Math.floor(rng() * SCENES.length)
-    const scene = SCENES[sceneIdx]
-    leafGx = scene.gx; leafGy = scene.gy
-    const tr = rng()
-    trunkCount = tree.trunkCount >= 0 ? Math.round(tree.trunkCount) : tr < 0.4 ? 0 : tr < 0.8 ? 1 : 2
-    trunkX0 = clamp(scene.fx + (rng() - 0.5) * 0.25, 0.05, 0.95)
-    trunkX1 = clamp(scene.fx + (rng() - 0.5) * 0.5, 0.05, 0.95)
-    trunkW = 0.008 + rng() * rng() * 0.03
-    const off = tree.rootOffset
-    const rootForEdge = (edge: number, depth: number): [number, number, number] => {
-      const spread = 0.1 + depth * 0.45
-      const fx = clamp(scene.fx + (rng() - 0.5) * spread, 0.04, 0.96)
-      if (edge === 2) return [fx * aspect, 1.0 + off, -Math.PI / 2 + (rng() - 0.5) * 0.6]
-      if (edge === 3) return [fx * aspect, -off, Math.PI / 2 + (rng() - 0.5) * 0.6]
-      const yc = scene.top ? 0.7 : 0.3
-      const y = clamp(yc + (rng() - 0.5) * spread, 0.05, 0.95)
-      if (edge === 0) return [-off, y, (rng() - 0.5) * 0.6]
-      return [aspect + off, y, Math.PI + (rng() - 0.5) * 0.6]
-    }
-    const nTrees = Math.max(1, Math.round(tree.nTrees))
-    for (let i = 0; i < nTrees; i++) {
-      if (segs.length >= MAXSEG) break
-      const edge = scene.edges[i % scene.edges.length]
-      const role = nTrees > 1 ? i / (nTrees - 1) : 0
-      const base = clamp(0.12 + role * 0.4 + (rng() - 0.5) * 0.1, 0.04, 0.95)
-      const [x, y, ang] = rootForEdge(edge, role)
-      const w = tree.trunkWidth * (1 - role * 0.5) * (0.9 + rng() * 0.2)
-      grow(x, y, ang, w, (rng() - 0.5) * tree.curl, rng() * Math.PI * 2, base)
-    }
+
     segCount = Math.min(segs.length, MAXSEG)
     posScale = aspect + 2
     const enc = (v: number, off: number) => {
@@ -496,25 +543,17 @@ function initScene(container: HTMLElement) {
     addSlider(`${LNAME[k]} flutter`, 0, 0.5, 0.005, () => FLUT[k], (v) => (FLUT[k] = v))
     addSlider(`${LNAME[k]} flutter spd`, 0, 5, 0.1, () => FREQ[k], (v) => (FREQ[k] = v))
   }
-  addHeader("tree (L-system)")
-  addButton("reshuffle tree", () => { treeSeed = Math.floor(Math.random() * 1e9); regen() })
-  addSlider("scene (-1=rand)", -1, 4, 1, () => tree.sceneType, (v) => { tree.sceneType = v; regen() })
-  addSlider("root offset", 0, 1.6, 0.02, () => tree.rootOffset, (v) => { tree.rootOffset = v; regen() })
-  addSlider("trunks (-1=rand)", -1, 2, 1, () => tree.trunkCount, (v) => { tree.trunkCount = v; regen() })
-  addSlider("leaf bias", 0, 3, 0.05, () => tree.leafBias, (v) => { tree.leafBias = v })
-  addSlider("leaf follows depth", 0, 1, 0.05, () => tree.leafFollow, (v) => { tree.leafFollow = v })
-  addSlider("trees", 1, 12, 1, () => tree.nTrees, (v) => { tree.nTrees = v; regen() })
-  addSlider("trunk width", 0.02, 0.09, 0.002, () => tree.trunkWidth, (v) => { tree.trunkWidth = v; regen() })
-  addSlider("len / width", 4, 28, 0.5, () => tree.lenRatio, (v) => { tree.lenRatio = v; regen() })
-  addSlider("max seg len", 0.06, 0.7, 0.01, () => tree.maxLen, (v) => { tree.maxLen = v; regen() })
-  addSlider("curl", 0, 0.8, 0.02, () => tree.curl, (v) => { tree.curl = v; regen() })
-  addSlider("P(3 split)", 0, 1, 0.05, () => tree.split3, (v) => { tree.split3 = v; regen() })
-  addSlider("fork prob", 0.3, 1, 0.05, () => tree.forkProb, (v) => { tree.forkProb = v; regen() })
-  addSlider("depth drift", 0, 0.9, 0.05, () => tree.depthDrift, (v) => { tree.depthDrift = v; regen() })
-  addSlider("leader share", 0.4, 0.95, 0.02, () => tree.leader, (v) => { tree.leader = v; regen() })
-  addSlider("golden phyllotaxis", 0, 1, 0.05, () => tree.golden, (v) => { tree.golden = v; regen() })
-  addSlider("width conserve", 0.7, 1, 0.01, () => tree.conserve, (v) => { tree.conserve = v; regen() })
-  addSlider("end thickness px", 0.5, 3, 0.1, () => tree.endPx, (v) => { tree.endPx = v; regen() })
+  addHeader("columns & statues")
+  addButton("reshuffle scene", () => { sceneSeed = Math.floor(Math.random() * 1e9); regen() })
+  addSlider("columns", 2, 10, 1, () => scene.nColumns, (v) => { scene.nColumns = v; regen() })
+  addSlider("column width", 0.02, 0.15, 0.005, () => scene.columnWidth, (v) => { scene.columnWidth = v; regen() })
+  addSlider("statue width", 0.03, 0.2, 0.005, () => scene.statueWidth, (v) => { scene.statueWidth = v; regen() })
+  addSlider("spacing", 0.08, 0.4, 0.01, () => scene.spacing, (v) => { scene.spacing = v; regen() })
+  addSlider("lean amount", 0, 0.08, 0.002, () => scene.leanAmount, (v) => { scene.leanAmount = v; regen() })
+  addSlider("pedestal h", 0.02, 0.15, 0.005, () => scene.pedestalH, (v) => { scene.pedestalH = v; regen() })
+  addSlider("capital h", 0.01, 0.1, 0.002, () => scene.capitalH, (v) => { scene.capitalH = v; regen() })
+  addSlider("statue probability", 0, 1, 0.05, () => scene.statueProb, (v) => { scene.statueProb = v; regen() })
+  addSlider("arch probability", 0, 0.5, 0.05, () => scene.archProb, (v) => { scene.archProb = v; regen() })
   addHeader("tone & dither")
   addToggle("dither", () => u.dither > 0.5, (on) => (u.dither = on ? 1 : 0))
   addSlider("contrast", 0.5, 3, 0.05, () => u.contrast, (v) => (u.contrast = v))
@@ -560,8 +599,8 @@ function initScene(container: HTMLElement) {
     gl.uniform1f(U.uWidScale, WIDSCALE)
     gl.uniform1i(U.uSegCount, segCount)
     gl.uniform2f(U.uLeafGrad, leafGx, leafGy)
-    gl.uniform1f(U.uLeafFall, tree.leafBias)
-    gl.uniform1f(U.uLeafFollow, tree.leafFollow)
+    gl.uniform1f(U.uLeafFall, 1.4)
+    gl.uniform1f(U.uLeafFollow, 0.6)
     gl.uniform1f(U.uTrunkCount, trunkCount)
     gl.uniform2f(U.uTrunkX, trunkX0, trunkX1)
     gl.uniform1f(U.uTrunkW, trunkW)
