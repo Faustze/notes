@@ -1,6 +1,17 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
+/* Hide page-title on the index page */
+body[data-slug="index"] .article-title {
+  display: none;
+}
+
+// Page title in the left sidebar — Tangerine font (loaded by fonts plugin via --titleFont)
+.sidebar.left .page-title {
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: var(--titleFont);
+}
 
 // Komorebi (dappled light) 3-tone palette: shadow → glow → lit wall.
 // Each theme gets its own palette so the dappled light reads correctly
