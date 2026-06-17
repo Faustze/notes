@@ -45,14 +45,25 @@ jobs:
           OBSIDIAN_VAULT_TOKEN: ${{ secrets.OBSIDIAN_VAULT_TOKEN }}
         run: bash scripts/sync-obsidian-notes.sh
 
-      - name: Commit synced notes
+      - name: Create PR with synced notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add content/obsidian-notes/
           if ! git diff --cached --quiet; then
+            BRANCH="sync/obsidian-notes-$(date +%Y%m%d-%H%M%S)"
+            git checkout -b "$BRANCH"
             git commit -m "sync: update obsidian notes [skip ci]"
-            git push
+            git push origin "$BRANCH"
+            gh pr create \
+              --base main \
+              --head "$BRANCH" \
+              --title "sync: update obsidian notes" \
+              --body "Automated sync of Obsidian notes from vault." \
+              --label "automated" || true
+            git checkout main
           else
             echo "No changes to commit"
           fi
