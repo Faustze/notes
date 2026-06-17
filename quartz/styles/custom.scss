@@ -2,21 +2,27 @@
 
 // put your custom CSS here!
 
-// Komorebi (dappled light) theme colors
+// Komorebi (dappled light) 3-tone palette: shadow → glow → lit wall.
+// Each theme gets its own palette so the dappled light reads correctly
+// against the page background in both modes.
 :root {
-  --komorebi-light: #83a1c9; // moonlit wall — the main light color (light blue)
-  --komorebi-mid: #5d7ba3; // glow (transition zones)
-  --komorebi-shadow: #2b2b2b; // shadow
-  --komorebi-frame: var(--komorebi-light); // frame = the moonlight color at night
-  --komorebi-gap: var(--komorebi-shadow); // padding gap fill (dark at night)
+  // Light mode: warm paper wall with cool shadow and amber penumbra
+  --komorebi-shadow: #2b2b2b; // cool tree shadow on warm paper
+  --komorebi-mid: #b89a6a; // warm amber penumbra at shadow edges
+  --komorebi-light: #faf8f8; // lit wall ≈ page background
+  --komorebi-frame: var(--komorebi-shadow); // frame contrasts the page
+  --komorebi-gap: var(--komorebi-light); // padding gap fill
   --komorebi-center: 0.38;
 }
 
-// Dark mode overrides
-.theme-dark {
-  --komorebi-light: #83a1c9;
-  --komorebi-mid: #5d7ba3;
-  --komorebi-shadow: #2b2b2b;
+[saved-theme="dark"] {
+  // Dark mode: moonlit blue wall with deep navy shadow, cool glow
+  --komorebi-shadow: #0c1a30; // deep navy tree shadow
+  --komorebi-mid: #4a6080; // cool steel-blue penumbra
+  --komorebi-light: #83a1c9; // moonlit wall (light blue)
+  --komorebi-frame: var(--komorebi-light); // frame = moonlight color
+  --komorebi-gap: var(--komorebi-shadow); // padding gap fill (dark)
+  --komorebi-center: 0.38;
 }
 
 // Dappled Canvas Scene
