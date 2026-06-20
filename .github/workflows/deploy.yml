@@ -15,6 +15,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  pull-requests: write
 
 # Одновременно только один деплой
 concurrency:
@@ -30,6 +31,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -45,32 +48,17 @@ jobs:
           OBSIDIAN_VAULT_TOKEN: ${{ secrets.OBSIDIAN_VAULT_TOKEN }}
         run: bash scripts/sync-obsidian-notes.sh
 
-      - name: Create PR with synced notes
+      - name: Commit synced notes
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${PAT_TOKEN}@github.com/${{ github.repository }}.git"
           git add content/obsidian-notes/
           if ! git diff --cached --quiet; then
-            BRANCH="sync/obsidian-notes-$(date +%Y%m%d-%H%M%S)"
-            git checkout -b "$BRANCH"
             git commit -m "sync: update obsidian notes [skip ci]"
-            git push origin "$BRANCH"
-
-            # Check if PR already exists for this branch
-            EXISTING_PR=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
-            if [ -z "$EXISTING_PR" ]; then
-              gh pr create \
-                --base main \
-                --head "$BRANCH" \
-                --title "sync: update obsidian notes" \
-                --body "Automated sync of Obsidian notes from vault." || true
-            else
-              echo "PR #$EXISTING_PR already exists for branch $BRANCH"
-            fi
-
-            git checkout main
+            git push origin main
           else
             echo "No changes to commit"
           fi
