@@ -6,9 +6,9 @@ body[data-slug="index"] .article-title {
   display: none;
 }
 
-// Page title in the left sidebar — Tangerine font (loaded by fonts plugin via --titleFont)
+// Page title in the left sidebar
 .sidebar.left .page-title {
-  font-size: 2rem;
+  font-size: 1rem;
   font-weight: 600;
   font-family: var(--titleFont);
 }
