@@ -1,10 +1,5 @@
 # 67. Add Binary (Easy) (<https://leetcode.com/problems/add-binary/>)
 
-<<<<<<< HEAD:content/leetcode/Bit Manipulation/67-add-binary.md
-=======
-<!-- [[leetcode/bit-manipulation]] -->
-
->>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Bit Manipulation/67-add-binary.md
 > Given two binary strings a and b, return their sum as a binary string.
 > Constraints: - 1 <= a.length, b.length <= 10^4 - a and b consist only of '0' or '1' characters.
 > - Each string does not contain leading zeros except for the zero itself.
@@ -33,8 +28,5 @@ Example 1:
     Output: "10101"
     Explanation: 1010 (binary) = 10, 1011 (binary) = 11, 10 + 11 = 21 = 10101 (binary)
 ```
-<<<<<<< HEAD:content/leetcode/Bit Manipulation/67-add-binary.md
 
 [[leetcode/bit-manipulation]]
-=======
->>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Bit Manipulation/67-add-binary.md

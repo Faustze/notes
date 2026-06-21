@@ -48,8 +48,4 @@ Example 1:
     Output: [0,0,0,0]
 ```
 
-<<<<<<< HEAD:content/leetcode/Array/1365-how-many-numbers-are-smaller-than-the-current-number.md
 [[leetcode/array/1431-kids-with-the-greatest-number-of-candies]]
-=======
-<!-- [[leetcode/array]] [[leetcode/array/1431-kids-with-the-greatest-number-of-candies]] -->
->>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/1365-how-many-numbers-are-smaller-than-the-current-number.md

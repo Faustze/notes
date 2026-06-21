@@ -61,9 +61,6 @@ Example 1:
     Input: candies = [12,1,12], extraCandies = 10
     Output: [true,false,true]
 ```
-<<<<<<< HEAD:content/leetcode/Array/1431-kids-with-the-greatest-number-of-candies.md
 
 [[leetcode/array/1365-how-many-numbers-are-smaller-than-the-current-number]]
 [[leetcode/array/1441-build-an-array-with-stack-operations]]
-=======
->>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/1431-kids-with-the-greatest-number-of-candies.md

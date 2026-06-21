@@ -1,10 +1,5 @@
 # 448. Find All Numbers Disappeared in an Array (Easy) (<https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array>)
 
-<<<<<<< HEAD:content/leetcode/Array/448-find-all-numbers-disappeared-in-an-array.md
-=======
-<!-- [[leetcode/array]] [[leetcode/array/283-move-zeroes]] [[leetcode/array/485-max-consecutive-ones]] -->
-
->>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/448-find-all-numbers-disappeared-in-an-array.md
 > Given an array nums of n integers where nums[i] is in the range [1, n], return an array of all the integers in the range [1, n] that do not appear in nums.
 > Constraints: - n == nums.length - 1 <= n <= 10^5 - 1 <= nums[i] <= n Follow up: Could you do it without extra space and in O(n) runtime? You may assume the returned list does not count as extra space.
 
@@ -46,9 +41,6 @@ Example 1:
     Input: nums = [1,1]
     Output: [2]
 ```
-<<<<<<< HEAD:content/leetcode/Array/448-find-all-numbers-disappeared-in-an-array.md
 
 [[leetcode/array/283-move-zeroes]]
 [[leetcode/array/485-max-consecutive-ones]]
-=======
->>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/448-find-all-numbers-disappeared-in-an-array.md

@@ -54,8 +54,4 @@ Example 1:
     Output: [1,1,0]
 ```
 
-<<<<<<< HEAD:content/leetcode/Array/739-daily-temperatures.md
 [[leetcode/array/645-set-mismatch]]
-=======
-<!-- [[leetcode/array]] [[leetcode/array/645-set-mismatch]] -->
->>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/739-daily-temperatures.md

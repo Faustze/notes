@@ -66,11 +66,7 @@ Example 2:
   Example 3:
     Input: prices = [10,1,1,6]
     Output: [9,0,1,6]
-<<<<<<< HEAD:content/leetcode/Array/1475-final-prices-with-a-special-discount-in-a-shop.md
 ```
 
 [[leetcode/array/1470-shuffle-the-array]]
 [[leetcode/array/150-evaluate-reverse-polish-notation]]
-=======
-```
->>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/1475-final-prices-with-a-special-discount-in-a-shop.md
