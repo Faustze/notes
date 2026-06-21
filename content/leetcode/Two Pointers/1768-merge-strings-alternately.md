@@ -1,5 +1,10 @@
 # 1768. Merge Strings Alternately (Easy) (<https://leetcode.com/problems/merge-strings-alternately/>)
 
+<<<<<<< HEAD:content/leetcode/Two Pointers/1768-merge-strings-alternately.md
+=======
+<!-- [[leetcode/two-pointers]] [[leetcode/two-pointers/151-reverse-words-in-a-string]] [[leetcode/two-pointers/345-reverse-vowels-of-a-string]] -->
+
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Two Pointers/1768-merge-strings-alternately.md
 > You are given two strings word1 and word2.
 > Merge the strings by adding letters in alternating order, starting with word1.
 > If a string is longer than the other, append the additional letters onto the end of the merged string.
@@ -52,5 +57,8 @@ Example 1:
       word2:    p   q
       merged: a p b q c   d
 ```
+<<<<<<< HEAD:content/leetcode/Two Pointers/1768-merge-strings-alternately.md
 
 [[leetcode/two-pointers]]\n[[leetcode/two-pointers/151-reverse-words-in-a-string]]\n[[leetcode/two-pointers/345-reverse-vowels-of-a-string]]
+=======
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Two Pointers/1768-merge-strings-alternately.md

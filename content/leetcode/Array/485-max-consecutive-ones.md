@@ -1,5 +1,10 @@
 # 485. Max Consecutive Ones (Easy) (<https://leetcode.com/problems/max-consecutive-ones/>)
 
+<<<<<<< HEAD:content/leetcode/Array/485-max-consecutive-ones.md
+=======
+<!-- [[leetcode/array]] [[leetcode/array/448-find-all-numbers-disappeared-in-an-array]] [[leetcode/array/605-can-place-flowers]] -->
+
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/485-max-consecutive-ones.md
 > Given a binary array nums, return the maximum number of consecutive 1's in the array.
 > Constraints: 1 <= nums.length <= 10^5 nums[i] is either 0 or 1.
 
@@ -38,6 +43,9 @@ Example 1:
     Input: nums = [1,0,1,1,0,1]
     Output: 2
 ```
+<<<<<<< HEAD:content/leetcode/Array/485-max-consecutive-ones.md
 
 [[leetcode/array/448-find-all-numbers-disappeared-in-an-array]]
 [[leetcode/array/605-can-place-flowers]]
+=======
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/485-max-consecutive-ones.md

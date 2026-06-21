@@ -41,5 +41,9 @@ Example 1:
     8 is the missing number in the range since it does not appear in nums.
 ```
 
+<<<<<<< HEAD:content/leetcode/Array/268-missing-number.md
 [[leetcode/array/150-evaluate-reverse-polish-notation]]
 [[leetcode/array/283-move-zeroes]]
+=======
+<!-- [[leetcode/array]] [[leetcode/array/150-evaluate-reverse-polish-notation]] [[leetcode/array/283-move-zeroes]] -->
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/268-missing-number.md

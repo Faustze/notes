@@ -83,6 +83,9 @@ Example 1:
     Since the stack (from the bottom to the top) is equal to target, we stop the stack operations.
     The answers that read integer 3 from the stream are not accepted.
 ```
+<<<<<<< HEAD:content/leetcode/Array/1441-build-an-array-with-stack-operations.md
 
 [[leetcode/array/1431-kids-with-the-greatest-number-of-candies]]
 [[leetcode/array/1470-shuffle-the-array]]
+=======
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/1441-build-an-array-with-stack-operations.md

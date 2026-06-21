@@ -1,5 +1,10 @@
 # 645. Set Mismatch (Easy) (<https://leetcode.com/problems/set-mismatch>)
 
+<<<<<<< HEAD:content/leetcode/Array/645-set-mismatch.md
+=======
+<!-- [[leetcode/array]] [[leetcode/array/636-exclusive-time-of-functions]] [[leetcode/array/739-daily-temperatures]] -->
+
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/645-set-mismatch.md
 > You have a set of integers `s`, which originally contains all the numbers from `1` to `n`.
 > Unfortunately, due to some error, one of the numbers in `s` got duplicated to another number in the set, which results in repetition of one number and loss of another number.
 > You are given an integer array nums representing the data status of this set after the error.
@@ -43,6 +48,9 @@ Example 1:
     Output: [1,2]
     Explanation: The number 1 appears twice and the number 2 is missing.
 ```
+<<<<<<< HEAD:content/leetcode/Array/645-set-mismatch.md
 
 [[leetcode/array/636-exclusive-time-of-functions]]
 [[leetcode/array/739-daily-temperatures]]
+=======
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/645-set-mismatch.md

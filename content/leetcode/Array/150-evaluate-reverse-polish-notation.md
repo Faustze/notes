@@ -66,5 +66,9 @@ Example 1:
     = 22
 ```
 
+<<<<<<< HEAD:content/leetcode/Array/150-evaluate-reverse-polish-notation.md
 [[leetcode/array/1475-final-prices-with-a-special-discount-in-a-shop]]
 [[leetcode/array/268-missing-number]]
+=======
+<!-- [[leetcode/array]] [[leetcode/array/1475-final-prices-with-a-special-discount-in-a-shop]] [[leetcode/array/268-missing-number]] -->
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/150-evaluate-reverse-polish-notation.md

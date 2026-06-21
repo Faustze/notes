@@ -1,6 +1,11 @@
 #lcpatterns/slow-fast-pointer
 # 283. Move Zeroes (Easy) (<https://leetcode.com/problems/move-zeroes/>)
 
+<<<<<<< HEAD:content/leetcode/Array/283-move-zeroes.md
+=======
+<!-- [[leetcode/array]] [[leetcode/array/268-missing-number]] [[leetcode/array/448-find-all-numbers-disappeared-in-an-array]] -->
+
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/283-move-zeroes.md
 > Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 > Note that you must do this in-place without making a copy of the array.
 > Constraints: 1 <= nums.length <= 10^4 -2^31 <= nums[i] <= 2^31 - 1 Follow up: Could you minimize the total number of operations done?
@@ -37,7 +42,11 @@ Example 1:
 Example 2:
     Input: nums = [0]
     Output: [0]
+<<<<<<< HEAD:content/leetcode/Array/283-move-zeroes.md
 ```
 
 [[leetcode/array/268-missing-number]]
 [[leetcode/array/448-find-all-numbers-disappeared-in-an-array]]
+=======
+```
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/283-move-zeroes.md

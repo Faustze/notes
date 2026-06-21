@@ -4,6 +4,11 @@
 > Return the array in the form [x1,y1,x2,y2,...,xn,yn].
 > Constraints: 1 <= n <= 500 nums.length == 2 * n 1 <= nums[i] <= 10^3
 
+<<<<<<< HEAD:content/leetcode/Array/1470-shuffle-the-array.md
+=======
+<!-- [[leetcode/array]] [[leetcode/array/1441-build-an-array-with-stack-operations]] [[leetcode/array/1475-final-prices-with-a-special-discount-in-a-shop]] -->
+
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/1470-shuffle-the-array.md
 ```ts
 function shuffle(nums: number[], n: number): number[] {
   const result = new Array(n * 2);
@@ -37,6 +42,9 @@ Example 1:
     Input: nums = [1,1,2,2], n = 2
     Output: [1,2,1,2]
 ```
+<<<<<<< HEAD:content/leetcode/Array/1470-shuffle-the-array.md
 
 [[leetcode/array/1441-build-an-array-with-stack-operations]]
 [[leetcode/array/1475-final-prices-with-a-special-discount-in-a-shop]]
+=======
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Array/1470-shuffle-the-array.md

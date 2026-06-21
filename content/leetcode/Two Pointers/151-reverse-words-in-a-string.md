@@ -1,5 +1,10 @@
 # 151. Reverse Words in a String (Medium) (<https://leetcode.com/problems/reverse-words-in-a-string/>)
 
+<<<<<<< HEAD:content/leetcode/Two Pointers/151-reverse-words-in-a-string.md
+=======
+<!-- [[leetcode/two-pointers]] [[leetcode/two-pointers/125-valid-palindrome]] [[leetcode/two-pointers/1768-merge-strings-alternately]] -->
+
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Two Pointers/151-reverse-words-in-a-string.md
 > Given an input string s, reverse the order of the words.
 > A word is defined as a sequence of non-space characters.
 > The words in s will be separated by at least one space.
@@ -40,5 +45,8 @@ Example 1:
     Output: "example good a"
     Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
 ```
+<<<<<<< HEAD:content/leetcode/Two Pointers/151-reverse-words-in-a-string.md
 
 [[leetcode/two-pointers]]\n[[leetcode/two-pointers/125-valid-palindrome]]\n[[leetcode/two-pointers/1768-merge-strings-alternately]]
+=======
+>>>>>>> 6c9469eec57d3be0ae42f8972cb5d02841658ed0:content/obsidian-notes/leetcode/Two Pointers/151-reverse-words-in-a-string.md
