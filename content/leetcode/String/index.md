@@ -1,7 +1,7 @@
 ---
-title: leetcode/string
+title: string
 ---
 
 [[leetcode]]
 
-[[leetcode/string/1071-greatest-common-divisor-of-strings]]
+[[string/1071-greatest-common-divisor-of-strings]]

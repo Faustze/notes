@@ -1,5 +1,5 @@
 ---
-title: leetcode/regexp/medium
+title: regexp/medium
 ---
 
-[[leetcode/regexp]]
+[[regexp]]

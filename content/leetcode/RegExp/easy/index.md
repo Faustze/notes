@@ -1,7 +1,7 @@
 ---
-title: leetcode/regexp/easy
+title: regexp/easy
 ---
 
-[[leetcode/regexp]]
+[[regexp]]
 
-[[leetcode/regexp/easy/125-valid-palindrome]]
+[[regexp/easy/125-valid-palindrome]]

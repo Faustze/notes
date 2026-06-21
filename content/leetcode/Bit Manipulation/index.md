@@ -1,7 +1,7 @@
 ---
-title: leetcode/bit-manipulation
+title: bit-manipulation
 ---
 
 [[leetcode]]
 
-[[leetcode/bit-manipulation/67-add-binary]]
+[[bit-manipulation/67-add-binary]]

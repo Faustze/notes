@@ -1,5 +1,5 @@
 ---
-title: leetcode/regexp/hard
+title: regexp/hard
 ---
 
-[[leetcode/regexp]]
+[[regexp]]
