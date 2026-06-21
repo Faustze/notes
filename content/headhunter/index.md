@@ -1,5 +1,5 @@
 ---
-title: headhunter
+title: headhuner
 ---
 
 [[index]]
