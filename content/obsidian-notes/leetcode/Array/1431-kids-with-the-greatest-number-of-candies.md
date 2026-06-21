@@ -50,6 +50,8 @@ Example 1:
 
     Input: candies = [4,2,1,1,2], extraCandies = 1
     Output: [true,false,false,false,false]
+
+<!-- [[leetcode/array]] [[leetcode/array/1365-how-many-numbers-are-smaller-than-the-current-number]] [[leetcode/array/1441-build-an-array-with-stack-operations]] -->
     Explanation: There is only 1 extra candy.
       Kid 1 will always have the greatest number of candies, even if a different
       kid is given the extra candy.

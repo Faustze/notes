@@ -76,3 +76,6 @@ console.log(count)
 - Тип null является "object"  
 - undefiend используется когда значение не задано  
 ==->Строку можно изменять==
+
+[[index]]
+[[headhunter/javascript-easy-level]]

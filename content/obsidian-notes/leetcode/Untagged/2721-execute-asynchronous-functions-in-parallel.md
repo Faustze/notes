@@ -60,6 +60,8 @@ Example 1:
       () => new Promise(resolve => setTimeout(() => resolve(5), 200))
     ]
     Output: {"t": 200, "resolved": [5]}
+
+<!-- [[leetcode/untagged]] [[leetcode/untagged/2715-timeout-cancellation]] [[leetcode/untagged/2723-add-two-promises]] -->
     Explanation:
     promiseAll(functions).then(console.log) // [5]
     The single function was resolved at 200ms with a value of 5.

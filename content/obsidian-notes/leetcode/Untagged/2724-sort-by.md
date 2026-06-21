@@ -1,5 +1,7 @@
 # 2724. Sort By (Easy) (<https://leetcode.com/problems/sort-by/>)
 
+<!-- [[leetcode/untagged]] [[leetcode/untagged/2723-add-two-promises]] [[leetcode/untagged/2725-interval-cancellation]] -->
+
 > Given an array arr and a function fn, return a sorted array sortedArr.
 > You can assume fn only returns numbers and those numbers determine the sort order of sortedArr.
 > sortedArr must be sorted in ascending order by fn output.

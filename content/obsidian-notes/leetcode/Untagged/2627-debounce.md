@@ -60,6 +60,8 @@ Example 1:
 
   Example 3:
 
+<!-- [[leetcode/untagged]] [[leetcode/untagged/2626-array-reduce-transformation]] [[leetcode/untagged/2629-function-composition]] -->
+
     Input:
     t = 150
     calls = [

@@ -70,6 +70,8 @@ Example 1:
     At t=0, the cache is constructed.
     At t=0, a key-value pair (1: 42) is added with a time limit of 50ms.
     The value doesn't exist so false is returned.
+
+<!-- [[leetcode/untagged]] [[leetcode/untagged/2620-counter]] [[leetcode/untagged/2623-memoize]] -->
     At t=40, a key-value pair (1: 50) is added with a time limit of 100ms.
     A non-expired value already existed so true is returned and the old value
     was overwritten.

@@ -64,3 +64,6 @@ console.log([] + []);
 console.log(0 == false);
 ```
 ==-> true==
+
+[[index]]
+[[headhunter/javascript-middle-level]]

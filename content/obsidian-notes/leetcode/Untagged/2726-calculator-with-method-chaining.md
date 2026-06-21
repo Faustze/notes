@@ -66,6 +66,8 @@ Example 1:
     Input:
     actions = ["Calculator", "add", "subtract", "getResult"],
     values = [10, 5, 7]
+
+<!-- [[leetcode/untagged]] [[leetcode/untagged/2725-interval-cancellation]] -->
     Output: 8
     Explanation:
     new Calculator(10).add(5).subtract(7).getResult() // 10 + 5 - 7 = 8

@@ -53,3 +53,5 @@ Example 1:
     Input: temperatures = [30,60,90]
     Output: [1,1,0]
 ```
+
+<!-- [[leetcode/array]] [[leetcode/array/645-set-mismatch]] -->

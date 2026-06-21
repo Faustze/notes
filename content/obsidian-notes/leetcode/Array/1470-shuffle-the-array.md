@@ -4,6 +4,8 @@
 > Return the array in the form [x1,y1,x2,y2,...,xn,yn].
 > Constraints: 1 <= n <= 500 nums.length == 2 * n 1 <= nums[i] <= 10^3
 
+<!-- [[leetcode/array]] [[leetcode/array/1441-build-an-array-with-stack-operations]] [[leetcode/array/1475-final-prices-with-a-special-discount-in-a-shop]] -->
+
 ```ts
 function shuffle(nums: number[], n: number): number[] {
   const result = new Array(n * 2);

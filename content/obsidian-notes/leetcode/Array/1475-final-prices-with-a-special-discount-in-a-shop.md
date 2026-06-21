@@ -45,6 +45,8 @@ function finalPrices2(prices: number[]): number[] {
 console.log(finalPrices([8, 4, 6, 2, 3]));
 console.log(finalPrices([1, 2, 3, 4, 5]));
 console.log(finalPrices([10, 1, 1, 6]));
+
+<!-- [[leetcode/array]] [[leetcode/array/1470-shuffle-the-array]] [[leetcode/array/150-evaluate-reverse-polish-notation]] -->
 ```
 
 ```md

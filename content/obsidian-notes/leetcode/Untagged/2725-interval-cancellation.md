@@ -61,6 +61,8 @@ Example 1:
 
   Example 2:
 
+<!-- [[leetcode/untagged]] [[leetcode/untagged/2724-sort-by]] [[leetcode/untagged/2726-calculator-with-method-chaining]] -->
+
     Input: fn = (x1, x2) => (x1 * x2), args = [2, 5], t = 30
     Output:
     [

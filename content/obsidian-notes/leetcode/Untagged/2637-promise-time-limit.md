@@ -61,6 +61,8 @@ Example 1:
     Explanation:
     The function resolved 5 * 5 = 25 at t=100ms. The time limit is never reached.
 
+<!-- [[leetcode/untagged]] [[leetcode/untagged/2631-group-by]] [[leetcode/untagged/2665-counter2]] -->
+
   Example 3:
 
     Input:

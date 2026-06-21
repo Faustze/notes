@@ -60,6 +60,8 @@ Example 1:
     fnName = "factorial"
     actions = ["call","call","call","getCallCount","call","getCallCount"]
     values = [[2],[3],[2],[],[3],[]]
+
+<!-- [[leetcode/untagged]] [[leetcode/untagged/2622-cache-with-time-limit]] [[leetcode/untagged/2626-array-reduce-transformation]] -->
     Output: [2,6,2,2,6,2]
     Explanation:
     const factorial = (n) => (n <= 1) ? 1 : (nfactorial(n - 1));

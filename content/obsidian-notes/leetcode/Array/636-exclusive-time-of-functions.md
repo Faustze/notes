@@ -92,6 +92,8 @@ console.log(exclusiveTime(2, ['0:start:0', '1:start:2', '1:end:5', '0:end:6']))
 console.log(exclusiveTime(1, ['0:start:0', '0:start:2', '0:end:5', '0:start:6', '0:end:6', '0:end:7']))
 console.log(exclusiveTime(2, ['0:start:0', '0:start:2', '0:end:5', '1:start:6', '1:end:6', '0:end:7']))
 
+<!-- [[leetcode/array]] [[leetcode/array/605-can-place-flowers]] [[leetcode/array/645-set-mismatch]] -->
+
 // Альтернативное решение
 type Status = 'start' | 'end'
 

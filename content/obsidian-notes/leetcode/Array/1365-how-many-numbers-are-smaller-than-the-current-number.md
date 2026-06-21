@@ -47,3 +47,5 @@ Example 1:
     Input: nums = [7,7,7,7]
     Output: [0,0,0,0]
 ```
+
+<!-- [[leetcode/array]] [[leetcode/array/1431-kids-with-the-greatest-number-of-candies]] -->

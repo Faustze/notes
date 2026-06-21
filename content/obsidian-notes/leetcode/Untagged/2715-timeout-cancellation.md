@@ -60,6 +60,8 @@ Example 1:
 
   Example 3:
 
+<!-- [[leetcode/untagged]] [[leetcode/untagged/2703-return-length-of-arguments-passed]] [[leetcode/untagged/2721-execute-asynchronous-functions-in-parallel]] -->
+
     Input: fn = (x1, x2) => x1 * x2, args = [2,4], t = 30
     Output: [{"time": 30, "returned": 8}]
     Explanation:

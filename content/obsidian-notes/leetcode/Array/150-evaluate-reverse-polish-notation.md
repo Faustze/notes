@@ -65,3 +65,5 @@ Example 1:
     = 17 + 5
     = 22
 ```
+
+<!-- [[leetcode/array]] [[leetcode/array/1475-final-prices-with-a-special-discount-in-a-shop]] [[leetcode/array/268-missing-number]] -->

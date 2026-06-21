@@ -1,5 +1,7 @@
 # 1768. Merge Strings Alternately (Easy) (<https://leetcode.com/problems/merge-strings-alternately/>)
 
+<!-- [[leetcode/two-pointers]] [[leetcode/two-pointers/151-reverse-words-in-a-string]] [[leetcode/two-pointers/345-reverse-vowels-of-a-string]] -->
+
 > You are given two strings word1 and word2.
 > Merge the strings by adding letters in alternating order, starting with word1.
 > If a string is longer than the other, append the additional letters onto the end of the merged string.

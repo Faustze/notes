@@ -123,6 +123,8 @@ const URL_SIMPLE = /^https?:\/\/[\w.-]+\.[a-z]{2,}(\/\S*)?$/i;
 const INTEGER = /^[+-]?\d+$/;
 const FLOAT = /^[+-]?\d+(\.\d+)?$/;
 const HEX_COLOR = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
+
+<!-- [[leetcode/regexp]] -->
 const WHITESPACE_TRIM = /^\s+|\s+$/g;
 const MULTI_SPACE = /\s+/g;
 const WORD_BOUNDARY_SPLIT = /\b/;
