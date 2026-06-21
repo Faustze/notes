@@ -191,7 +191,9 @@ function cssNum(name: string, fallback: number): number {
   return isNaN(v) ? fallback : v
 }
 function rgbStr(name: string): string {
-  return cssVar(name).map((c) => Math.round(c * 255)).join(",")
+  return cssVar(name)
+    .map((c) => Math.round(c * 255))
+    .join(",")
 }
 function contentSize(el: HTMLElement): [number, number] {
   const cs = getComputedStyle(el)
@@ -205,7 +207,10 @@ function initScene(container: HTMLElement) {
   canvas.className = "dappled-canvas"
   container.appendChild(canvas)
   const gl = canvas.getContext("webgl", { antialias: false, alpha: false })
-  if (!gl) { console.error("[dappled-light] no WebGL"); return }
+  if (!gl) {
+    console.error("[dappled-light] no WebGL")
+    return
+  }
   gl.getExtension("OES_standard_derivatives")
 
   const compile = (type: number, src: string) => {
@@ -233,26 +238,49 @@ function initScene(container: HTMLElement) {
 
   const loc = (n: string) => gl.getUniformLocation(prog, n)
   const U = {
-    uTime: loc("uTime"), uDisp: loc("uDisp[0]"), uResolution: loc("uResolution"),
-    uColorA: loc("uColorA"), uColorMid: loc("uColorMid"), uColorB: loc("uColorB"),
-    uContrast: loc("uContrast"), uCenter: loc("uCenter"),
-    uGoldLo: loc("uGoldLo"), uGoldHi: loc("uGoldHi"), uCanopy: loc("uCanopy"),
-    uLayerOn: loc("uLayerOn"), uBlur: loc("uBlur"), uDither: loc("uDither"),
-    uSeed: loc("uSeed"), uParallax: loc("uParallax"), uFloor: loc("uFloor"),
-    uSegTex: loc("uSegTex"), uPosScale: loc("uPosScale"), uWidScale: loc("uWidScale"),
-    uSegCount: loc("uSegCount"), uLeafGrad: loc("uLeafGrad"),
-    uLeafFall: loc("uLeafFall"), uLeafFollow: loc("uLeafFollow"),
-    uTrunkCount: loc("uTrunkCount"), uTrunkX: loc("uTrunkX"), uTrunkW: loc("uTrunkW"),
+    uTime: loc("uTime"),
+    uDisp: loc("uDisp[0]"),
+    uResolution: loc("uResolution"),
+    uColorA: loc("uColorA"),
+    uColorMid: loc("uColorMid"),
+    uColorB: loc("uColorB"),
+    uContrast: loc("uContrast"),
+    uCenter: loc("uCenter"),
+    uGoldLo: loc("uGoldLo"),
+    uGoldHi: loc("uGoldHi"),
+    uCanopy: loc("uCanopy"),
+    uLayerOn: loc("uLayerOn"),
+    uBlur: loc("uBlur"),
+    uDither: loc("uDither"),
+    uSeed: loc("uSeed"),
+    uParallax: loc("uParallax"),
+    uFloor: loc("uFloor"),
+    uSegTex: loc("uSegTex"),
+    uPosScale: loc("uPosScale"),
+    uWidScale: loc("uWidScale"),
+    uSegCount: loc("uSegCount"),
+    uLeafGrad: loc("uLeafGrad"),
+    uLeafFall: loc("uLeafFall"),
+    uLeafFollow: loc("uLeafFollow"),
+    uTrunkCount: loc("uTrunkCount"),
+    uTrunkX: loc("uTrunkX"),
+    uTrunkW: loc("uTrunkW"),
   }
   gl.uniform2f(U.uSeed, Math.random() * 1000, Math.random() * 1000)
 
   const u = {
-    contrast: 1.6, center: cssNum("--komorebi-center", 0.38),
-    goldLo: 0.45, goldHi: 0.7, canopy: 1.2, dither: 1,
+    contrast: 1.6,
+    center: cssNum("--komorebi-center", 0.38),
+    goldLo: 0.45,
+    goldHi: 0.7,
+    canopy: 1.2,
+    dither: 1,
     layerOn: [1, 1, 0, 1],
     blur: [0.0, 0.12, 0.35, 0.45],
     floor: [0.1, 0.4, 0.7],
-    sensitivity: 5, rest: 0.35, gustSpeed: 1,
+    sensitivity: 5,
+    rest: 0.35,
+    gustSpeed: 1,
   }
 
   const MAXSEG = 1024
@@ -261,8 +289,12 @@ function initScene(container: HTMLElement) {
   const texData = new Uint8Array(TEXW * MAXSEG * 4)
   let segCount = 0
   let posScale = 12
-  let leafGx = 0, leafGy = 1
-  let trunkCount = 0, trunkX0 = 0.5, trunkX1 = 0.5, trunkW = 0.018
+  let leafGx = 0,
+    leafGy = 1
+  let trunkCount = 0,
+    trunkX0 = 0.5,
+    trunkX1 = 0.5,
+    trunkW = 0.018
   const segTex = gl.createTexture()!
   gl.bindTexture(gl.TEXTURE_2D, segTex)
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
@@ -271,30 +303,38 @@ function initScene(container: HTMLElement) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
   let sceneSeed = Math.floor(Math.random() * 1e9)
   const scene = {
-    nColumns: 5,        // number of columns/statues
-    columnWidth: 0.06,  // base width of columns
-    statueWidth: 0.08,  // width of statue figures
-    spacing: 0.18,      // horizontal spacing between elements
-    leanAmount: 0.02,   // how much columns lean (wind sway)
-    pedestalH: 0.06,    // height of pedestal
-    capitalH: 0.04,     // height of capital (top of column)
-    statueProb: 0.4,    // probability a column is replaced by a statue
-    archProb: 0.15,     // probability of an arch between two columns
+    nColumns: 5, // number of columns/statues
+    columnWidth: 0.06, // base width of columns
+    statueWidth: 0.08, // width of statue figures
+    spacing: 0.18, // horizontal spacing between elements
+    leanAmount: 0.02, // how much columns lean (wind sway)
+    pedestalH: 0.06, // height of pedestal
+    capitalH: 0.04, // height of capital (top of column)
+    statueProb: 0.4, // probability a column is replaced by a statue
+    archProb: 0.15, // probability of an arch between two columns
   }
   const mulberry32 = (a: number) => () => {
-    a |= 0; a = (a + 0x6d2b79f5) | 0
+    a |= 0
+    a = (a + 0x6d2b79f5) | 0
     let t = Math.imul(a ^ (a >>> 15), 1 | a)
     t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296
   }
   const buildSegments = () => {
     const aspect = bw / Math.max(bh, 1)
-    const pxPerUnit = bh
     const rng = mulberry32(sceneSeed)
     const segs: number[][] = []
 
     // Helper: add a segment [x1, y1, x2, y2, wStart, wEnd, depth]
-    const seg = (x1: number, y1: number, x2: number, y2: number, ws: number, we: number, d: number) => {
+    const seg = (
+      x1: number,
+      y1: number,
+      x2: number,
+      y2: number,
+      ws: number,
+      we: number,
+      d: number,
+    ) => {
       if (segs.length >= MAXSEG) return
       segs.push([x1, y1, x2, y2, ws, we, d])
     }
@@ -308,7 +348,7 @@ function initScene(container: HTMLElement) {
 
       const cx = startX + i * scene.spacing + (rng() - 0.5) * 0.02
       const isStatue = rng() < scene.statueProb
-      const baseDepth = 0.15 + rng() * 0.35  // varies per column for parallax
+      const baseDepth = 0.15 + rng() * 0.35 // varies per column for parallax
 
       if (isStatue) {
         // === STATUE ===
@@ -327,24 +367,71 @@ function initScene(container: HTMLElement) {
         // Body (torso) — slightly tapered
         const bodyH = pedY + pedH + 0.22 * (0.8 + rng() * 0.4)
         const bodyLean = lean * 0.5
-        seg(cx - sw * 0.35 + bodyLean, pedY + pedH, cx - sw * 0.3 + bodyLean * 1.5, bodyH, sw * 0.7, sw * 0.6, baseDepth + 0.1)
-        seg(cx + sw * 0.3 + bodyLean, pedY + pedH, cx + sw * 0.3 + bodyLean * 1.5, bodyH, sw * 0.6, sw * 0.6, baseDepth + 0.1)
+        seg(
+          cx - sw * 0.35 + bodyLean,
+          pedY + pedH,
+          cx - sw * 0.3 + bodyLean * 1.5,
+          bodyH,
+          sw * 0.7,
+          sw * 0.6,
+          baseDepth + 0.1,
+        )
+        seg(
+          cx + sw * 0.3 + bodyLean,
+          pedY + pedH,
+          cx + sw * 0.3 + bodyLean * 1.5,
+          bodyH,
+          sw * 0.6,
+          sw * 0.6,
+          baseDepth + 0.1,
+        )
 
         // Shoulders
         const shoulderY = bodyH
         const shoulderW = sw * (0.7 + rng() * 0.3)
-        seg(cx - shoulderW * 0.5 + bodyLean * 1.5, shoulderY, cx + shoulderW * 0.5 + bodyLean * 1.5, shoulderY, shoulderW, shoulderW, baseDepth + 0.15)
+        seg(
+          cx - shoulderW * 0.5 + bodyLean * 1.5,
+          shoulderY,
+          cx + shoulderW * 0.5 + bodyLean * 1.5,
+          shoulderY,
+          shoulderW,
+          shoulderW,
+          baseDepth + 0.15,
+        )
 
         // Neck
         const neckY = shoulderY + 0.04
-        seg(cx - sw * 0.12 + bodyLean * 1.8, shoulderY, cx - sw * 0.1 + bodyLean * 2, neckY, sw * 0.25, sw * 0.22, baseDepth + 0.2)
-        seg(cx + sw * 0.1 + bodyLean * 1.8, shoulderY, cx + sw * 0.1 + bodyLean * 2, neckY, sw * 0.22, sw * 0.22, baseDepth + 0.2)
+        seg(
+          cx - sw * 0.12 + bodyLean * 1.8,
+          shoulderY,
+          cx - sw * 0.1 + bodyLean * 2,
+          neckY,
+          sw * 0.25,
+          sw * 0.22,
+          baseDepth + 0.2,
+        )
+        seg(
+          cx + sw * 0.1 + bodyLean * 1.8,
+          shoulderY,
+          cx + sw * 0.1 + bodyLean * 2,
+          neckY,
+          sw * 0.22,
+          sw * 0.22,
+          baseDepth + 0.2,
+        )
 
         // Head
         const headY = neckY + 0.06
         const headR = sw * 0.2
-        seg(cx + bodyLean * 2, neckY, cx + bodyLean * 2.2, headY, headR * 2, headR * 2, baseDepth + 0.25)
-
+        seg(
+          cx + bodyLean * 2,
+          neckY,
+          cx + bodyLean * 2.2,
+          headY,
+          headR * 2,
+          headR * 2,
+          baseDepth + 0.25,
+        )
       } else {
         // === COLUMN ===
         const cw = scene.columnWidth * (0.7 + rng() * 0.6)
@@ -353,30 +440,102 @@ function initScene(container: HTMLElement) {
 
         // Base / pedestal
         const baseY = 0.02
-        seg(cx - cw * 0.7, baseY, cx - cw * 0.65, baseY + scene.pedestalH, cw * 1.4, cw * 1.3, baseDepth)
-        seg(cx + cw * 0.65, baseY, cx + cw * 0.7, baseY + scene.pedestalH, cw * 1.3, cw * 1.4, baseDepth)
+        seg(
+          cx - cw * 0.7,
+          baseY,
+          cx - cw * 0.65,
+          baseY + scene.pedestalH,
+          cw * 1.4,
+          cw * 1.3,
+          baseDepth,
+        )
+        seg(
+          cx + cw * 0.65,
+          baseY,
+          cx + cw * 0.7,
+          baseY + scene.pedestalH,
+          cw * 1.3,
+          cw * 1.4,
+          baseDepth,
+        )
 
         // Shaft (main column body) — slightly tapered with entasis
         const shaftTop = baseY + scene.pedestalH + colH
-        const entasis = cw * 0.08  // slight bulge in the middle
+        const entasis = cw * 0.08 // slight bulge in the middle
         const topCW = cw * 0.85
 
         // Left side of shaft with entasis
-        seg(cx - cw * 0.5, baseY + scene.pedestalH, cx - cw * 0.5 - entasis * 0.3, (baseY + scene.pedestalH + shaftTop) * 0.5, cw, cw * 0.95, baseDepth + 0.05)
-        seg(cx - cw * 0.5 - entasis * 0.3, (baseY + scene.pedestalH + shaftTop) * 0.5, cx - topCW * 0.5 + lean, shaftTop, cw * 0.95, topCW, baseDepth + 0.05)
+        seg(
+          cx - cw * 0.5,
+          baseY + scene.pedestalH,
+          cx - cw * 0.5 - entasis * 0.3,
+          (baseY + scene.pedestalH + shaftTop) * 0.5,
+          cw,
+          cw * 0.95,
+          baseDepth + 0.05,
+        )
+        seg(
+          cx - cw * 0.5 - entasis * 0.3,
+          (baseY + scene.pedestalH + shaftTop) * 0.5,
+          cx - topCW * 0.5 + lean,
+          shaftTop,
+          cw * 0.95,
+          topCW,
+          baseDepth + 0.05,
+        )
 
         // Right side of shaft with entasis
-        seg(cx + cw * 0.5, baseY + scene.pedestalH, cx + cw * 0.5 + entasis * 0.3, (baseY + scene.pedestalH + shaftTop) * 0.5, cw, cw * 0.95, baseDepth + 0.05)
-        seg(cx + cw * 0.5 + entasis * 0.3, (baseY + scene.pedestalH + shaftTop) * 0.5, cx + topCW * 0.5 + lean, shaftTop, cw * 0.95, topCW, baseDepth + 0.05)
+        seg(
+          cx + cw * 0.5,
+          baseY + scene.pedestalH,
+          cx + cw * 0.5 + entasis * 0.3,
+          (baseY + scene.pedestalH + shaftTop) * 0.5,
+          cw,
+          cw * 0.95,
+          baseDepth + 0.05,
+        )
+        seg(
+          cx + cw * 0.5 + entasis * 0.3,
+          (baseY + scene.pedestalH + shaftTop) * 0.5,
+          cx + topCW * 0.5 + lean,
+          shaftTop,
+          cw * 0.95,
+          topCW,
+          baseDepth + 0.05,
+        )
 
         // Capital (top of column) — wider, decorative
         const capW = cw * 1.6
-        seg(cx - capW * 0.5 + lean * 0.5, shaftTop, cx - capW * 0.55 + lean, shaftTop + scene.capitalH, capW * 0.9, capW, baseDepth + 0.1)
-        seg(cx + capW * 0.5 + lean * 0.5, shaftTop, cx + capW * 0.55 + lean, shaftTop + scene.capitalH, capW * 0.9, capW, baseDepth + 0.1)
+        seg(
+          cx - capW * 0.5 + lean * 0.5,
+          shaftTop,
+          cx - capW * 0.55 + lean,
+          shaftTop + scene.capitalH,
+          capW * 0.9,
+          capW,
+          baseDepth + 0.1,
+        )
+        seg(
+          cx + capW * 0.5 + lean * 0.5,
+          shaftTop,
+          cx + capW * 0.55 + lean,
+          shaftTop + scene.capitalH,
+          capW * 0.9,
+          capW,
+          baseDepth + 0.1,
+        )
 
         // Abacus (top slab)
         const abacusW = cw * 1.8
-        seg(cx - abacusW * 0.5 + lean, shaftTop + scene.capitalH, cx + abacusW * 0.5 + lean, shaftTop + scene.capitalH, abacusW, abacusW, baseDepth + 0.12)
+        seg(
+          cx - abacusW * 0.5 + lean,
+          shaftTop + scene.capitalH,
+          cx + abacusW * 0.5 + lean,
+          shaftTop + scene.capitalH,
+          abacusW,
+          abacusW,
+          baseDepth + 0.12,
+        )
       }
 
       // Occasional arch between columns
@@ -413,7 +572,8 @@ function initScene(container: HTMLElement) {
     }
     texData.fill(0)
     for (let i = 0; i < segCount; i++) {
-      const s = segs[i], base = i * TEXW * 4
+      const s = segs[i],
+        base = i * TEXW * 4
       enc((s[0] + 1) / posScale, base)
       enc((s[1] + 1) / posScale, base + 2)
       enc((s[2] + 1) / posScale, base + 4)
@@ -432,31 +592,45 @@ function initScene(container: HTMLElement) {
   let chartRGB = rgbStr("--secondary")
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   const SCALE = 2
-  let w = 600, h = 180, bw = 200, bh = 60
+  let w = 600,
+    h = 180,
+    bw = 200,
+    bh = 60
   const resize = () => {
     ;[w, h] = contentSize(container)
     bw = Math.max(1, Math.round(w / SCALE))
     bh = Math.max(1, Math.round(h / SCALE))
-    canvas.width = bw; canvas.height = bh
-    canvas.style.width = w + "px"; canvas.style.height = h + "px"
+    canvas.width = bw
+    canvas.height = bh
+    canvas.style.width = w + "px"
+    canvas.style.height = h + "px"
     gl.viewport(0, 0, bw, bh)
     buildSegments()
   }
   resize()
-  const ro = new ResizeObserver(() => { resize(); if (reduce) draw() })
+  const ro = new ResizeObserver(() => {
+    resize()
+    if (reduce) draw()
+  })
   ro.observe(container)
 
   const syncColors = () => {
-    colA = cssVar("--komorebi-light"); colMid = cssVar("--komorebi-mid")
-    colB = cssVar("--komorebi-shadow"); u.center = cssNum("--komorebi-center", 0.38)
+    colA = cssVar("--komorebi-light")
+    colMid = cssVar("--komorebi-mid")
+    colB = cssVar("--komorebi-shadow")
+    u.center = cssNum("--komorebi-center", 0.38)
     chartRGB = rgbStr("--secondary")
     if (reduce) draw()
   }
   document.addEventListener("themechange", syncColors)
 
-  let ceiling = u.rest, ceilingTarget = u.rest
-  let parallax = 0, parallaxTarget = 0
-  let lastX = 0, lastY = 0, lastT = 0
+  let ceiling = u.rest,
+    ceilingTarget = u.rest
+  let parallax = 0,
+    parallaxTarget = 0
+  let lastX = 0,
+    lastY = 0,
+    lastT = 0
   const onMove = (e: PointerEvent) => {
     const now = e.timeStamp
     if (lastT) {
@@ -466,7 +640,9 @@ function initScene(container: HTMLElement) {
         ceilingTarget = Math.min(1, Math.max(ceilingTarget, speed / u.sensitivity))
       }
     }
-    lastX = e.clientX; lastY = e.clientY; lastT = now
+    lastX = e.clientX
+    lastY = e.clientY
+    lastT = now
     parallaxTarget = (e.clientX / window.innerWidth - 0.5) * 2
   }
   window.addEventListener("pointermove", onMove, { passive: true })
@@ -475,7 +651,9 @@ function initScene(container: HTMLElement) {
   }
   window.addEventListener("deviceorientation", onTilt)
 
-  const gust = (t: number) => 0.7 + 0.3 * (0.65 * Math.sin(t * 0.27 * u.gustSpeed) + 0.35 * Math.sin(t * 0.13 * u.gustSpeed + 2.0))
+  const gust = (t: number) =>
+    0.7 +
+    0.3 * (0.65 * Math.sin(t * 0.27 * u.gustSpeed) + 0.35 * Math.sin(t * 0.13 * u.gustSpeed + 2.0))
   const DIR = [0.97, 0.22]
   const BEND = [0.0, 0.05, 0.1, 0.36]
   const FLUT = [0.0, 0.03, 0.08, 0.42]
@@ -488,94 +666,348 @@ function initScene(container: HTMLElement) {
   panel.className = "dappled-debug"
   panel.style.display = "none"
   const makeChart = (label: string, max: number, digits: number) => {
-    const wrap = document.createElement("div"); wrap.className = "dappled-chart"
-    const cap = document.createElement("span"); wrap.appendChild(cap)
-    const cv = document.createElement("canvas"); cv.width = 206; cv.height = 30; wrap.appendChild(cv)
+    const wrap = document.createElement("div")
+    wrap.className = "dappled-chart"
+    const cap = document.createElement("span")
+    wrap.appendChild(cap)
+    const cv = document.createElement("canvas")
+    cv.width = 206
+    cv.height = 30
+    wrap.appendChild(cv)
     const ctx = cv.getContext("2d") as CanvasRenderingContext2D
-    const N = cv.width; const data = new Float32Array(N); let head = 0
+    const N = cv.width
+    const data = new Float32Array(N)
+    let head = 0
     const update = (v: number) => {
-      data[head] = v; head = (head + 1) % N
+      data[head] = v
+      head = (head + 1) % N
       cap.textContent = `${label}: ${v.toFixed(digits)}`
-      ctx.clearRect(0, 0, N, cv.height); ctx.beginPath()
+      ctx.clearRect(0, 0, N, cv.height)
+      ctx.beginPath()
       for (let x = 0; x < N; x++) {
         const val = Math.min(data[(head + x) % N], max)
         const y = cv.height - 1 - (val / max) * (cv.height - 2)
         x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)
       }
-      ctx.strokeStyle = `rgb(${chartRGB})`; ctx.lineWidth = 1; ctx.stroke()
+      ctx.strokeStyle = `rgb(${chartRGB})`
+      ctx.lineWidth = 1
+      ctx.stroke()
     }
     return { wrap, update }
   }
-  const fpsChart = makeChart("fps", 80, 0), windChart = makeChart("wind", 1, 2)
-  panel.appendChild(fpsChart.wrap); panel.appendChild(windChart.wrap)
+  const fpsChart = makeChart("fps", 80, 0),
+    windChart = makeChart("wind", 1, 2)
+  panel.appendChild(fpsChart.wrap)
+  panel.appendChild(windChart.wrap)
 
-  const addHeader = (text: string) => { const hd = document.createElement("div"); hd.className = "dappled-debug-h"; hd.textContent = text; panel.appendChild(hd) }
-  const addSlider = (label: string, min: number, max: number, st: number, get: () => number, set: (v: number) => void) => {
-    const row = document.createElement("label"), span = document.createElement("span"), input = document.createElement("input")
-    input.type = "range"; input.min = String(min); input.max = String(max); input.step = String(st); input.value = String(get())
+  const addHeader = (text: string) => {
+    const hd = document.createElement("div")
+    hd.className = "dappled-debug-h"
+    hd.textContent = text
+    panel.appendChild(hd)
+  }
+  const addSlider = (
+    label: string,
+    min: number,
+    max: number,
+    st: number,
+    get: () => number,
+    set: (v: number) => void,
+  ) => {
+    const row = document.createElement("label"),
+      span = document.createElement("span"),
+      input = document.createElement("input")
+    input.type = "range"
+    input.min = String(min)
+    input.max = String(max)
+    input.step = String(st)
+    input.value = String(get())
     const relabel = () => (span.textContent = `${label}: ${(+input.value).toFixed(2)}`)
     relabel()
-    input.addEventListener("input", () => { set(parseFloat(input.value)); relabel() })
-    row.append(span, input); panel.appendChild(row)
+    input.addEventListener("input", () => {
+      set(parseFloat(input.value))
+      relabel()
+    })
+    row.append(span, input)
+    panel.appendChild(row)
   }
   const addToggle = (label: string, get: () => boolean, set: (on: boolean) => void) => {
-    const row = document.createElement("label"); row.className = "dappled-debug-toggle"
-    const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = get()
+    const row = document.createElement("label")
+    row.className = "dappled-debug-toggle"
+    const cb = document.createElement("input")
+    cb.type = "checkbox"
+    cb.checked = get()
     cb.addEventListener("change", () => set(cb.checked))
-    const span = document.createElement("span"); span.textContent = label
-    row.append(cb, span); panel.appendChild(row)
+    const span = document.createElement("span")
+    span.textContent = label
+    row.append(cb, span)
+    panel.appendChild(row)
   }
-  const addButton = (label: string, onClick: () => void) => { const b = document.createElement("button"); b.className = "dappled-debug-btn"; b.textContent = label; b.addEventListener("click", onClick); panel.appendChild(b) }
-  const regen = () => { buildSegments(); if (reduce) draw() }
+  const addButton = (label: string, onClick: () => void) => {
+    const b = document.createElement("button")
+    b.className = "dappled-debug-btn"
+    b.textContent = label
+    b.addEventListener("click", onClick)
+    panel.appendChild(b)
+  }
+  const regen = () => {
+    buildSegments()
+    if (reduce) draw()
+  }
 
   addHeader("wind")
-  addSlider("cursor sensitivity", 1, 15, 0.5, () => u.sensitivity, (v) => (u.sensitivity = v))
-  addSlider("resting wind", 0, 1, 0.01, () => u.rest, (v) => (u.rest = v))
-  addSlider("gust speed", 0.2, 3, 0.05, () => u.gustSpeed, (v) => (u.gustSpeed = v))
+  addSlider(
+    "cursor sensitivity",
+    1,
+    15,
+    0.5,
+    () => u.sensitivity,
+    (v) => (u.sensitivity = v),
+  )
+  addSlider(
+    "resting wind",
+    0,
+    1,
+    0.01,
+    () => u.rest,
+    (v) => (u.rest = v),
+  )
+  addSlider(
+    "gust speed",
+    0.2,
+    3,
+    0.05,
+    () => u.gustSpeed,
+    (v) => (u.gustSpeed = v),
+  )
   addHeader("branches")
   const LNAME = ["trunk", "branches", "(unused)", "leaves"]
   for (let i = 0; i < 4; i++) {
-    const k = i; if (k === 2) continue
-    addToggle(LNAME[k], () => u.layerOn[k] > 0.5, (on) => (u.layerOn[k] = on ? 1 : 0))
-    addSlider(`${LNAME[k]} blur`, 0, 1, 0.02, () => u.blur[k], (v) => (u.blur[k] = v))
-    if (k < 3) addSlider(`${LNAME[k]} floor max`, 0, 1, 0.02, () => u.floor[k], (v) => (u.floor[k] = v))
-    addSlider(`${LNAME[k]} bend`, 0, 0.5, 0.005, () => BEND[k], (v) => (BEND[k] = v))
-    addSlider(`${LNAME[k]} flutter`, 0, 0.5, 0.005, () => FLUT[k], (v) => (FLUT[k] = v))
-    addSlider(`${LNAME[k]} flutter spd`, 0, 5, 0.1, () => FREQ[k], (v) => (FREQ[k] = v))
+    const k = i
+    if (k === 2) continue
+    addToggle(
+      LNAME[k],
+      () => u.layerOn[k] > 0.5,
+      (on) => (u.layerOn[k] = on ? 1 : 0),
+    )
+    addSlider(
+      `${LNAME[k]} blur`,
+      0,
+      1,
+      0.02,
+      () => u.blur[k],
+      (v) => (u.blur[k] = v),
+    )
+    if (k < 3)
+      addSlider(
+        `${LNAME[k]} floor max`,
+        0,
+        1,
+        0.02,
+        () => u.floor[k],
+        (v) => (u.floor[k] = v),
+      )
+    addSlider(
+      `${LNAME[k]} bend`,
+      0,
+      0.5,
+      0.005,
+      () => BEND[k],
+      (v) => (BEND[k] = v),
+    )
+    addSlider(
+      `${LNAME[k]} flutter`,
+      0,
+      0.5,
+      0.005,
+      () => FLUT[k],
+      (v) => (FLUT[k] = v),
+    )
+    addSlider(
+      `${LNAME[k]} flutter spd`,
+      0,
+      5,
+      0.1,
+      () => FREQ[k],
+      (v) => (FREQ[k] = v),
+    )
   }
   addHeader("columns & statues")
-  addButton("reshuffle scene", () => { sceneSeed = Math.floor(Math.random() * 1e9); regen() })
-  addSlider("columns", 2, 10, 1, () => scene.nColumns, (v) => { scene.nColumns = v; regen() })
-  addSlider("column width", 0.02, 0.15, 0.005, () => scene.columnWidth, (v) => { scene.columnWidth = v; regen() })
-  addSlider("statue width", 0.03, 0.2, 0.005, () => scene.statueWidth, (v) => { scene.statueWidth = v; regen() })
-  addSlider("spacing", 0.08, 0.4, 0.01, () => scene.spacing, (v) => { scene.spacing = v; regen() })
-  addSlider("lean amount", 0, 0.08, 0.002, () => scene.leanAmount, (v) => { scene.leanAmount = v; regen() })
-  addSlider("pedestal h", 0.02, 0.15, 0.005, () => scene.pedestalH, (v) => { scene.pedestalH = v; regen() })
-  addSlider("capital h", 0.01, 0.1, 0.002, () => scene.capitalH, (v) => { scene.capitalH = v; regen() })
-  addSlider("statue probability", 0, 1, 0.05, () => scene.statueProb, (v) => { scene.statueProb = v; regen() })
-  addSlider("arch probability", 0, 0.5, 0.05, () => scene.archProb, (v) => { scene.archProb = v; regen() })
+  addButton("reshuffle scene", () => {
+    sceneSeed = Math.floor(Math.random() * 1e9)
+    regen()
+  })
+  addSlider(
+    "columns",
+    2,
+    10,
+    1,
+    () => scene.nColumns,
+    (v) => {
+      scene.nColumns = v
+      regen()
+    },
+  )
+  addSlider(
+    "column width",
+    0.02,
+    0.15,
+    0.005,
+    () => scene.columnWidth,
+    (v) => {
+      scene.columnWidth = v
+      regen()
+    },
+  )
+  addSlider(
+    "statue width",
+    0.03,
+    0.2,
+    0.005,
+    () => scene.statueWidth,
+    (v) => {
+      scene.statueWidth = v
+      regen()
+    },
+  )
+  addSlider(
+    "spacing",
+    0.08,
+    0.4,
+    0.01,
+    () => scene.spacing,
+    (v) => {
+      scene.spacing = v
+      regen()
+    },
+  )
+  addSlider(
+    "lean amount",
+    0,
+    0.08,
+    0.002,
+    () => scene.leanAmount,
+    (v) => {
+      scene.leanAmount = v
+      regen()
+    },
+  )
+  addSlider(
+    "pedestal h",
+    0.02,
+    0.15,
+    0.005,
+    () => scene.pedestalH,
+    (v) => {
+      scene.pedestalH = v
+      regen()
+    },
+  )
+  addSlider(
+    "capital h",
+    0.01,
+    0.1,
+    0.002,
+    () => scene.capitalH,
+    (v) => {
+      scene.capitalH = v
+      regen()
+    },
+  )
+  addSlider(
+    "statue probability",
+    0,
+    1,
+    0.05,
+    () => scene.statueProb,
+    (v) => {
+      scene.statueProb = v
+      regen()
+    },
+  )
+  addSlider(
+    "arch probability",
+    0,
+    0.5,
+    0.05,
+    () => scene.archProb,
+    (v) => {
+      scene.archProb = v
+      regen()
+    },
+  )
   addHeader("tone & dither")
-  addToggle("dither", () => u.dither > 0.5, (on) => (u.dither = on ? 1 : 0))
-  addSlider("contrast", 0.5, 3, 0.05, () => u.contrast, (v) => (u.contrast = v))
-  addSlider("brightness", 0.1, 0.7, 0.01, () => u.center, (v) => (u.center = v))
-  addSlider("gold start", 0, 0.8, 0.01, () => u.goldLo, (v) => (u.goldLo = v))
-  addSlider("gold end", 0.2, 0.95, 0.01, () => u.goldHi, (v) => (u.goldHi = v))
-  addSlider("canopy", 0, 1.5, 0.05, () => u.canopy, (v) => (u.canopy = v))
+  addToggle(
+    "dither",
+    () => u.dither > 0.5,
+    (on) => (u.dither = on ? 1 : 0),
+  )
+  addSlider(
+    "contrast",
+    0.5,
+    3,
+    0.05,
+    () => u.contrast,
+    (v) => (u.contrast = v),
+  )
+  addSlider(
+    "brightness",
+    0.1,
+    0.7,
+    0.01,
+    () => u.center,
+    (v) => (u.center = v),
+  )
+  addSlider(
+    "gold start",
+    0,
+    0.8,
+    0.01,
+    () => u.goldLo,
+    (v) => (u.goldLo = v),
+  )
+  addSlider(
+    "gold end",
+    0.2,
+    0.95,
+    0.01,
+    () => u.goldHi,
+    (v) => (u.goldHi = v),
+  )
+  addSlider(
+    "canopy",
+    0,
+    1.5,
+    0.05,
+    () => u.canopy,
+    (v) => (u.canopy = v),
+  )
   document.body.appendChild(panel)
 
-  const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight"]
+  const KONAMI = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+  ]
   let seq: string[] = []
   const onKey = (e: KeyboardEvent) => {
     seq.push(e.key)
     if (seq.length > KONAMI.length) seq = seq.slice(-KONAMI.length)
     if (seq.length === KONAMI.length && KONAMI.every((kk, ii) => seq[ii] === kk)) {
-      panel.style.display = panel.style.display === "none" ? "block" : "none"; seq = []
+      panel.style.display = panel.style.display === "none" ? "block" : "none"
+      seq = []
     }
   }
   document.addEventListener("keydown", onKey)
 
   // --- render ---
-  let tReal = 0, wind = u.rest
+  let tReal = 0,
+    wind = u.rest
   const draw = () => {
     gl.uniform1f(U.uTime, tReal)
     gl.uniform2f(U.uResolution, bw, bh)
@@ -593,7 +1025,8 @@ function initScene(container: HTMLElement) {
     gl.uniform1f(U.uDither, u.dither)
     gl.uniform1f(U.uParallax, parallax)
     gl.uniform3f(U.uFloor, u.floor[0], u.floor[1], u.floor[2])
-    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, segTex)
+    gl.activeTexture(gl.TEXTURE0)
+    gl.bindTexture(gl.TEXTURE_2D, segTex)
     gl.uniform1i(U.uSegTex, 0)
     gl.uniform1f(U.uPosScale, posScale)
     gl.uniform1f(U.uWidScale, WIDSCALE)
@@ -607,10 +1040,14 @@ function initScene(container: HTMLElement) {
     gl.drawArrays(gl.TRIANGLES, 0, 3)
   }
 
-  let raf = 0, running = true, prevMs = 0, fps = 0
+  let raf = 0,
+    running = true,
+    prevMs = 0,
+    fps = 0
   const loop = (ms: number) => {
     const dt = prevMs ? Math.min(0.05, (ms - prevMs) / 1000) : 0.016
-    prevMs = ms; tReal += dt
+    prevMs = ms
+    tReal += dt
     ceilingTarget = Math.max(u.rest, ceilingTarget * 0.97)
     ceiling += (ceilingTarget - ceiling) * (ceilingTarget > ceiling ? 0.02 : 0.05)
     parallax += (parallaxTarget - parallax) * 0.08
@@ -618,27 +1055,45 @@ function initScene(container: HTMLElement) {
     let s = 0
     for (let i = 0; i < 4; i++) {
       s += wind * (BEND[i] + FLUT[i] * Math.sin(tReal * FREQ[i] + FPH[i]))
-      dispArr[2 * i] = DIR[0] * s; dispArr[2 * i + 1] = DIR[1] * s
+      dispArr[2 * i] = DIR[0] * s
+      dispArr[2 * i + 1] = DIR[1] * s
     }
     draw()
     fps += ((dt > 0 ? 1 / dt : 0) - fps) * 0.1
-    if (panel.style.display !== "none") { fpsChart.update(fps); windChart.update(wind) }
+    if (panel.style.display !== "none") {
+      fpsChart.update(fps)
+      windChart.update(wind)
+    }
     if (running) raf = requestAnimationFrame(loop)
   }
   const onVis = () => {
-    if (document.hidden) { running = false; cancelAnimationFrame(raf) }
-    else if (!reduce) { running = true; prevMs = 0; raf = requestAnimationFrame(loop) }
+    if (document.hidden) {
+      running = false
+      cancelAnimationFrame(raf)
+    } else if (!reduce) {
+      running = true
+      prevMs = 0
+      raf = requestAnimationFrame(loop)
+    }
   }
-  if (reduce) { draw() } else { raf = requestAnimationFrame(loop); document.addEventListener("visibilitychange", onVis) }
+  if (reduce) {
+    draw()
+  } else {
+    raf = requestAnimationFrame(loop)
+    document.addEventListener("visibilitychange", onVis)
+  }
 
   window.addCleanup(() => {
-    running = false; cancelAnimationFrame(raf); ro.disconnect()
+    running = false
+    cancelAnimationFrame(raf)
+    ro.disconnect()
     window.removeEventListener("pointermove", onMove)
     window.removeEventListener("deviceorientation", onTilt)
     document.removeEventListener("themechange", syncColors)
     document.removeEventListener("visibilitychange", onVis)
     document.removeEventListener("keydown", onKey)
-    panel.remove(); gl.deleteTexture(segTex)
+    panel.remove()
+    gl.deleteTexture(segTex)
     gl.getExtension("WEBGL_lose_context")?.loseContext()
     canvas.remove()
   })

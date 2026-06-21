@@ -55,9 +55,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin "https://x-access-token:${PAT_TOKEN}@github.com/${{ github.repository }}.git"
-          git add content/obsidian-notes/
+          git add content/
           if ! git diff --cached --quiet; then
-            git commit -m "sync: update obsidian notes [skip ci]"
+            git commit -m "sync: update vault notes [skip ci]"
             git push origin main
           else
             echo "No changes to commit"

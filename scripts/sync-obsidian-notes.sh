@@ -1,12 +1,12 @@
 #!/bin/bash
 # Синхронизация публичных заметок из Obsidian-Vault
-# Копирует содержимое Obsidian-Vault/public в content/obsidian-notes/
+# Копирует содержимое Obsidian-Vault/public в content/
 
 set -euo pipefail
 
 VAULT_REPO="github.com/Faustze/Obsidian-Notes.git"
 TEMP_DIR=$(mktemp -d)
-CONTENT_DIR="content/obsidian-notes"
+CONTENT_DIR="content"
 
 # Используем OBSIDIAN_VAULT_TOKEN для аутентификации в CI
 if [ -n "${OBSIDIAN_VAULT_TOKEN:-}" ]; then
@@ -31,13 +31,17 @@ fi
 
 echo "📋 Копирую содержимое public/ в $CONTENT_DIR/..."
 
-# Удаляем старый контент (кроме .gitkeep если есть)
 cd -
-rm -rf "$CONTENT_DIR"/*
 mkdir -p "$CONTENT_DIR"
 
-# Копируем содержимое public/ (без самой папки public)
-cp -r "$TEMP_DIR"/public/* "$CONTENT_DIR"/ 2>/dev/null || true
+# Если внутри public/ есть только папка obsidian-notes, копируем её содержимое напрямую
+if [ -d "$TEMP_DIR/public/obsidian-notes" ] && [ ! -d "$TEMP_DIR/public/hh" ]; then
+    echo "   Найдена папка obsidian-notes/, копирую содержимое напрямую..."
+    cp -r "$TEMP_DIR"/public/obsidian-notes/* "$CONTENT_DIR"/ 2>/dev/null || true
+else
+    # Копируем всё содержимое public/ (без самой папки public)
+    cp -r "$TEMP_DIR"/public/* "$CONTENT_DIR"/ 2>/dev/null || true
+fi
 
 # Удаляем временную директорию
 rm -rf "$TEMP_DIR"
@@ -45,4 +49,4 @@ rm -rf "$TEMP_DIR"
 echo "✅ Синхронизация завершена!"
 echo "   Не забудьте закоммитить изменения:"
 echo "   git add $CONTENT_DIR/"
-echo "   git commit -m 'sync: update obsidian notes'"
+echo "   git commit -m 'sync: update vault notes'"
