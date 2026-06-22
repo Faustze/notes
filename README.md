@@ -3,12 +3,12 @@
 # 🌱 Notes — Digital Garden
 
 [![Last commit](https://img.shields.io/github/last-commit/faustze/notes?style=flat-square&color=8b5cf6)](https://github.com/faustze/notes/commits)
-[![GitHub Pages](https://img.shields.io/badge/hosted-GitHub%20Pages-0ea5e9?style=flat-square)](https://faustze.github.io/notes)
+[![GitHub Pages](https://img.shields.io/badge/hosted-GitHub%20Pages-0ea5e9?style=flat-square)](https://notes.faustze.tech)
 [![Built with Quartz](https://img.shields.io/badge/built%20with-Quartz%20v5-8b5cf6?style=flat-square)](https://quartz.jzhao.xyz/)
 
 **Personal knowledge base** — Vue 3 · Nuxt · TypeScript · LeetCode · JavaScript
 
-[![site preview](./docs/preview.png)](https://faustze.github.io/notes)
+[![site preview](./docs/preview.png)](https://notes.faustze.tech)
 
 </div>
 
