@@ -2,7 +2,7 @@
 title: leetcode
 ---
 
-[[index]]
+[[public/leetcode/index]]
 [[leetcode/array]]
 [[leetcode/binary-tree]]
 [[leetcode/bit-manipulation]]

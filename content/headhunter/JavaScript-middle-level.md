@@ -77,5 +77,5 @@ console.log(count)
 - undefiend используется когда значение не задано  
 ==->Строку можно изменять==
 
-[[index]]
+[[public/headhunter/index]]
 [[headhunter/javascript-easy-level]]
