@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: en-US
-  baseUrl: faustze.github.io/notes
+  baseUrl: notes.faustze.tech
   ignorePatterns:
     - private
     - templates

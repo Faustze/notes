@@ -8,7 +8,7 @@ title: home
   <div class="avatar">FZ</div>
   <div>
     <p class="profile-name">Artem Suvorov — Software Engineer</p>
-    <p class="profile-bio">3 года опыта, прокачиваю фундамент: Vue 3, Nuxt, TypeScript, Python, FastAPI. Готовлюсь к интервью.</p>
+    <p class="profile-bio">3 years of experience, strengthening my fundamentals: Vue 3, Nuxt, TypeScript, Python, FastAPI. Preparing for interviews.</p>
   </div>
 </div>
 
@@ -19,13 +19,13 @@ title: home
 <div class="section-cards">
   <a href="/headhunter" class="section-card">
     <p class="card-title">Headhunter</p>
-    <p class="card-desc">Решения тестов закрепления навыков на hh.ru</p>
-    <p class="card-meta">2 теста · JS easy/middle →</p>
+    <p class="card-desc">Solutions for hh.ru skill assessment tests</p>
+    <p class="card-meta">2 tests · JS easy/middle →</p>
   </a>
   <a href="/leetcode" class="section-card">
     <p class="card-title">LeetCode</p>
-    <p class="card-desc">Решения задач на leetcode.com, TypeScript</p>
-    <p class="card-meta">42 задачи · monotonic stack, regex →</p>
+    <p class="card-desc">LeetCode problem solutions in TypeScript</p>
+    <p class="card-meta">42 problems · monotonic stack, regex →</p>
   </a>
 </div>
 
