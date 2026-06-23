@@ -2,6 +2,6 @@
 title: bit-manipulation
 ---
 
-[[leetcode]]
-
+[[leetcode/index]]
 [[bit-manipulation/67-add-binary]]
+#leetcode

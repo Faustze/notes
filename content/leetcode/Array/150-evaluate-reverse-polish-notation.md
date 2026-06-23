@@ -68,3 +68,4 @@ Example 1:
 
 [[leetcode/array/1475-final-prices-with-a-special-discount-in-a-shop]]
 [[leetcode/array/268-missing-number]]
+#leetcode

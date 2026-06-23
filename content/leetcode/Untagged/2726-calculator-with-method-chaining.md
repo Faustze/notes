@@ -92,3 +92,5 @@ Example 1:
 
     The error should be thrown because we cannot divide by zero.
 ```
+
+#leetcode

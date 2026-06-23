@@ -2,8 +2,7 @@
 title: untagged
 ---
 
-[[leetcode]]
-
+[[leetcode/index]]
 [[untagged/2620-counter]]
 [[untagged/2622-cache-with-time-limit]]
 [[untagged/2623-memoize]]
@@ -23,3 +22,4 @@ title: untagged
 [[untagged/2724-sort-by]]
 [[untagged/2725-interval-cancellation]]
 [[untagged/2726-calculator-with-method-chaining]]
+#leetcode

@@ -2,8 +2,7 @@
 title: array
 ---
 
-[[leetcode]]
-
+[[leetcode/index]]
 [[array/1365-how-many-numbers-are-smaller-than-the-current-number]]
 [[array/1431-kids-with-the-greatest-number-of-candies]]
 [[array/1441-build-an-array-with-stack-operations]]
@@ -18,3 +17,4 @@ title: array
 [[array/636-exclusive-time-of-functions]]
 [[array/645-set-mismatch]]
 [[array/739-daily-temperatures]]
+#leetcode

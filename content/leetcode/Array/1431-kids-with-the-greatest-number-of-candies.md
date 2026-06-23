@@ -64,3 +64,4 @@ Example 1:
 
 [[leetcode/array/1365-how-many-numbers-are-smaller-than-the-current-number]]
 [[leetcode/array/1441-build-an-array-with-stack-operations]]
+#leetcode

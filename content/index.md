@@ -8,13 +8,15 @@ title: home
   <div class="avatar">FZ</div>
   <div>
     <p class="profile-name">Artem Suvorov — Software Engineer</p>
-    <p class="profile-bio">3 years of experience, strengthening my fundamentals: Vue 3, Nuxt, TypeScript, Python, FastAPI. Preparing for interviews.</p>
+    <p class="profile-bio">Here is my notes🌱</p>
   </div>
 </div>
 
+<!-- <p>Topics:</p>
 <div class="stack-badges">
-  <span>Vue 3</span><span>Nuxt 4</span><span>TypeScript</span><span>Pinia</span><span>Vuetify 3</span>
-</div>
+  <span>#leetcode</span>
+  <span>#hh</span>
+</div> -->
 
 <div class="section-cards">
   <a href="/headhunter" class="section-card">

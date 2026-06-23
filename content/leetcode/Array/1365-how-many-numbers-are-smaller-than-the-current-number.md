@@ -49,3 +49,4 @@ Example 1:
 ```
 
 [[leetcode/array/1431-kids-with-the-greatest-number-of-candies]]
+#leetcode

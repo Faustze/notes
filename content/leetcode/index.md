@@ -2,7 +2,6 @@
 title: leetcode
 ---
 
-[[index]]
 [[leetcode/array]]
 [[leetcode/binary-tree]]
 [[leetcode/bit-manipulation]]
@@ -10,3 +9,4 @@ title: leetcode
 [[leetcode/string]]
 [[leetcode/two-pointers]]
 [[leetcode/untagged]]
+#leetcode

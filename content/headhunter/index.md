@@ -1,7 +1,6 @@
 ---
 title: headhunter
 ---
-
-[[index]]
+[[public/index]]
 [[headhunter/javascript-easy-level]]
 [[headhunter/javascript-middle-level]]

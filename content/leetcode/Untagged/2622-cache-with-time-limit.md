@@ -81,3 +81,4 @@ Example 1:
     At t=200, get(1) is called but the cache is empty so -1 is returned.
     At t=250, count() returns 0 because the cache is empty.
 ```
+#leetcode

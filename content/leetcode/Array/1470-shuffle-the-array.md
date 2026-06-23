@@ -40,3 +40,4 @@ Example 1:
 
 [[leetcode/array/1441-build-an-array-with-stack-operations]]
 [[leetcode/array/1475-final-prices-with-a-special-discount-in-a-shop]]
+#leetcode

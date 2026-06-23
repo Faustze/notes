@@ -6,8 +6,6 @@
 [![GitHub Pages](https://img.shields.io/badge/hosted-GitHub%20Pages-0ea5e9?style=flat-square)](https://notes.faustze.tech)
 [![Built with Quartz](https://img.shields.io/badge/built%20with-Quartz%20v5-8b5cf6?style=flat-square)](https://quartz.jzhao.xyz/)
 
-**Personal knowledge base** — Vue 3 · Nuxt · TypeScript · LeetCode · JavaScript
-
 [![site preview](./docs/preview.png)](https://notes.faustze.tech)
 
 </div>
@@ -16,7 +14,6 @@
 
 ## 🎯 Goal
 
-Deepening fundamentals in **Vue 3 / Nuxt / TypeScript** and preparing for senior-level interviews.  
 Solving LeetCode problems in TypeScript, completing hh.ru skill assessments along the way.
 
 ---

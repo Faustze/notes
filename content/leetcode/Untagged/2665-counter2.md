@@ -44,3 +44,4 @@ Example 1:
     counter.reset(); // 0
     counter.reset(); // 0
 ```
+#leetcode

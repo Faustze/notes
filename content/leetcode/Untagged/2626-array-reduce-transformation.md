@@ -67,3 +67,4 @@ Example 1:
     Explanation:
     For empty arrays, the answer is always init.
 ```
+#leetcode
