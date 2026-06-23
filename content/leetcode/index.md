@@ -1,7 +1,6 @@
 ---
 title: leetcode
 ---
-
 [[leetcode/array]]
 [[leetcode/binary-tree]]
 [[leetcode/bit-manipulation]]
