@@ -16,9 +16,9 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Schibsted Grotesk
-      body: Source Sans Pro
-      code: IBM Plex Mono
+      header: Geist
+      body: Geist
+      code: Geist Mono
     colors:
       lightMode:
         light: "#faf8f8"

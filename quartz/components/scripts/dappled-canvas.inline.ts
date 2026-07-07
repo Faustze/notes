@@ -303,15 +303,17 @@ function initScene(container: HTMLElement) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
   let sceneSeed = Math.floor(Math.random() * 1e9)
   const scene = {
-    nColumns: 5, // number of columns/statues
-    columnWidth: 0.06, // base width of columns
-    statueWidth: 0.08, // width of statue figures
-    spacing: 0.18, // horizontal spacing between elements
-    leanAmount: 0.02, // how much columns lean (wind sway)
-    pedestalH: 0.06, // height of pedestal
-    capitalH: 0.04, // height of capital (top of column)
-    statueProb: 0.4, // probability a column is replaced by a statue
-    archProb: 0.15, // probability of an arch between two columns
+    variant: "random" as string, // "random" | "colonnade" | "temple" | "arcade" | "statues" | "ruins"
+    // kept for debug-panel compatibility (some are now unused):
+    nColumns: 5,
+    columnWidth: 0.06,
+    statueWidth: 0.08,
+    spacing: 0.18,
+    leanAmount: 0.02,
+    pedestalH: 0.06,
+    capitalH: 0.04,
+    statueProb: 0.4,
+    archProb: 0.15,
   }
   const mulberry32 = (a: number) => () => {
     a |= 0
@@ -324,242 +326,100 @@ function initScene(container: HTMLElement) {
     const aspect = bw / Math.max(bh, 1)
     const rng = mulberry32(sceneSeed)
     const segs: number[][] = []
-
-    // Helper: add a segment [x1, y1, x2, y2, wStart, wEnd, depth]
-    const seg = (
-      x1: number,
-      y1: number,
-      x2: number,
-      y2: number,
-      ws: number,
-      we: number,
-      d: number,
-    ) => {
-      if (segs.length >= MAXSEG) return
-      segs.push([x1, y1, x2, y2, ws, we, d])
+    const seg = (x1: number, y1: number, x2: number, y2: number, ws: number, we: number, d: number) => {
+      if (segs.length < MAXSEG) segs.push([x1, y1, x2, y2, ws, we, d])
     }
+    const G = 0.08 // ground line
+    const left = 0.15
+    const right = aspect - 0.15
+    const beam = (x0: number, x1: number, y: number, wdt: number, depth: number) =>
+      seg(x0, y, x1, y, wdt, wdt, depth)
+    const column = (cx: number, top: number, cw: number, depth: number, lean: number) => {
+      seg(cx - cw * 1.6, G + 0.02, cx + cw * 1.6, G + 0.02, cw * 0.6, cw * 0.6, depth) // base
+      seg(cx, G + 0.05, cx + lean, top - 0.04, cw, cw * 0.82, depth) // shaft (tapered)
+      seg(cx - cw * 1.3 + lean, top - 0.02, cx + cw * 1.3 + lean, top - 0.02, cw * 0.6, cw * 0.6, depth + 0.06) // capital
+    }
+    const statue = (cx: number, depth: number) => {
+      const sw = 0.045 + rng() * 0.02
+      const pedTop = G + 0.12
+      seg(cx, G, cx, pedTop, sw * 1.2, sw * 1.05, depth) // pedestal
+      seg(cx - sw * 1.6, pedTop, cx + sw * 1.6, pedTop, sw * 0.4, sw * 0.4, depth) // slab
+      const sh = pedTop + 0.3 + rng() * 0.08
+      seg(cx, pedTop + 0.04, cx + (rng() - 0.5) * 0.04, sh, sw * 0.7, sw * 0.85, depth + 0.08) // torso
+      seg(cx - sw * 1.1, sh, cx + sw * 1.1, sh, sw * 0.45, sw * 0.45, depth + 0.1) // shoulders
+      seg(cx, sh + 0.03, cx + (rng() - 0.5) * 0.02, sh + 0.1, sw * 0.5, sw * 0.42, depth + 0.12) // head
+    }
+    const names = ["colonnade", "temple", "arcade", "statues", "ruins"]
+    const idx = names.indexOf(scene.variant)
+    const variant = idx >= 0 ? idx : Math.floor(rng() * 5)
 
-    // Generate columns and statues across the canvas
-    const totalWidth = scene.nColumns * scene.spacing
-    const startX = (aspect - totalWidth) * 0.5 + scene.spacing * 0.5
-
-    for (let i = 0; i < scene.nColumns; i++) {
-      if (segs.length >= MAXSEG - 20) break
-
-      const cx = startX + i * scene.spacing + (rng() - 0.5) * 0.02
-      const isStatue = rng() < scene.statueProb
-      const baseDepth = 0.15 + rng() * 0.35 // varies per column for parallax
-
-      if (isStatue) {
-        // === STATUE ===
-        const sw = scene.statueWidth * (0.8 + rng() * 0.4)
-        const lean = (rng() - 0.5) * scene.leanAmount
-
-        // Pedestal
-        const pedY = 0.05
-        const pedH = scene.pedestalH * (0.8 + rng() * 0.4)
-        seg(cx - sw * 0.6, pedY, cx - sw * 0.55, pedY + pedH, sw * 1.2, sw * 1.1, baseDepth)
-        seg(cx + sw * 0.55, pedY, cx + sw * 0.6, pedY + pedH, sw * 1.1, sw * 1.2, baseDepth)
-
-        // Pedestal top slab
-        seg(cx - sw * 0.7, pedY + pedH, cx + sw * 0.7, pedY + pedH, sw * 1.4, sw * 1.4, baseDepth)
-
-        // Body (torso) — slightly tapered
-        const bodyH = pedY + pedH + 0.22 * (0.8 + rng() * 0.4)
-        const bodyLean = lean * 0.5
-        seg(
-          cx - sw * 0.35 + bodyLean,
-          pedY + pedH,
-          cx - sw * 0.3 + bodyLean * 1.5,
-          bodyH,
-          sw * 0.7,
-          sw * 0.6,
-          baseDepth + 0.1,
+    if (variant === 0 || variant === 1) {
+      // colonnade / temple front with pediment
+      const top = (variant === 1 ? 0.55 : 0.68) + rng() * 0.06
+      const sp = 0.34 + rng() * 0.14
+      const n = Math.max(4, Math.round((right - left) / sp) + 1)
+      const step = (right - left) / (n - 1)
+      beam(left - 0.08, right + 0.08, top + 0.03, 0.035, 0.28) // architrave
+      beam(left - 0.12, right + 0.12, top + 0.11, 0.028, 0.24) // cornice
+      beam(left - 0.1, right + 0.1, G, 0.04, 0.2) // stylobate
+      for (let i = 0; i < n; i++)
+        column(
+          left + i * step + (rng() - 0.5) * 0.015,
+          top,
+          0.024 + rng() * 0.01,
+          0.15 + rng() * 0.25,
+          (rng() - 0.5) * 0.02,
         )
-        seg(
-          cx + sw * 0.3 + bodyLean,
-          pedY + pedH,
-          cx + sw * 0.3 + bodyLean * 1.5,
-          bodyH,
-          sw * 0.6,
-          sw * 0.6,
-          baseDepth + 0.1,
-        )
-
-        // Shoulders
-        const shoulderY = bodyH
-        const shoulderW = sw * (0.7 + rng() * 0.3)
-        seg(
-          cx - shoulderW * 0.5 + bodyLean * 1.5,
-          shoulderY,
-          cx + shoulderW * 0.5 + bodyLean * 1.5,
-          shoulderY,
-          shoulderW,
-          shoulderW,
-          baseDepth + 0.15,
-        )
-
-        // Neck
-        const neckY = shoulderY + 0.04
-        seg(
-          cx - sw * 0.12 + bodyLean * 1.8,
-          shoulderY,
-          cx - sw * 0.1 + bodyLean * 2,
-          neckY,
-          sw * 0.25,
-          sw * 0.22,
-          baseDepth + 0.2,
-        )
-        seg(
-          cx + sw * 0.1 + bodyLean * 1.8,
-          shoulderY,
-          cx + sw * 0.1 + bodyLean * 2,
-          neckY,
-          sw * 0.22,
-          sw * 0.22,
-          baseDepth + 0.2,
-        )
-
-        // Head
-        const headY = neckY + 0.06
-        const headR = sw * 0.2
-        seg(
-          cx + bodyLean * 2,
-          neckY,
-          cx + bodyLean * 2.2,
-          headY,
-          headR * 2,
-          headR * 2,
-          baseDepth + 0.25,
-        )
-      } else {
-        // === COLUMN ===
-        const cw = scene.columnWidth * (0.7 + rng() * 0.6)
-        const lean = (rng() - 0.5) * scene.leanAmount
-        const colH = 0.7 + rng() * 0.2
-
-        // Base / pedestal
-        const baseY = 0.02
-        seg(
-          cx - cw * 0.7,
-          baseY,
-          cx - cw * 0.65,
-          baseY + scene.pedestalH,
-          cw * 1.4,
-          cw * 1.3,
-          baseDepth,
-        )
-        seg(
-          cx + cw * 0.65,
-          baseY,
-          cx + cw * 0.7,
-          baseY + scene.pedestalH,
-          cw * 1.3,
-          cw * 1.4,
-          baseDepth,
-        )
-
-        // Shaft (main column body) — slightly tapered with entasis
-        const shaftTop = baseY + scene.pedestalH + colH
-        const entasis = cw * 0.08 // slight bulge in the middle
-        const topCW = cw * 0.85
-
-        // Left side of shaft with entasis
-        seg(
-          cx - cw * 0.5,
-          baseY + scene.pedestalH,
-          cx - cw * 0.5 - entasis * 0.3,
-          (baseY + scene.pedestalH + shaftTop) * 0.5,
-          cw,
-          cw * 0.95,
-          baseDepth + 0.05,
-        )
-        seg(
-          cx - cw * 0.5 - entasis * 0.3,
-          (baseY + scene.pedestalH + shaftTop) * 0.5,
-          cx - topCW * 0.5 + lean,
-          shaftTop,
-          cw * 0.95,
-          topCW,
-          baseDepth + 0.05,
-        )
-
-        // Right side of shaft with entasis
-        seg(
-          cx + cw * 0.5,
-          baseY + scene.pedestalH,
-          cx + cw * 0.5 + entasis * 0.3,
-          (baseY + scene.pedestalH + shaftTop) * 0.5,
-          cw,
-          cw * 0.95,
-          baseDepth + 0.05,
-        )
-        seg(
-          cx + cw * 0.5 + entasis * 0.3,
-          (baseY + scene.pedestalH + shaftTop) * 0.5,
-          cx + topCW * 0.5 + lean,
-          shaftTop,
-          cw * 0.95,
-          topCW,
-          baseDepth + 0.05,
-        )
-
-        // Capital (top of column) — wider, decorative
-        const capW = cw * 1.6
-        seg(
-          cx - capW * 0.5 + lean * 0.5,
-          shaftTop,
-          cx - capW * 0.55 + lean,
-          shaftTop + scene.capitalH,
-          capW * 0.9,
-          capW,
-          baseDepth + 0.1,
-        )
-        seg(
-          cx + capW * 0.5 + lean * 0.5,
-          shaftTop,
-          cx + capW * 0.55 + lean,
-          shaftTop + scene.capitalH,
-          capW * 0.9,
-          capW,
-          baseDepth + 0.1,
-        )
-
-        // Abacus (top slab)
-        const abacusW = cw * 1.8
-        seg(
-          cx - abacusW * 0.5 + lean,
-          shaftTop + scene.capitalH,
-          cx + abacusW * 0.5 + lean,
-          shaftTop + scene.capitalH,
-          abacusW,
-          abacusW,
-          baseDepth + 0.12,
-        )
+      if (variant === 1) {
+        const mid = (left + right) / 2
+        seg(left - 0.12, top + 0.15, mid, top + 0.34, 0.022, 0.022, 0.3) // pediment
+        seg(mid, top + 0.34, right + 0.12, top + 0.15, 0.022, 0.022, 0.3)
       }
-
-      // Occasional arch between columns
-      if (i < scene.nColumns - 1 && rng() < scene.archProb && segs.length < MAXSEG - 10) {
-        const nextCx = startX + (i + 1) * scene.spacing + (rng() - 0.5) * 0.02
-        const archY = 0.15 + rng() * 0.1
-        const archH = 0.25 + rng() * 0.15
-        const archW = (nextCx - cx) * 0.5
-        const archCX = (cx + nextCx) * 0.5
-        const archThickness = scene.columnWidth * 0.3
-
-        // Arch segments (approximated with straight segments)
-        const nArchSegs = 6
-        for (let a = 0; a < nArchSegs; a++) {
-          const t1 = a / nArchSegs
-          const t2 = (a + 1) / nArchSegs
-          const angle1 = Math.PI * t1
-          const angle2 = Math.PI * t2
-          const x1 = archCX + Math.cos(angle1) * archW
-          const y1 = archY + Math.sin(angle1) * archH
-          const x2 = archCX + Math.cos(angle2) * archW
-          const y2 = archY + Math.sin(angle2) * archH
-          seg(x1, y1, x2, y2, archThickness, archThickness, baseDepth + 0.08)
+    } else if (variant === 2) {
+      // arcade / aqueduct
+      const n = Math.max(2, Math.round((right - left) / (0.55 + rng() * 0.2)))
+      const sp = (right - left) / n
+      const archY = 0.34 + rng() * 0.1
+      const archH = 0.2 + rng() * 0.08
+      beam(left - 0.08, right + 0.08, archY + archH + 0.14, 0.045, 0.26)
+      beam(left - 0.08, right + 0.08, G, 0.035, 0.2)
+      for (let i = 0; i <= n; i++)
+        seg(left + i * sp, G + 0.03, left + i * sp, archY + 0.04, 0.03, 0.028, 0.2) // piers
+      for (let i = 0; i < n; i++) {
+        const cx = left + (i + 0.5) * sp
+        const aw = sp * 0.5 - 0.03
+        for (let a = 0; a < 6; a++) {
+          const a1 = (Math.PI * a) / 6
+          const a2 = (Math.PI * (a + 1)) / 6
+          seg(
+            cx + Math.cos(a1) * aw, archY + Math.sin(a1) * archH,
+            cx + Math.cos(a2) * aw, archY + Math.sin(a2) * archH,
+            0.02, 0.02, 0.24,
+          )
         }
+      }
+    } else if (variant === 3) {
+      // statue garden: statues on pedestals mixed with columns
+      const n = Math.max(3, Math.round((right - left) / (0.5 + rng() * 0.15)) + 1)
+      const step = (right - left) / (n - 1)
+      beam(left - 0.1, right + 0.1, G, 0.035, 0.2)
+      for (let i = 0; i < n; i++) {
+        const cx = left + i * step + (rng() - 0.5) * 0.04
+        if (rng() < scene.statueProb + 0.15) statue(cx, 0.18 + rng() * 0.22)
+        else column(cx, 0.55 + rng() * 0.2, 0.026, 0.18 + rng() * 0.25, (rng() - 0.5) * 0.03)
+      }
+    } else {
+      // ruins: broken stumps, fallen drums, a few intact columns
+      const n = Math.max(4, Math.round((right - left) / 0.32))
+      beam(left - 0.1, right + 0.1, G, 0.035, 0.2)
+      for (let i = 0; i < n; i++) {
+        const cx = left + (i + rng() * 0.8) * ((right - left) / n)
+        const kind = rng()
+        if (kind < 0.4)
+          column(cx, G + 0.2 + rng() * 0.3, 0.026 + rng() * 0.012, 0.15 + rng() * 0.3, (rng() - 0.5) * 0.06)
+        else if (kind < 0.65)
+          seg(cx, G + 0.05, cx + 0.12 + rng() * 0.12, G + 0.05 + (rng() - 0.5) * 0.05, 0.032, 0.032, 0.2 + rng() * 0.2)
+        else column(cx, 0.6 + rng() * 0.25, 0.024 + rng() * 0.012, 0.2 + rng() * 0.25, (rng() - 0.5) * 0.02)
       }
     }
 

@@ -1,43 +1,43 @@
 @use "./variables.scss" as *;
 
-// Scale entire page to 125% using transform (doesn't affect layout flow)
-body {
-  transform: scale(1.25);
-  transform-origin: top left;
-  width: 80%;       // 100% / 1.25 = 80%
-  min-height: 80vh;
+// ── Global scale ─────────────────────────────────────────────
+// Replaces the old `body { transform: scale(1.25) }` hack.
+// Scaling via root font-size keeps popovers, tooltips and
+// position: fixed elements working correctly.
+html {
+  font-size: 125%; // 20px base
 }
-
-// put your custom CSS here!
 
 // ── Profile row ──────────────────────────────────────────────
 .profile-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 1.5rem;
+  gap: 16px;
+  margin-bottom: 2rem;
 
   .avatar {
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     background: var(--lightgray);
+    color: var(--dark);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15px;
     flex-shrink: 0;
   }
   .profile-name {
     font-weight: 600;
-    font-size: 16px;
+    font-size: 0.95rem;
+    color: var(--dark);
     margin: 0;
   }
   .profile-bio {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--darkgray);
-    margin: 0;
+    margin: 2px 0 0;
   }
 }
 
@@ -49,7 +49,7 @@ body {
   margin-bottom: 1.5rem;
 
   span {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     padding: 4px 10px;
     border-radius: 6px;
     background: var(--lightgray);
@@ -60,37 +60,42 @@ body {
 // ── Section cards ────────────────────────────────────────────
 .section-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 12px;
-  margin-bottom: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 2.25rem;
 }
 
 .section-card {
   display: block;
   background: var(--light);
   border: 1px solid var(--lightgray);
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
   text-decoration: none;
   color: inherit;
-  transition: border-color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 
   &:hover {
     border-color: var(--secondary);
+    box-shadow: 0 2px 12px rgba(43, 43, 43, 0.06);
   }
   .card-title {
     font-weight: 600;
-    font-size: 15px;
+    font-size: 0.875rem;
+    color: var(--dark);
     margin: 0 0 4px;
   }
   .card-desc {
-    font-size: 0.85rem;
+    font-size: 0.775rem;
     color: var(--darkgray);
-    margin: 0 0 10px;
+    margin: 0 0 12px;
   }
   .card-meta {
-    font-size: 0.85rem;
+    font-size: 0.725rem;
     color: var(--secondary);
+    font-family: var(--codeFont);
     margin: 0;
   }
 }
@@ -98,20 +103,22 @@ body {
 // ── Social links ─────────────────────────────────────────────
 .social-links {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 1.5rem;
 }
 
 .social-link {
   flex: 1;
   text-align: center;
-  font-size: 0.85rem;
-  padding: 8px;
+  font-size: 0.775rem;
+  padding: 10px;
   border: 1px solid var(--lightgray);
-  border-radius: 6px;
+  border-radius: 8px;
   color: var(--darkgray);
   text-decoration: none;
-  transition: border-color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
 
   &:hover {
     border-color: var(--secondary);
@@ -127,42 +134,39 @@ body[data-slug="index"] .article-title {
 // Page title in the left sidebar
 .sidebar.left .page-title {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   font-family: var(--titleFont);
 }
 
-// Komorebi (dappled light) 3-tone palette: shadow → glow → lit wall.
-// Each theme gets its own palette so the dappled light reads correctly
-// against the page background in both modes.
+// ── Classicism canvas: 3-tone palette ────────────────────────
+// shadow → penumbra glow → lit wall. Themed per mode so the
+// colonnade reads correctly against the page background.
 :root {
-  // Light mode: warm paper wall with cool shadow and amber penumbra
-  --komorebi-shadow: #2b2b2b; // cool tree shadow on warm paper
-  --komorebi-mid: #b89a6a; // warm amber penumbra at shadow edges
-  --komorebi-light: #faf8f8; // lit wall ≈ page background
-  --komorebi-frame: var(--komorebi-shadow); // frame contrasts the page
-  --komorebi-gap: var(--komorebi-light); // padding gap fill
-  --komorebi-center: 0.38;
+  --komorebi-shadow: #2b2b2b; // column / entablature silhouette
+  --komorebi-mid: #b89a6a; // warm amber penumbra + dappled light
+  --komorebi-light: #f3ede2; // sunlit marble wall (warm paper)
+  --komorebi-frame: var(--komorebi-shadow);
+  --komorebi-gap: var(--komorebi-light);
 }
 
 [saved-theme="dark"] {
-  // Dark mode: moonlit blue wall with deep navy shadow, cool glow
-  --komorebi-shadow: #0c1a30; // deep navy tree shadow
+  --komorebi-shadow: #0c1a30; // deep navy silhouette
   --komorebi-mid: #4a6080; // cool steel-blue penumbra
-  --komorebi-light: #83a1c9; // moonlit wall (light blue)
-  --komorebi-frame: var(--komorebi-light); // frame = moonlight color
-  --komorebi-gap: var(--komorebi-shadow); // padding gap fill (dark)
-  --komorebi-center: 0.38;
+  --komorebi-light: #83a1c9; // moonlit wall
+  --komorebi-frame: var(--komorebi-light);
+  --komorebi-gap: var(--komorebi-shadow);
 }
 
-// Dappled Canvas Scene
+// Aquarium Canvas Scene — same rounded frame as the cards
 .dappled-scene {
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  height: 180px;
-  margin: 0 0 1.5rem;
-  padding: 2px;
-  border: 2px solid var(--komorebi-frame);
+  height: 190px;
+  margin: 0 0 1.75rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 10px;
   overflow: hidden;
   background-color: var(--komorebi-gap);
 }
