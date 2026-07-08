@@ -30,3 +30,8 @@ Example 2:
 	Input: s = "axc", t = "ahbgdc"
 	Output: false
 ```
+
+[[leetcode/Two Pointers/index|two-pointers]]
+[[leetcode/Two Pointers/345-reverse-vowels-of-a-string|345-reverse-vowels-of-a-string]]
+[[leetcode/Two Pointers/844-backspace-string-compare|844-backspace-string-compare]]
+#leetcode

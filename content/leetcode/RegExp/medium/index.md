@@ -2,4 +2,4 @@
 title: regexp/medium
 ---
 
-[[regexp]]
+[[leetcode/RegExp/index|regexp]]

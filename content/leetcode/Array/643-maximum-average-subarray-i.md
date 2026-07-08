@@ -31,3 +31,7 @@ Example 2:
 	Input: nums = [5], k = 1
 	Output: 5.00000
 ```
+
+[[leetcode/Array/index|array]]
+[[leetcode/Patterns/index|patterns — sliding window]]
+#leetcode

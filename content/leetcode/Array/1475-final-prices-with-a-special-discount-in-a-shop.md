@@ -70,4 +70,6 @@ Example 2:
 
 [[leetcode/array/1470-shuffle-the-array]]
 [[leetcode/array/150-evaluate-reverse-polish-notation]]
+[[leetcode/Array/739-daily-temperatures|739 — тот же monotonic stack]]
+[[leetcode/Patterns/index|patterns]]
 #leetcode

@@ -50,3 +50,7 @@ Example 3:
 	Input: head = []
 	Output: []
 ```
+
+[[leetcode/Linked List/index|linked-list]]
+[[leetcode/Linked List/876-middle-of-the-linked-list|876-middle-of-the-linked-list]]
+#leetcode

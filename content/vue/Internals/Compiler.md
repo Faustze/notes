@@ -270,3 +270,7 @@ template
 
 > VNode — это не промежуточный шаг между compiler и DOM  
 > VNode — это **runtime-формат описания UI**
+
+[[vue/index|vue]]
+[[vue/Internals/Reactivity|Reactivity — куда компилятор передаёт эстафету]]
+#vue

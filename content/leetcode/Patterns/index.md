@@ -258,4 +258,12 @@ function hasCycle(head: ListNode | null): boolean {
 |k-й элемент, топ-k|Heap|
 |Цикл в списке, середина|Fast & Slow Pointers|
 [[leetcode/index]]
+
+Примеры паттернов в заметках:
+[[leetcode/Array/739-daily-temperatures|739 — monotonic stack]]
+[[leetcode/Array/1475-final-prices-with-a-special-discount-in-a-shop|1475 — monotonic stack]]
+[[leetcode/Array/643-maximum-average-subarray-i|643 — sliding window]]
+[[leetcode/Hash Table/141-linked-list-cycle|141 — fast & slow pointers]]
+[[leetcode/Linked List/876-middle-of-the-linked-list|876 — fast & slow pointers]]
+[[leetcode/Two Pointers/125-valid-palindrome|125 — two pointers]]
 #leetcode

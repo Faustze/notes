@@ -43,5 +43,5 @@ Example 1:
     Output: ""
 ```
 
-[[leetcode/string]]
+[[leetcode/String/index|string]]
 #leetcode

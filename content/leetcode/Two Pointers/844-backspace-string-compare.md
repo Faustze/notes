@@ -73,3 +73,7 @@ Example 3:
     Output: false
     Explanation: s becomes "c" while t becomes "b".
 ```
+
+[[leetcode/Two Pointers/index|two-pointers]]
+[[leetcode/Two Pointers/392-is-subsequence|392-is-subsequence]]
+#leetcode

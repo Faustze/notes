@@ -53,5 +53,7 @@ Example 1:
       merged: a p b q c   d
 ```
 
-[[leetcode/two-pointers]]\n[[leetcode/two-pointers/151-reverse-words-in-a-string]]\n[[leetcode/two-pointers/345-reverse-vowels-of-a-string]]
+[[leetcode/Two Pointers/index|two-pointers]]
+[[leetcode/two-pointers/151-reverse-words-in-a-string]]
+[[leetcode/two-pointers/345-reverse-vowels-of-a-string]]
 #leetcode

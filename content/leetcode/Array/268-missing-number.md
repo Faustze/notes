@@ -43,4 +43,5 @@ Example 1:
 
 [[leetcode/array/150-evaluate-reverse-polish-notation]]
 [[leetcode/array/283-move-zeroes]]
+[[leetcode/Array/217-contains-duplicate|217 — то же set-семейство]]
 #leetcode

@@ -39,3 +39,7 @@ Example 2:
 	Output: false
 	Explanation: "car" is not an anagram of "rat".
 ```
+
+[[leetcode/Hash Table/index|hash-table]]
+[[leetcode/Array/49-group-anagrams|49 — группировка анаграмм]]
+#leetcode

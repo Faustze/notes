@@ -33,6 +33,7 @@ Example 1:
     Since an empty string reads the same forward and backward, it is a palindrome.
 ```
 
-[[leetcode/two-pointers]]
+[[leetcode/Two Pointers/index|two-pointers]]
 [[leetcode/two-pointers/151-reverse-words-in-a-string]]
+[[leetcode/RegExp/easy/125-Valid-Palindrome|та же задача через RegExp]]
 #leetcode

@@ -2,4 +2,4 @@
 title: regexp/hard
 ---
 
-[[regexp]]
+[[leetcode/RegExp/index|regexp]]

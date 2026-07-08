@@ -54,4 +54,6 @@ Output:** true
 Since an empty string reads the same forward and backward, it is a palindrome.
 ```
 
-[[leetcode/regexp/easy]]\n[[leetcode/regexp/RegExp-cheatsheet]]
+[[leetcode/RegExp/easy/index|regexp/easy]]
+[[leetcode/RegExp/index|RegExp cheatsheet]]
+[[leetcode/Two Pointers/125-valid-palindrome|та же задача через two pointers]]

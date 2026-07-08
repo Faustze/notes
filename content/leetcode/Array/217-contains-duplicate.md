@@ -36,3 +36,8 @@ Example 3:
 	Input: nums = [1,1,1,3,3,4,3,2,4,2]
 	Output: true
 ```
+
+[[leetcode/Array/index|array]]
+[[leetcode/Array/268-missing-number|268 — то же set-семейство]]
+[[leetcode/Array/645-set-mismatch|645 — то же set-семейство]]
+#leetcode

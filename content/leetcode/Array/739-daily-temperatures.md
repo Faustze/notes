@@ -55,4 +55,6 @@ Example 1:
 ```
 
 [[leetcode/array/645-set-mismatch]]
+[[leetcode/Array/1475-final-prices-with-a-special-discount-in-a-shop|1475 — тот же monotonic stack]]
+[[leetcode/Patterns/index|patterns]]
 #leetcode

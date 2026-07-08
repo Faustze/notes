@@ -59,3 +59,8 @@ Example 2:
     Output: [4,5,6]
     Explanation: Since the list has two middle nodes with values 3 and 4, we return the second one.
 ```
+
+[[leetcode/Linked List/index|linked-list]]
+[[leetcode/Hash Table/141-linked-list-cycle|141 — тот же fast & slow pointer]]
+[[leetcode/Patterns/index|patterns]]
+#leetcode

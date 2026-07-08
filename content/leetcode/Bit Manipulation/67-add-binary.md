@@ -29,5 +29,5 @@ Example 1:
     Explanation: 1010 (binary) = 10, 1011 (binary) = 11, 10 + 11 = 21 = 10101 (binary)
 ```
 
-[[leetcode/bit-manipulation]]
+[[leetcode/Bit Manipulation/index|bit-manipulation]]
 #leetcode

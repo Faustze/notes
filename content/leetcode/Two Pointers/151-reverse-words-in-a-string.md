@@ -41,5 +41,7 @@ Example 1:
     Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
 ```
 
-[[leetcode/two-pointers]]\n[[leetcode/two-pointers/125-valid-palindrome]]\n[[leetcode/two-pointers/1768-merge-strings-alternately]]
+[[leetcode/Two Pointers/index|two-pointers]]
+[[leetcode/two-pointers/125-valid-palindrome]]
+[[leetcode/two-pointers/1768-merge-strings-alternately]]
 #leetcode

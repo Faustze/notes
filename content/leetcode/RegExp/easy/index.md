@@ -2,6 +2,6 @@
 title: regexp/easy
 ---
 
-[[regexp]]
+[[leetcode/RegExp/index|regexp]]
 
 [[regexp/easy/125-valid-palindrome]]

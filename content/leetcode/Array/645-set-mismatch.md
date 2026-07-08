@@ -46,4 +46,5 @@ Example 1:
 
 [[leetcode/array/636-exclusive-time-of-functions]]
 [[leetcode/array/739-daily-temperatures]]
+[[leetcode/Array/217-contains-duplicate|217 — то же set-семейство]]
 #leetcode

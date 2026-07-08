@@ -72,3 +72,8 @@ Example 3:
     Output: false
     Explanation: There is no cycle in the linked list.
 ```
+
+[[leetcode/Hash Table/index|hash-table]]
+[[leetcode/Linked List/876-middle-of-the-linked-list|876 — тот же fast & slow pointer]]
+[[leetcode/Patterns/index|patterns]]
+#leetcode
