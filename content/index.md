@@ -19,12 +19,12 @@ title: home
 </div> -->
 
 <div class="section-cards">
-  <a href="/headhunter" class="section-card">
+  <a href="/headhunter/" class="section-card">
     <p class="card-title">Headhunter</p>
     <p class="card-desc">Solutions for hh.ru skill assessment tests</p>
     <p class="card-meta">2 tests · JS easy/middle →</p>
   </a>
-  <a href="/leetcode" class="section-card">
+  <a href="/leetcode/" class="section-card">
     <p class="card-title">LeetCode</p>
     <p class="card-desc">LeetCode problem solutions in TypeScript</p>
     <p class="card-meta">42 problems · monotonic stack, regex →</p>

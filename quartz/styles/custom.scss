@@ -126,6 +126,156 @@ html {
   }
 }
 
+// ── Recent notes ─────────────────────────────────────────────
+// Compact list rows: title · date, hairline separators — matches
+// the section-card / social-link visual language.
+.recent-notes {
+  margin-bottom: 2rem;
+
+  & > h3 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0 0 0.7rem;
+  }
+
+  & > ul.recent-ul {
+    margin: 0;
+    padding: 0;
+
+    & > li.recent-li {
+      margin: 0;
+      border-bottom: 1px solid var(--lightgray);
+
+      .section {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        padding: 10px 2px;
+      }
+
+      .section > .desc {
+        flex: 1;
+        min-width: 0;
+
+        & > h3 {
+          margin: 0;
+          font-size: 0.825rem;
+          font-weight: 500;
+          line-height: 1.4;
+
+          & > a {
+            display: block;
+            color: var(--dark);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            &:hover {
+              color: var(--secondary);
+            }
+          }
+        }
+      }
+
+      .section > .meta {
+        margin: 0;
+        opacity: 1;
+        flex-shrink: 0;
+        font-size: 0.675rem;
+        color: var(--gray);
+      }
+    }
+  }
+}
+
+// ── Footer ───────────────────────────────────────────────────
+// Single hairline-topped row: © + links left, Quartz version right.
+footer {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  opacity: 1;
+  border-top: 1px solid var(--lightgray);
+  padding-top: 18px;
+  font-size: 0.7rem;
+  color: var(--gray);
+
+  & > p {
+    margin: 0;
+  }
+
+  & > ul {
+    margin-top: 0;
+    margin-left: auto;
+
+    & a {
+      color: var(--gray);
+
+      &:hover {
+        color: var(--secondary);
+      }
+    }
+  }
+}
+
+// ── Mobile layout ────────────────────────────────────────────
+@media all and ($mobile) {
+  // Slightly smaller base type on phones: 125% (20px) reads well on
+  // desktop but crowds a 430px viewport.
+  html {
+    font-size: 112.5%; // 18px base
+  }
+
+  // Fix horizontal overflow: the mobile grid column is `auto`, which
+  // tracks max-content — .section-cards alone demands 2×220px + gap,
+  // pushing the whole page past the viewport. minmax(0, 1fr) lets
+  // content shrink to the screen instead.
+  .page > #quartz-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  // Top nav row: breathing room between burger, title and toolbar.
+  .page > #quartz-body .sidebar.left {
+    gap: 0.75rem;
+    padding: 1.1rem 0 0.5rem;
+
+    .page-title {
+      margin: 0;
+      white-space: nowrap;
+    }
+  }
+
+  // Graph + backlinks: base.scss lays them out as a flex row with
+  // flex: 1, but min-width: auto lets the graph push past the
+  // viewport — stack them full-width instead.
+  .page > #quartz-body .sidebar.right {
+    flex-direction: column;
+
+    & > * {
+      min-width: 0;
+    }
+  }
+
+  // Footer content wraps instead of clipping off-screen.
+  footer {
+    flex-wrap: wrap;
+    gap: 8px 18px;
+
+    & > ul {
+      flex-wrap: wrap;
+      margin-left: 0;
+    }
+  }
+
+  // A shorter scene banner suits the narrow viewport better.
+  .dappled-scene {
+    height: 150px;
+  }
+}
+
 /* Hide page-title on the index page */
 body[data-slug="index"] .article-title {
   display: none;
