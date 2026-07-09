@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   deploy-preview:
-    if: ${{ github.repository == 'jackyzha0/quartz' && github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.repository == 'Faustze/notes' && github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     name: Deploy Preview to Cloudflare Pages
     steps:
@@ -32,6 +32,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          projectName: quartz
+          projectName: notes
           deploymentName: Branch Preview
           directory: ${{ steps.preview-build-artifact.outputs.download-path }}

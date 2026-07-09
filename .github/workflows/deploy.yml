@@ -6,9 +6,9 @@ on:
     branches: [main]
   # Ручной запуск
   workflow_dispatch:
-  # Автоматическая синхронизация каждые 6 часов
+  # Автоматическая синхронизация раз в сутки
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 3 * * *"
 
 # Разрешения для GitHub Pages
 permissions:

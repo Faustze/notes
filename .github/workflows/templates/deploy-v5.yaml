@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   deploy-v5:
-    if: ${{ github.repository == 'jackyzha0/quartz' }}
+    if: ${{ github.repository == 'Faustze/notes' }}
     runs-on: ubuntu-latest
     name: Deploy v5 to Cloudflare Pages
     steps:
@@ -58,7 +58,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          projectName: quartz
+          projectName: notes
           deploymentName: v5 Branch Preview
           branch: v5
           directory: public
