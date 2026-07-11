@@ -29,9 +29,9 @@ title: home
     <p class="card-desc">LeetCode problem solutions in TypeScript</p>
     <p class="card-meta">42 problems · monotonic stack, regex →</p>
   </a>
-</div>
-
-<div class="social-links">
-  <a href="https://t.me/faustflow" target="_blank" class="social-link">Telegram</a>
-  <a href="https://github.com/faustze" target="_blank" class="social-link">GitHub</a>
+  <a href="/vue/" class="section-card">
+    <p class="card-title">Vue</p>
+    <p class="card-desc">Notes on Vue internals — reactivity, compiler</p>
+    <p class="card-meta">2 notes · reactivity, compiler →</p>
+  </a>
 </div>

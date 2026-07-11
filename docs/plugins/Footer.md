@@ -27,8 +27,9 @@ This plugin accepts the following configuration options:
   enabled: true
   options:
     links:
-      GitHub: https://github.com/jackyzha0/quartz
-      Discord Community: https://discord.gg/cRFFHYye7t
+      GitHub: https://github.com/faustze/notes
+      Discord: https://discord.gg/NeXVsN6me
+      Telegram: https://t.me/faustflow
 ```
 
 ## API
