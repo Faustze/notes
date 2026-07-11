@@ -1,6 +1,6 @@
 import fs from "fs"
 import path from "path"
-import { execSync } from "child_process"
+import { execFileSync, execSync } from "child_process"
 import git from "isomorphic-git"
 import http from "isomorphic-git/http/node"
 import { styleText } from "util"
@@ -514,8 +514,10 @@ export async function installPlugin(
       fs.rmSync(tmpDir, { recursive: true })
     }
 
-    const branchArg = spec.ref ? ` --branch ${spec.ref}` : ""
-    execSync(`git clone --depth 1${branchArg} "${spec.repo}" "${tmpDir}"`, { stdio: "pipe" })
+    const branchArgs = spec.ref ? ["--branch", spec.ref] : []
+    execFileSync("git", ["clone", "--depth", "1", ...branchArgs, spec.repo, tmpDir], {
+      stdio: "pipe",
+    })
 
     const subdirPath = path.join(tmpDir, spec.subdir)
     if (!fs.existsSync(subdirPath)) {
@@ -526,8 +528,10 @@ export async function installPlugin(
     fs.renameSync(subdirPath, pluginDir)
     fs.rmSync(tmpDir, { recursive: true })
   } else {
-    const branchArg = spec.ref ? ` --branch ${spec.ref}` : ""
-    execSync(`git clone --depth 1${branchArg} "${spec.repo}" "${pluginDir}"`, { stdio: "pipe" })
+    const branchArgs = spec.ref ? ["--branch", spec.ref] : []
+    execFileSync("git", ["clone", "--depth", "1", ...branchArgs, spec.repo, pluginDir], {
+      stdio: "pipe",
+    })
   }
 
   buildInstalledPlugin(pluginDir, spec.name, options.verbose)
@@ -976,7 +980,7 @@ export async function regeneratePluginIndex(options: { verbose?: boolean } = {})
   )
   for (const [pluginName, { overridable }] of pluginExports) {
     if (overridable.length === 0) continue
-    const escapedName = pluginName.replace(/"/g, '\\"')
+    const escapedName = pluginName.replace(/\\/g, "\\\\").replace(/"/g, '\\"')
     lines.push(`  "${escapedName}": {`)
     for (const n of overridable) {
       lines.push(
@@ -996,7 +1000,7 @@ export async function regeneratePluginIndex(options: { verbose?: boolean } = {})
     const conflicting = overridable.filter((n) => (nameCount.get(n) ?? 0) > 1)
 
     if (unique.length > 0) {
-      const escapedName = pluginName.replace(/"/g, '\\"')
+      const escapedName = pluginName.replace(/\\/g, "\\\\").replace(/"/g, '\\"')
       for (const n of unique) {
         lines.push(`export const ${n} = plugins["${escapedName}"].${n}`)
       }

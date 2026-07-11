@@ -305,7 +305,7 @@ async function regeneratePluginIndex() {
   )
   for (const [pluginName, { overridable }] of pluginExports) {
     if (overridable.length === 0) continue
-    const escapedName = pluginName.replace(/"/g, '\\"')
+    const escapedName = pluginName.replace(/\\/g, "\\\\").replace(/"/g, '\\"')
     lines.push(`  "${escapedName}": {`)
     for (const n of overridable) {
       lines.push(
@@ -325,7 +325,7 @@ async function regeneratePluginIndex() {
     const conflicting = overridable.filter((n) => (nameCount.get(n) ?? 0) > 1)
 
     if (unique.length > 0) {
-      const escapedName = pluginName.replace(/"/g, '\\"')
+      const escapedName = pluginName.replace(/\\/g, "\\\\").replace(/"/g, '\\"')
       for (const n of unique) {
         lines.push(`export const ${n} = plugins["${escapedName}"].${n}`)
       }

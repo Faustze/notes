@@ -8,7 +8,7 @@ import { intro, outro, select, text } from "@clack/prompts"
 import { rm } from "fs/promises"
 import chokidar from "chokidar"
 import prettyBytes from "pretty-bytes"
-import { execSync, spawnSync } from "child_process"
+import { execFileSync, execSync, spawnSync } from "child_process"
 import http from "http"
 import serveHandler from "serve-handler"
 import { WebSocketServer } from "ws"
@@ -57,6 +57,22 @@ import {
 function resolveContentPath(contentPath) {
   if (path.isAbsolute(contentPath)) return path.relative(cwd, contentPath)
   return path.join(cwd, contentPath)
+}
+
+/**
+ * Join a (possibly attacker-controlled) relative path onto root, refusing to
+ * resolve outside of root (e.g. via "../" traversal).
+ * @param root trusted absolute root directory
+ * @param relPath untrusted path, relative to root
+ * @returns the resolved absolute path, or null if it would escape root
+ */
+function safeJoin(root, relPath) {
+  const resolvedRoot = path.resolve(root)
+  const resolved = path.resolve(resolvedRoot, `.${path.sep}${relPath}`)
+  if (resolved !== resolvedRoot && !resolved.startsWith(resolvedRoot + path.sep)) {
+    return null
+  }
+  return resolved
 }
 
 /**
@@ -518,7 +534,8 @@ export async function handleBuild(argv) {
         // /trailing/
         // does /trailing/index.html exist? if so, serve it
         const indexFp = path.posix.join(fp, "index.html")
-        if (fs.existsSync(path.posix.join(argv.output, indexFp))) {
+        const indexFullPath = safeJoin(argv.output, indexFp)
+        if (indexFullPath && fs.existsSync(indexFullPath)) {
           req.url = fp
           return serve()
         }
@@ -528,7 +545,8 @@ export async function handleBuild(argv) {
         if (path.extname(base) === "") {
           base += ".html"
         }
-        if (fs.existsSync(path.posix.join(argv.output, base))) {
+        const baseFullPath = safeJoin(argv.output, base)
+        if (baseFullPath && fs.existsSync(baseFullPath)) {
           return redirect(fp.slice(0, -1))
         }
       } else {
@@ -538,14 +556,16 @@ export async function handleBuild(argv) {
         if (path.extname(base) === "") {
           base += ".html"
         }
-        if (fs.existsSync(path.posix.join(argv.output, base))) {
+        const baseFullPath = safeJoin(argv.output, base)
+        if (baseFullPath && fs.existsSync(baseFullPath)) {
           req.url = fp
           return serve()
         }
 
         // does /regular/index.html exist? if so, redirect to /regular/
         let indexFp = path.posix.join(fp, "index.html")
-        if (fs.existsSync(path.posix.join(argv.output, indexFp))) {
+        const indexFullPath = safeJoin(argv.output, indexFp)
+        if (indexFullPath && fs.existsSync(indexFullPath)) {
           return redirect(fp + "/")
         }
       }
@@ -636,7 +656,7 @@ export async function handleUpgrade(argv) {
     if (hasLockfile) {
       try {
         fs.copyFileSync(lockfileBackup, LOCKFILE_PATH)
-        execSync(`git add ${LOCKFILE_PATH}`)
+        execFileSync("git", ["add", LOCKFILE_PATH])
         const remaining = execSync("git diff --name-only --diff-filter=U", {
           encoding: "utf-8",
         }).trim()
