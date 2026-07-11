@@ -1,12 +1,12 @@
 # ⚡ Vue 3 Reactivity (Proxy + track/trigger + effect)
 
-## 💡 Главная идея
+## 💡 Core idea
 
-> Vue не отслеживает данные.  
-> Vue связывает **(object + property) → (effect-функции)** и перезапускает их при изменении.
+> Vue doesn't "watch" data.
+> Vue links **(object + property) → (effect functions)** and reruns them when the value changes.
 
 ---
-# 🧭 Общая схема
+# 🧭 Overview
 
 ```text
 state.count++
@@ -15,33 +15,35 @@ Proxy.set()
    ↓
 trigger()
    ↓
-найти effects (Set)
+find effects (Set)
    ↓
-effect() заново выполняется
+effect() reruns
    ↓
 render / computed / watch
 ```
 
 ---
-# 🧠 1. Proxy — перехват доступа
+# 🧠 1. Proxy — intercepting access
 
-Proxy перехватывает:
+Proxy intercepts:
 
-- `get()` → чтение
-- `set()` → запись
-- `deleteProperty()` → удаление
-- `has()` → `in`
-- `ownKeys()` → перебор
+- `get()` → read
+- `set()` → write
+- `deleteProperty()` → delete
+- `has()` → `in` operator
+- `ownKeys()` → enumeration (`Object.keys`, `for...in`)
 
 ```js
 state.count  // get()
 state.count++ // set()
 ```
 
-👉 Proxy = точка входа реактивности
+👉 Proxy = the entry point of reactivity
+
+Vue 2 used `Object.defineProperty` on every property instead, which had real limitations: it couldn't detect new properties being added to an object or array index/length changes without helper methods (`Vue.set`, `this.$set`). Proxy traps the whole object, so **all** of that "just works" in Vue 3.
 
 ---
-# 🔥 2. effect — реактивная функция
+# 🔥 2. effect — the reactive function
 
 ```js
 effect(() => {
@@ -49,33 +51,37 @@ effect(() => {
 })
 ```
 
-👉 Любая реактивная логика = effect:
+👉 Any reactive logic in Vue is really an effect:
 
-- render
+- render (the component's render function)
 - computed
-- watch
+- watch / watchEffect
+
+Internally, `effect()` wraps your function in a `ReactiveEffect` instance. That instance is what actually gets stored as a subscriber and rerun — not the raw function.
 
 ---
-# 🧩 3. activeEffect — “кто сейчас выполняется”
+# 🧩 3. activeEffect — "who's currently running"
 
 ```js
 let activeEffect = null
 ```
 
-Во время выполнения:
+While running:
 
 ```text
-effect запускается
+effect starts
 ↓
-activeEffect = этот effect
+activeEffect = this effect
 ↓
-внутри читаются state поля
+state fields are read inside it
 ```
 
----
-# 🔗 4. track() — подписка
+Effects can nest (a computed reading inside a render, for example), so Vue actually keeps an **effect stack**, pushing/popping `activeEffect` as effects start and finish, rather than a single global variable in practice.
 
-Вызывается при `get()`:
+---
+# 🔗 4. track() — subscribing
+
+Called on `get()`:
 
 ```js
 state.count // Proxy.get → track()
@@ -83,17 +89,17 @@ state.count // Proxy.get → track()
 
 ```text
 track():
-activeEffect → записывается как подписчик
+activeEffect gets recorded as a subscriber
 ```
 
-👉 смысл:
+👉 meaning:
 
-> “этот effect зависит от этого свойства”
+> "this effect depends on this property"
 
 ---
-# ⚡ 5. trigger() — обновление
+# ⚡ 5. trigger() — updating
 
-Вызывается при `set()`:
+Called on `set()`:
 
 ```js
 state.count = 1
@@ -101,14 +107,16 @@ state.count = 1
 
 ```text
 trigger():
-найти Set(effect)
-→ вызвать все effects
+find the Set(effect)
+→ run all of them
 ```
 
----
-# 🧠 6. структура зависимостей
+For arrays and collections (`Map`/`Set`), `trigger()` also needs to know **what kind** of change happened (`SET`, `ADD`, `DELETE`, `CLEAR`) — adding a new key or changing `length` can affect iteration-based effects (like `for...in` or `Array.map`) even if that exact key was never read directly.
 
-## 💥 Vue хранит:
+---
+# 🧠 6. Dependency structure
+
+## 💥 Vue stores:
 
 ```text
 WeakMap
@@ -123,7 +131,7 @@ Set(effect)
 ```
 
 ---
-## 📦 Полная структура
+## 📦 Full structure
 
 ```text
 WeakMap
@@ -135,50 +143,50 @@ WeakMap
 
 ---
 
-# 🧩 Почему именно такие структуры
+# 🧩 Why these exact structures
 
 ## WeakMap
 
-- ключ = объект
-- авто-очистка GC  
-    👉 нет утечек памяти
+- key = the reactive object itself
+- auto garbage-collected when the object is no longer referenced elsewhere
+  👉 no memory leaks
 
 ---
 ## Map
 
-- хранит свойства объекта
+- stores the object's properties → their dependency sets
 
 ---
 ## Set
 
-- хранит effects без дублей
+- stores effects without duplicates (an effect can appear only once per property, even if the same property is read multiple times inside it)
 
 ---
-# 🔁 Полный цикл реактивности
+# 🔁 The full reactivity cycle
 
-## 1. подписка
+## 1. Subscription
 
 ```text
 effect()
 → activeEffect = fn
-→ читается state.count
+→ state.count is read
 → track()
-→ записали fn в Set
+→ fn is added to the Set
 ```
 
 ---
-## 2. изменение
+## 2. Mutation
 
 ```text
 state.count++
 → Proxy.set()
 → trigger()
-→ достали Set
-→ вызвали effects
+→ Set is looked up
+→ effects are invoked
 ```
 
 ---
-# 🧠 Итоговая схема
+# 🧠 Summary diagram
 
 ```text
 READ:
@@ -199,22 +207,58 @@ trigger()
   ↓
 Set(effects)
   ↓
-effect() rerun
+effect() reruns
 ```
 
 ---
-# 💥 ОДНА ФОРМУЛА Vue Reactivity
+# 💥 Vue Reactivity in one formula
 
 ```text
 Proxy + effect + track + trigger
-= автоматическая подписка и обновление UI
+= automatic subscription and UI updates
 ```
 
 ---
-# 🧠 Суть в одной фразе
+# 🧠 The essence, in one sentence
 
-> Vue не “следит за данными” — он строит граф зависимостей между свойствами и функциями и перезапускает только затронутые части.
+> Vue doesn't "watch data" — it builds a dependency graph between properties and functions, and reruns only the parts affected by a change.
+
+---
+# 📎 Extra: what the diagram above leaves out
+
+## reactive() vs ref()
+
+- `reactive(obj)` wraps an object in a Proxy directly — deep by default (nested objects are wrapped lazily, on access).
+- `ref(value)` wraps a **single value** (including primitives, which Proxy can't intercept) in an object with a `.value` getter/setter that itself calls `track()`/`trigger()`. That's why refs need `.value` in plain JS but get auto-unwrapped in templates and inside `reactive()` objects.
+- `shallowReactive` / `shallowRef` skip the deep wrapping — only the top-level access is tracked, useful for large objects or integrating with non-reactive external state.
+
+## computed()
+
+- A computed is itself a `ReactiveEffect`, but a **lazy** one: it doesn't rerun immediately on `trigger()`. Instead it just flips a `dirty` flag to `true`.
+- Reading `.value` checks `dirty`: if true, it reruns the getter and caches the result; if false, it returns the cached value without recomputation.
+- This is why computed properties are cheaper than methods when read many times between dependency changes.
+
+## watch / watchEffect
+
+- `watchEffect` is essentially `effect()` with automatic dependency tracking, run immediately.
+- `watch` tracks only the explicitly given source(s) and, by default, is **lazy** (doesn't run on setup, only on change) and does not auto-track anything read inside the callback body itself — only inside the source getter.
+- Both support a `flush` timing option (`pre` / `post` / `sync`) controlling whether the callback runs before, after, or synchronously around component DOM updates.
+
+## Scheduling — why the DOM doesn't update on every single mutation
+
+- Component render effects aren't run synchronously inside `trigger()`. Instead they're pushed into a **job queue** and flushed as a microtask (`Promise.resolve().then(flushJobs)`).
+- This means multiple synchronous mutations (`state.a = 1; state.b = 2`) in the same tick only trigger **one** re-render, not two — this is what `nextTick()` waits for.
+
+## readonly / toRaw / markRaw
+
+- `readonly(obj)` wraps an object so `set`/`delete` traps warn and no-op in dev — used to protect state passed down as props.
+- `toRaw(proxy)` unwraps a reactive Proxy back to the original object, bypassing tracking — useful for passing data to non-reactive external libraries.
+- `markRaw(obj)` tells Vue to never wrap this object in a Proxy at all.
+
+## Cleanup
+
+- Every time an effect reruns, Vue first removes it from all the dependency Sets it was previously subscribed to (`cleanupEffect`), then lets `track()` rebuild the subscriptions from scratch during the new run. This is what allows conditional dependencies (e.g. inside `v-if` branches or ternaries) to correctly stop being tracked once a branch is no longer taken.
 
 [[vue/index|vue]]
-[[vue/Internals/Compiler|Compiler — кто генерирует реактивный код]]
+[[vue/Internals/Compiler|Compiler — who generates the reactive code]]
 #vue
