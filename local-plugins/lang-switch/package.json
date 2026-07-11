@@ -1,0 +1,18 @@
+{
+  "name": "lang-switch",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./components": "./components.ts"
+  },
+  "quartz": {
+    "category": "component",
+    "components": {
+      "LangSwitch": {
+        "displayName": "Language Switch",
+        "defaultPosition": "left",
+        "defaultPriority": 32
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+#!/bin/sh
+# Safety net: refuses to push if content-ru/ is stale relative to content/.
+# Only compares hashes — makes no `claude` calls, so it's fast and free.
+# If this fires, the pre-commit hook was probably bypassed (--no-verify) or
+# `claude` wasn't installed/logged in when the content/ change was committed.
+#
+# Enabled per-clone with: git config core.hooksPath .githooks
+
+if [ -n "$CI" ]; then
+  # CI never translates or enforces freshness — it only builds whatever
+  # content-ru/ is already committed. Enforcing here would break the
+  # sync-then-push step in deploy.yml whenever a sync lands new content.
+  exit 0
+fi
+
+node scripts/translate-content.mjs --check
+status=$?
+
+if [ $status -ne 0 ]; then
+  echo "pre-push: aborting — run 'npm run translate' and commit content-ru/ before pushing."
+  echo "(or run 'git push --no-verify' to skip this check)"
+  exit 1
+fi
+
+exit 0

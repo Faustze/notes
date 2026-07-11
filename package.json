@@ -21,6 +21,11 @@
     "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
     "install-plugins": "npx tsx ./quartz/plugins/loader/install-plugins.ts",
     "sync": "bash scripts/sync-obsidian-notes.sh",
+    "translate": "node scripts/translate-content.mjs",
+    "translate:check": "node scripts/translate-content.mjs --check",
+    "build:ru": "node scripts/generate-ru-config.mjs && QUARTZ_CONFIG_PATH=quartz.config.ru.yaml npx quartz build -d content-ru -o public/ru",
+    "serve:all": "node scripts/serve-both.mjs",
+    "postinstall": "git config core.hooksPath .githooks || true",
     "prebuild": "npm run install-plugins"
   },
   "engines": {

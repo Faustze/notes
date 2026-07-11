@@ -177,8 +177,14 @@ plugins:
       position: left
       priority: 30
       group: toolbar
-  - source: github:quartz-community/reader-mode
+  - source: ./local-plugins/lang-switch
     enabled: true
+    layout:
+      position: left
+      priority: 32
+      group: toolbar
+  - source: github:quartz-community/reader-mode
+    enabled: false
     layout:
       position: left
       priority: 35

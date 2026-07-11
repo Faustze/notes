@@ -1,25 +1,25 @@
 (https://hh.ru/applicant/skills/674/verification_methods?rank=1&kind=theory)
 
-1) **Какой тип данных у переменной let empty = []?**  
+1) **What is the data type of the variable let empty = []?**  
 ==-> array==  
 
-2) **Какой вариант неправильно описывает глобальную область видимости в** JavaScript?  
-==-> Глобальные переменные можно объявить внутри функции==  
+2) **Which option incorrectly describes the global scope in** JavaScript?  
+==-> Global variables can be declared inside a function==  
 
-3) **Что вернет typeof null?**  
+3) **What does typeof null return?**  
 ==-> "object"==  
 
-4) **Что вернёт typeof "5"?**  
+4) **What does typeof "5" return?**  
 ==-> "string"==  
 
-5) **Вы разрабатываете приложение, которое обрабатывает пользовательский ввод. Вам необходимо:**  
-- Выполнять код хотя бы один раз перед проверкой условия.  
-- Запрашивать у пользователя данные, пока он не введет корректное значение.  
-- Обрабатывать динамически изменяющееся условие.  
-Какой оператор управления потоком лучше всего использовать?  
+5) **You are developing an application that processes user input. You need to:**  
+- Execute the code at least once before checking the condition.  
+- Keep asking the user for data until they enter a valid value.  
+- Handle a dynamically changing condition.  
+Which flow control statement is best to use?  
 ==-> do-while==  
 
-5) **Какой утверждение верно о функциях в их области видимости в этом коде?**  
+5) **Which statement about functions and their scope is true for this code?**  
 ```typescript
 let value = 100;
 function first() {
@@ -31,9 +31,9 @@ function first() {
 }
 ```
  
-==-> second вернет 200==  
+==-> second will return 200==  
 
-7) **Что выведет код?**  
+7) **What will the code output?**  
 ```typescript
 function createCounter() {
   let count = 0;
@@ -48,18 +48,18 @@ counter();
 
 ```
  
-==-> 1 и 2;==  
+==-> 1 and 2;==  
 
-8) **Что выведет код?**  
+8) **What will the code output?**  
 ```typescript
 console.log([] + []);
 ```
 ==-> ""==  
 
-9) **Какой метод массива используется для создания нового массива, применяя функцию к каждому элементу исходного массива?**  
+9) **Which array method is used to create a new array by applying a function to each element of the source array?**  
 ==-> map==  
 
-10) **Что выведет код ?**  
+10) **What will the code output?**  
 ```typescript
 console.log(0 == false);
 ```

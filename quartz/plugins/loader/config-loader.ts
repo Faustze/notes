@@ -33,6 +33,12 @@ const LEGACY_PLUGINS_JSON_PATH = path.join(process.cwd(), "quartz.plugins.json")
 const LEGACY_DEFAULT_PLUGINS_JSON_PATH = path.join(process.cwd(), "quartz.plugins.default.json")
 
 function resolveConfigPath(): string {
+  // Lets a second build (e.g. a translated tree served from a subpath like
+  // /ru) point at a different config file — most commonly to override just
+  // `configuration.baseUrl` so components that navigate via an absolute,
+  // basePath-derived href (Explorer, Search, Graph) stay under that subpath
+  // instead of always resolving back to the root build.
+  if (process.env.QUARTZ_CONFIG_PATH) return path.resolve(process.env.QUARTZ_CONFIG_PATH)
   if (fs.existsSync(CONFIG_YAML_PATH)) return CONFIG_YAML_PATH
   if (fs.existsSync(LEGACY_PLUGINS_JSON_PATH)) return LEGACY_PLUGINS_JSON_PATH
   if (fs.existsSync(DEFAULT_CONFIG_YAML_PATH)) return DEFAULT_CONFIG_YAML_PATH

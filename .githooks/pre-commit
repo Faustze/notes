@@ -1,0 +1,27 @@
+#!/bin/sh
+# Auto-translates content/ changes into content-ru/ and stages the result into
+# the current commit, so a note and its RU translation land in the same commit.
+# Uses the local `claude` CLI (your logged-in Claude subscription) — no API key.
+#
+# Enabled per-clone with: git config core.hooksPath .githooks
+
+if [ -n "$CI" ]; then
+  # CI commits synced content as-is; translation only ever happens locally.
+  exit 0
+fi
+
+if ! command -v claude >/dev/null 2>&1; then
+  echo "pre-commit: 'claude' CLI not found — skipping RU translation (content-ru/ may go stale)"
+  exit 0
+fi
+
+node scripts/translate-content.mjs
+status=$?
+
+if [ $status -ne 0 ]; then
+  echo "pre-commit: translation failed, aborting commit."
+  echo "Fix the error above, or run 'git commit --no-verify' to skip translation."
+  exit 1
+fi
+
+git add content-ru/

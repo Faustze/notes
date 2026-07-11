@@ -14,3 +14,4 @@ replit.nix
 quartz/cli/tui/dist/
 .env
 .playwright-mcp/
+quartz.config.ru.yaml

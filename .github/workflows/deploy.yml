@@ -63,13 +63,22 @@ jobs:
             echo "No changes to commit"
           fi
 
+      # content-ru/ is translated by hand (via Claude Code) and committed to the
+      # repo directly, same as content/ — CI never calls a translation API, it
+      # just builds whatever RU content is currently committed.
       - name: Install Quartz plugins
         run: npx tsx ./quartz/plugins/loader/install-plugins.ts
         env:
           NODE_OPTIONS: "--no-warnings --experimental-require-module"
 
-      - name: Build Quartz
+      - name: Build Quartz (EN)
         run: npx quartz build
+
+      - name: Build Quartz (RU)
+        continue-on-error: true
+        run: |
+          mkdir -p content-ru
+          npm run build:ru
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
