@@ -60,22 +60,6 @@ function resolveContentPath(contentPath) {
 }
 
 /**
- * Join a (possibly attacker-controlled) relative path onto root, refusing to
- * resolve outside of root (e.g. via "../" traversal).
- * @param root trusted absolute root directory
- * @param relPath untrusted path, relative to root
- * @returns the resolved absolute path, or null if it would escape root
- */
-function safeJoin(root, relPath) {
-  const resolvedRoot = path.resolve(root)
-  const resolved = path.resolve(resolvedRoot, `.${path.sep}${relPath}`)
-  if (resolved !== resolvedRoot && !resolved.startsWith(resolvedRoot + path.sep)) {
-    return null
-  }
-  return resolved
-}
-
-/**
  * Handles `npx quartz create`
  * @param {*} argv arguments for `create`
  */
@@ -529,13 +513,15 @@ export async function handleBuild(argv) {
 
       let fp = req.url?.split("?")[0] ?? "/"
 
+      const outputRoot = path.resolve(argv.output)
+
       // handle redirects
       if (fp.endsWith("/")) {
         // /trailing/
         // does /trailing/index.html exist? if so, serve it
         const indexFp = path.posix.join(fp, "index.html")
-        const indexFullPath = safeJoin(argv.output, indexFp)
-        if (indexFullPath && fs.existsSync(indexFullPath)) {
+        const indexFullPath = path.resolve(outputRoot, `.${indexFp}`)
+        if (indexFullPath.startsWith(outputRoot + path.sep) && fs.existsSync(indexFullPath)) {
           req.url = fp
           return serve()
         }
@@ -545,8 +531,8 @@ export async function handleBuild(argv) {
         if (path.extname(base) === "") {
           base += ".html"
         }
-        const baseFullPath = safeJoin(argv.output, base)
-        if (baseFullPath && fs.existsSync(baseFullPath)) {
+        const baseFullPath = path.resolve(outputRoot, `.${base}`)
+        if (baseFullPath.startsWith(outputRoot + path.sep) && fs.existsSync(baseFullPath)) {
           return redirect(fp.slice(0, -1))
         }
       } else {
@@ -556,16 +542,16 @@ export async function handleBuild(argv) {
         if (path.extname(base) === "") {
           base += ".html"
         }
-        const baseFullPath = safeJoin(argv.output, base)
-        if (baseFullPath && fs.existsSync(baseFullPath)) {
+        const baseFullPath = path.resolve(outputRoot, `.${base}`)
+        if (baseFullPath.startsWith(outputRoot + path.sep) && fs.existsSync(baseFullPath)) {
           req.url = fp
           return serve()
         }
 
         // does /regular/index.html exist? if so, redirect to /regular/
         let indexFp = path.posix.join(fp, "index.html")
-        const indexFullPath = safeJoin(argv.output, indexFp)
-        if (indexFullPath && fs.existsSync(indexFullPath)) {
+        const indexFullPath = path.resolve(outputRoot, `.${indexFp}`)
+        if (indexFullPath.startsWith(outputRoot + path.sep) && fs.existsSync(indexFullPath)) {
           return redirect(fp + "/")
         }
       }
