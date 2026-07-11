@@ -25,7 +25,7 @@ Example 1:
     counter() = 11 // Returns 1 more than the previous time.
     counter() = 12 // Returns 1 more than the previous time.
 
-  Example 2:
+Example 2:
 
     Input:
     n = -2

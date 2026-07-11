@@ -1,12 +1,12 @@
 # 1475. Final Prices With a Special Discount in a Shop (Easy) (<https://leetcode.com/problems/final-prices-with-a-special-discount-in-a-shop/>)
 
-  > Дан целочисленный массив prices, где prices[i] — цена i-го товара в магазине.
+> Дан целочисленный массив prices, где prices[i] — цена i-го товара в магазине.
 > В магазине действует специальная скидка на товары.
 > Если вы покупаете i-й товар, вы получите скидку, равную prices[j], где j — минимальный индекс такой, что j > i и prices[j] <= prices[i].
 > В противном случае скидки не будет вовсе.
 > Верните целочисленный массив answer, где answer[i] — итоговая цена, которую вы заплатите за i-й товар с учётом специальной скидки.
 > Ограничения: 1 <= prices.length <= 500 1 <= prices[i] <= 1000
- 
+
 ```ts
 function finalPrices(prices: number[]): number[] {
   const discounted: number[] = [];
@@ -51,21 +51,21 @@ console.log(finalPrices([10, 1, 1, 6]));
 
 ```md
 Example 1:
-    Input: prices = [8,4,6,2,3]
-    Output: [4,2,4,2,3]
-    Explanation:
-    For item 0 with price[0]=8 you will receive a discount equivalent to prices[1]=4, therefore, the final price you will pay is 8 - 4 = 4.
-    For item 1 with price[1]=4 you will receive a discount equivalent to prices[3]=2, therefore, the final price you will pay is 4 - 2 = 2.
-	For item 2 with price[2]=6 you will receive a discount equivalent to prices[3]=2, therefore, the final price you will pay is 6 - 2 = 4.
-	For items 3 and 4 you will not receive any discount at all.
+Input: prices = [8,4,6,2,3]
+Output: [4,2,4,2,3]
+Explanation:
+For item 0 with price[0]=8 you will receive a discount equivalent to prices[1]=4, therefore, the final price you will pay is 8 - 4 = 4.
+For item 1 with price[1]=4 you will receive a discount equivalent to prices[3]=2, therefore, the final price you will pay is 4 - 2 = 2.
+For item 2 with price[2]=6 you will receive a discount equivalent to prices[3]=2, therefore, the final price you will pay is 6 - 2 = 4.
+For items 3 and 4 you will not receive any discount at all.
 
 Example 2:
-    Input: prices = [1,2,3,4,5]
-    Output: [1,2,3,4,5]
-    Explanation: In this case, for all items, you will not receive any discount at all.
-  Example 3:
-    Input: prices = [10,1,1,6]
-    Output: [9,0,1,6]
+Input: prices = [1,2,3,4,5]
+Output: [1,2,3,4,5]
+Explanation: In this case, for all items, you will not receive any discount at all.
+Example 3:
+Input: prices = [10,1,1,6]
+Output: [9,0,1,6]
 ```
 
 [[leetcode/Array/1470-shuffle-the-array]]

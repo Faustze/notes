@@ -6,8 +6,8 @@
 
 ```ts
 function reverseVowels(s: string): string {
-  const chars = s.split('')
-  const vowels = 'aeiouAEIOU'
+  const chars = s.split("")
+  const vowels = "aeiouAEIOU"
 
   for (let left = 0, right = chars.length - 1; left < right;) {
     if (!vowels.includes(chars[left])) {
@@ -28,12 +28,12 @@ function reverseVowels(s: string): string {
     right--
   }
 
-  return chars.join('')
+  return chars.join("")
 }
 
 // Local check:
-console.log(reverseVowels('IceCreAm'))
-console.log(reverseVowels('leetcode'))
+console.log(reverseVowels("IceCreAm"))
+console.log(reverseVowels("leetcode"))
 ```
 
 ```md
@@ -44,7 +44,7 @@ Example 1:
     Explanation: The vowels in s are ['I', 'e', 'e', 'A']. On reversing the
     vowels, s becomes "AceCreIm".
 
-  Example 2:
+Example 2:
 
     Input: s = "leetcode"
     Output: "leotcede"

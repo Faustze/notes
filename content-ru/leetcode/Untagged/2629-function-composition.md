@@ -44,7 +44,7 @@ Example 1:
     8 * 8 = 64
     64 + 1 = 65
 
-  Example 2:
+Example 2:
 
     Input:
     functions = [x => 10 * x, x => 10 * x, x => 10 * x]
@@ -55,10 +55,11 @@ Example 1:
     10 * 1 = 10
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2627-debounce]] [[leetcode/untagged/2631-group-by]] -->
+
     10 * 10 = 100
     10 * 100 = 1000
 
-  Example 3:
+Example 3:
 
     Input:
     functions = []
@@ -67,4 +68,5 @@ Example 1:
     Explanation:
     The composition of zero functions is the identity function.
 ```
+
 #leetcode

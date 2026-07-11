@@ -12,7 +12,7 @@
 
 ```ts
 class TimeLimitedCache {
-  cache: Map<number, { value: number, timerId: ReturnType<typeof setTimeout> }>
+  cache: Map<number, { value: number; timerId: ReturnType<typeof setTimeout> }>
 
   constructor() {
     this.cache = new Map()
@@ -59,7 +59,7 @@ Example 1:
     At t=100, key=1 expires.
     At t=150, get(1) is called but -1 is returned because the cache is empty.
 
-  Example 2:
+Example 2:
 
     Input:
     actions = ["TimeLimitedCache", "set", "set", "get", "get", "get", "count"]
@@ -72,6 +72,7 @@ Example 1:
     The value doesn't exist so false is returned.
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2620-counter]] [[leetcode/untagged/2623-memoize]] -->
+
     At t=40, a key-value pair (1: 50) is added with a time limit of 100ms.
     A non-expired value already existed so true is returned and the old value
     was overwritten.
@@ -81,4 +82,5 @@ Example 1:
     At t=200, get(1) is called but the cache is empty so -1 is returned.
     At t=250, count() returns 0 because the cache is empty.
 ```
+
 #leetcode

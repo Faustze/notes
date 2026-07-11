@@ -12,6 +12,7 @@
 > Например, если функция вызывается дважды: один вызов выполняется 2 единицы времени, а другой — 1 единицу, эксклюзивное время равно 2 + 1 = 3.
 > Верните эксклюзивное время каждой функции в виде массива, где значение по индексу i представляет эксклюзивное время функции с ID i.
 > Ограничения: - 1 <= n <= 100 - 2 <= logs.length <= 500 - 0 <= function_id < n - 0 <= timestamp <= 10^9 - Никакие два события start не произойдут в один и тот же момент времени.
+>
 > - Никакие два события end не произойдут в один и тот же момент времени.
 > - У каждой функции есть лог "end" для каждого лога "start".
 
@@ -168,7 +169,7 @@ Example 1:
     So function 0 spends 2 + 1 = 3 units of total time executing, and function 1 spends
     4 units of total time executing.
 
-  Example 2:
+Example 2:
 
     Input: n = 1, logs = ["0:start:0","0:start:2","0:end:5","0:start:6","0:end:6","0:end:7"]
     Output: [8]
@@ -181,7 +182,7 @@ Example 1:
     Function 0 (initial call) resumes execution at the beginning of time 7 and executes for 1 unit of time.
     So function 0 spends 2 + 4 + 1 + 1 = 8 units of total time executing.
 
-  Example 3:
+Example 3:
 
     Input: n = 2, logs = ["0:start:0","0:start:2","0:end:5","1:start:6","1:end:6","0:end:7"]
     Output: [7,1]

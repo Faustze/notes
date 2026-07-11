@@ -31,7 +31,7 @@ Example 1:
     callPolyfill sets the "this" context to { "a": 5 }. 7 is passed as an
     argument.
 
-  Example 2:
+Example 2:
 
     Input:
     fn = function tax(price, taxRate) {

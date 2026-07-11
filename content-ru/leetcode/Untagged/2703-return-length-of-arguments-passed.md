@@ -17,7 +17,7 @@ function argumentsLength(...args: JSONValue[]): number {
 
 console.log(argumentsLength(1, 2, 3)) // 3
 console.log(argumentsLength(5)) // 1
-console.log(argumentsLength({}, null, '3')) // 3
+console.log(argumentsLength({}, null, "3")) // 3
 ```
 
 ```md
@@ -30,7 +30,7 @@ Example 1:
 
     One value was passed to the function so it should return 1.
 
-  Example 2:
+Example 2:
 
     Input: args = [{}, null, "3"]
     Output: 3

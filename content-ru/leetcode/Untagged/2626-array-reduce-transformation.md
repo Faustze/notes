@@ -40,7 +40,7 @@ Example 1:
     (6) + nums[3] = 10
     The final answer is 10.
 
-  Example 2:
+Example 2:
 
     Input:
     nums = [1,2,3,4]
@@ -55,9 +55,10 @@ Example 1:
     (114) + nums[3] * nums[3] = 130
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2623-memoize]] [[leetcode/untagged/2627-debounce]] -->
+
     The final answer is 130.
 
-  Example 3:
+Example 3:
 
     Input:
     nums = []
@@ -67,4 +68,5 @@ Example 1:
     Explanation:
     For empty arrays, the answer is always init.
 ```
+
 #leetcode

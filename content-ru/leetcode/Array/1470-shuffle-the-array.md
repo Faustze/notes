@@ -6,12 +6,12 @@
 
 ```ts
 function shuffle(nums: number[], n: number): number[] {
-  const result = new Array(n * 2);
+  const result = new Array(n * 2)
   for (let i = 0; i < n; i++) {
-    result[i * 2] = nums[i];
-    result[i * 2 + 1] = nums[i + n];
+    result[i * 2] = nums[i]
+    result[i * 2 + 1] = nums[i + n]
   }
-  return result;
+  return result
 }
 
 // Local check:
@@ -27,12 +27,12 @@ Example 1:
     Output: [2,3,5,4,1,7]
     Explanation: Since x1=2, x2=5, x3=1, y1=3, y2=4, y3=7 then the answer is [2,3,5,4,1,7].
 
-  Example 2:
+Example 2:
 
     Input: nums = [1,2,3,4,4,3,2,1], n = 4
     Output: [1,4,2,3,3,2,4,1]
 
-  Example 3:
+Example 3:
 
     Input: nums = [1,1,2,2], n = 2
     Output: [1,2,1,2]

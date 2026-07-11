@@ -18,9 +18,18 @@ function sortBy(arr: JSONValue[], fn: Fn): JSONValue[] {
 }
 
 // Local check:
-console.log(sortBy([5, 4, 1, 2, 3], x => x as number)) // [1, 2, 3, 4, 5]
-console.log(sortBy([{ x: 1 }, { x: 0 }, { x: -1 }], d => (d as { x: number }).x)) // [{ x: -1 }, { x: 0 }, { x: 1 }]
-console.log(sortBy([[3, 4], [5, 2], [10, 1]], x => (x as number[])[1])) // [[10, 1], [5, 2], [3, 4]]
+console.log(sortBy([5, 4, 1, 2, 3], (x) => x as number)) // [1, 2, 3, 4, 5]
+console.log(sortBy([{ x: 1 }, { x: 0 }, { x: -1 }], (d) => (d as { x: number }).x)) // [{ x: -1 }, { x: 0 }, { x: 1 }]
+console.log(
+  sortBy(
+    [
+      [3, 4],
+      [5, 2],
+      [10, 1],
+    ],
+    (x) => (x as number[])[1],
+  ),
+) // [[10, 1], [5, 2], [3, 4]]
 ```
 
 ```md
@@ -31,14 +40,14 @@ Example 1:
     Explanation:
     fn simply returns the number passed to it so the array is sorted in ascending order.
 
-  Example 2:
+Example 2:
 
     Input: arr = [{"x": 1}, {"x": 0}, {"x": -1}], fn = (d) => d.x
     Output: [{"x": -1}, {"x": 0}, {"x": 1}]
     Explanation:
     fn returns the value for the "x" key. So the array is sorted based on that value.
 
-  Example 3:
+Example 3:
 
     Input: arr = [[3, 4], [5, 2], [10, 1]], fn = (x) => x[1]
     Output: [[10, 1], [5, 2], [3, 4]]

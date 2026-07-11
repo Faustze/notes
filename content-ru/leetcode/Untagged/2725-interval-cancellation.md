@@ -15,7 +15,7 @@ function cancellable(fn: Fn, args: JSONValue[], t: number): Function {
 }
 
 // Local check
-const result: { time: number, returned: JSONValue }[] = []
+const result: { time: number; returned: JSONValue }[] = []
 const fn = (...values: JSONValue[]) => Number(values[0]) * 2
 const args: JSONValue[] = [4]
 const t = 35
@@ -59,7 +59,7 @@ Example 1:
     6th fn call is at 175ms. fn(4) returns 8.
     Cancelled at 190ms.
 
-  Example 2:
+Example 2:
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2724-sort-by]] [[leetcode/untagged/2726-calculator-with-method-chaining]] -->
 
@@ -87,7 +87,7 @@ Example 1:
     6th fn call is at 150ms.
     Cancelled at 165ms.
 
-  Example 3:
+Example 3:
 
     Input: fn = (x1, x2, x3) => (x1 + x2 + x3), args = [5, 1, 3], t = 50
     Output:

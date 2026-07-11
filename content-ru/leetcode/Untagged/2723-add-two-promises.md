@@ -19,7 +19,7 @@ Example 1:
     The returned promise should resolve with a value of 2 + 5 = 7.
     The time the returned promise resolves is not judged for this problem.
 
-  Example 2:
+Example 2:
 
     Input:
     promise1 = new Promise(resolve => setTimeout(() => resolve(10), 50)),

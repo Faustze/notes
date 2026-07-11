@@ -46,7 +46,7 @@ Example 1:
     The cancellation was scheduled to occur after a delay of cancelTimeMs (50ms),
     which happened after the execution of fn(2) at 20ms.
 
-  Example 2:
+Example 2:
 
     Input: fn = (x) => x**2, args = [2], t = 100
     Output: []
@@ -58,7 +58,7 @@ Example 1:
     The cancellation was scheduled to occur after a delay of cancelTimeMs (50ms),
     which happened before the execution of fn(2) at 100ms, resulting in fn(2) never being called.
 
-  Example 3:
+Example 3:
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2703-return-length-of-arguments-passed]] [[leetcode/untagged/2721-execute-asynchronous-functions-in-parallel]] -->
 

@@ -7,8 +7,8 @@
 
 ```ts
 function isPalindrome(s: string): boolean {
-  const lc = s.toLocaleLowerCase().replace(/[^a-zA-Z\d]/g, "");
-  return lc === lc.split("").reverse().join("");
+  const lc = s.toLocaleLowerCase().replace(/[^a-zA-Z\d]/g, "")
+  return lc === lc.split("").reverse().join("")
 }
 ```
 
@@ -19,13 +19,13 @@ Example 1:
     Output: true
     Explanation: "amanaplanacanalpanama" is a palindrome.
 
-  Example 2:
+Example 2:
 
     Input: s = "race a car"
     Output: false
     Explanation: "raceacar" is not a palindrome.
 
-  Example 3:
+Example 3:
 
     Input: s = " "
     Output: true

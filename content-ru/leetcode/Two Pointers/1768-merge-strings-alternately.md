@@ -10,18 +10,16 @@
 function mergeAlternately(word1: string, word2: string): string {
   const result: string[] = []
   for (let i = 0; i < Math.max(word1.length, word2.length); i++) {
-    if (i < word1.length)
-      result.push(word1[i])
-    if (i < word2.length)
-      result.push(word2[i])
+    if (i < word1.length) result.push(word1[i])
+    if (i < word2.length) result.push(word2[i])
   }
-  return result.join('')
+  return result.join("")
 }
 
 // Local check:
-console.log(mergeAlternately('abc', 'pqr'))
-console.log(mergeAlternately('ab', 'pqrs'))
-console.log(mergeAlternately('abcd', 'pq'))
+console.log(mergeAlternately("abc", "pqr"))
+console.log(mergeAlternately("ab", "pqrs"))
+console.log(mergeAlternately("abcd", "pq"))
 ```
 
 ```md
@@ -34,7 +32,7 @@ Example 1:
       word2:    p   q   r
       merged: a p b q c r
 
-  Example 2:
+Example 2:
 
     Input: word1 = "ab", word2 = "pqrs"
     Output: "apbqrs"
@@ -43,7 +41,7 @@ Example 1:
       word2:    p   q   r   s
       merged: a p b q   r   s
 
-  Example 3:
+Example 3:
 
     Input: word1 = "abcd", word2 = "pq"
     Output: "apbqcd"

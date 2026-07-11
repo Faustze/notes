@@ -8,8 +8,8 @@
 
 ```typescript
 function isPalindrome(s: string): boolean {
-  const lc = s.toLocaleLowerCase().replace(/[^a-zA-Z\d]/g, "");
-  return lc === lc.split("").reverse().join("");
+  const lc = s.toLocaleLowerCase().replace(/[^a-zA-Z\d]/g, "")
+  return lc === lc.split("").reverse().join("")
 }
 
 /**
@@ -26,11 +26,11 @@ function isPalindrome(s: string): boolean {
 //   }
 //   return true;
 // }
-  
+
 // Local check:
-console.log(isPalindrome("A man, a plan, a canal: Panama"));
-console.log(isPalindrome("race a car"));
-console.log(isPalindrome(" "));
+console.log(isPalindrome("A man, a plan, a canal: Panama"))
+console.log(isPalindrome("race a car"))
+console.log(isPalindrome(" "))
 ```
 
 ```md

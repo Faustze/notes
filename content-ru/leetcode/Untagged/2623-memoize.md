@@ -54,7 +54,7 @@ Example 1:
     memoizedSum(1, 2); // "call" - returns 3. sum() was called as (1, 2) was not seen before.
     // "getCallCount" - total call count: 2
 
-  Example 2:
+Example 2:
 
     Input:
     fnName = "factorial"
@@ -62,6 +62,7 @@ Example 1:
     values = [[2],[3],[2],[],[3],[]]
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2622-cache-with-time-limit]] [[leetcode/untagged/2626-array-reduce-transformation]] -->
+
     Output: [2,6,2,2,6,2]
     Explanation:
     const factorial = (n) => (n <= 1) ? 1 : (nfactorial(n - 1));
@@ -73,7 +74,7 @@ Example 1:
     memoFactorial(3); // "call" - returns 6. However factorial was not called because 3 was seen before.
     // "getCallCount" - total call count: 2
 
-  Example 3:
+Example 3:
 
     Input:
     fnName = "fib"
@@ -84,4 +85,5 @@ Example 1:
     fib(5) = 8 // "call"
     // "getCallCount" - total call count: 1
 ```
+
 #leetcode

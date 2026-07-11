@@ -14,63 +14,63 @@
 
 ```ts
 class ListNode {
-  val: number;
-  next: ListNode | null;
+  val: number
+  next: ListNode | null
   constructor(val?: number, next?: ListNode | null) {
-    this.val = val === undefined ? 0 : val;
-    this.next = next === undefined ? null : next;
+    this.val = val === undefined ? 0 : val
+    this.next = next === undefined ? null : next
   }
 }
-  
+
 function hasCycle(head: ListNode | null): boolean {
   // Floyd's Cycle Detection
-  let slow: ListNode | null = head;
-  let fast: ListNode | null = head;
-  
+  let slow: ListNode | null = head
+  let fast: ListNode | null = head
+
   while (fast !== null && fast.next !== null) {
-    slow = slow!.next;
-    fast = fast.next.next;
-    if (fast === slow) return true;
+    slow = slow!.next
+    fast = fast.next.next
+    if (fast === slow) return true
   }
-  
-  return false;
+
+  return false
 }
 
 function toList(arr: number[], pos: number): ListNode | null {
-  if (arr.length === 0) return null;
-  const nodes = arr.map((v) => new ListNode(v));
+  if (arr.length === 0) return null
+  const nodes = arr.map((v) => new ListNode(v))
 
   for (let i = 0; i < nodes.length - 1; i++) {
-    nodes[i].next = nodes[i + 1];
+    nodes[i].next = nodes[i + 1]
   }
   if (pos >= 0 && pos < nodes.length) {
-    nodes[nodes.length - 1].next = nodes[pos];
+    nodes[nodes.length - 1].next = nodes[pos]
   }
-  return nodes[0];
+  return nodes[0]
 }
 
 // Local check:
-console.log(hasCycle(toList([3, 2, 0, -4], 1))); // true
-console.log(hasCycle(toList([1, 2], 0))); // true
-console.log(hasCycle(toList([1], -1))); // false
-console.log(hasCycle(toList([], -1))); // false
-console.log(hasCycle(toList([1, 2, 3, 4, 5], -1))); // false
-console.log(hasCycle(toList([1, 2, 3, 4, 5], 4))); // true (tail → last node itself)
+console.log(hasCycle(toList([3, 2, 0, -4], 1))) // true
+console.log(hasCycle(toList([1, 2], 0))) // true
+console.log(hasCycle(toList([1], -1))) // false
+console.log(hasCycle(toList([], -1))) // false
+console.log(hasCycle(toList([1, 2, 3, 4, 5], -1))) // false
+console.log(hasCycle(toList([1, 2, 3, 4, 5], 4))) // true (tail → last node itself)
 ```
 
 ```md
 Example 1:
-    Input: head = [3,2,0,-4], pos = 1
-    Output: true
-    Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
 Example 2:
-    Input: head = [1,2], pos = 0
-    Output: true
-    Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
+Input: head = [1,2], pos = 0
+Output: true
+Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
 Example 3:
-    Input: head = [1], pos = -1
-    Output: false
-    Explanation: There is no cycle in the linked list.
+Input: head = [1], pos = -1
+Output: false
+Explanation: There is no cycle in the linked list.
 ```
 
 [[leetcode/Hash Table/index|hash-table]]

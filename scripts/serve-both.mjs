@@ -18,7 +18,9 @@ const server = http.createServer((req, res) => handler(req, res, { public: "publ
 server.on("error", (err) => {
   if (err.code === "EADDRINUSE") {
     console.error(`\nPort ${PORT} is already in use — probably a previous serve:all still running.`)
-    console.error(`Find it with 'lsof -i :${PORT}' and kill it, or run with a different port: PORT=8082 npm run serve:all`)
+    console.error(
+      `Find it with 'lsof -i :${PORT}' and kill it, or run with a different port: PORT=8082 npm run serve:all`,
+    )
     process.exit(1)
   }
   throw err

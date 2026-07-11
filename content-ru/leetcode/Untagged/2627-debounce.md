@@ -23,11 +23,11 @@ function debounce(fn: F, t: number): F {
 }
 
 const log = debounce(console.log, 100)
-log('Hello') // cancelled
-console.log('1')
-log('Hello') // cancelled
-console.log('2')
-log('Hello') // Logged at t=100ms
+log("Hello") // cancelled
+console.log("1")
+log("Hello") // cancelled
+console.log("2")
+log("Hello") // Logged at t=100ms
 ```
 
 ```md
@@ -45,7 +45,7 @@ Example 1:
     before 100ms. The 2nd call is delayed by 50ms and executed at 125ms.
     The inputs were (2).
 
-  Example 2:
+Example 2:
 
     Input:
     t = 20
@@ -58,7 +58,7 @@ Example 1:
     The 1st call is delayed until 70ms. The inputs were (1).
     The 2nd call is delayed until 120ms. The inputs were (2).
 
-  Example 3:
+Example 3:
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2626-array-reduce-transformation]] [[leetcode/untagged/2629-function-composition]] -->
 
@@ -75,4 +75,5 @@ Example 1:
     The 2nd call is cancelled by the 3rd call.
     The 3rd call is delayed by 150ms and ran at 450ms. The inputs were (5, 6).
 ```
+
 #leetcode
