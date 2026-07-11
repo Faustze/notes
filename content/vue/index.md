@@ -1,7 +1,11 @@
 ---
 title: vue
 ---
-[[vue/Internals/index|internals]]
-[[vue/Internals/Compiler|Compiler]]
-[[vue/Internals/Reactivity|Reactivity]]
-#vue 
+
+# Vue
+
+- [[vue/Internals/index|Internals]]
+  - [[vue/Internals/Compiler|Compiler]]
+  - [[vue/Internals/Reactivity|Reactivity]]
+
+#vue

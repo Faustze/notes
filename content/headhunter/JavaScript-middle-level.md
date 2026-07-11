@@ -78,5 +78,5 @@ console.log(count)
 ==->Строку можно изменять==
 
 [[headhunter/index]]
-[[headhunter/javascript-easy-level]]
+[[headhunter/JavaScript-easy-level]]
 #hh

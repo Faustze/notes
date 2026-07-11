@@ -46,7 +46,7 @@ console.log(finalPrices([8, 4, 6, 2, 3]));
 console.log(finalPrices([1, 2, 3, 4, 5]));
 console.log(finalPrices([10, 1, 1, 6]));
 
-<!-- [[leetcode/array]] [[leetcode/array/1470-shuffle-the-array]] [[leetcode/array/150-evaluate-reverse-polish-notation]] -->
+<!-- [[leetcode/array]] [[leetcode/Array/1470-shuffle-the-array]] [[leetcode/Array/150-evaluate-reverse-polish-notation]] -->
 ```
 
 ```md
@@ -68,8 +68,8 @@ Example 2:
     Output: [9,0,1,6]
 ```
 
-[[leetcode/array/1470-shuffle-the-array]]
-[[leetcode/array/150-evaluate-reverse-polish-notation]]
+[[leetcode/Array/1470-shuffle-the-array]]
+[[leetcode/Array/150-evaluate-reverse-polish-notation]]
 [[leetcode/Array/739-daily-temperatures|739 — тот же monotonic stack]]
 [[leetcode/Patterns/index|patterns]]
 #leetcode

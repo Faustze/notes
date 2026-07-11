@@ -2,8 +2,11 @@
 title: internals
 ---
 
-[[vue/index|vue]]
+# Internals
 
-[[vue/Internals/Compiler|Compiler]]
-[[vue/Internals/Reactivity|Reactivity]]
+[[vue/index|← Vue]]
+
+- [[vue/Internals/Compiler|Compiler]]
+- [[vue/Internals/Reactivity|Reactivity]]
+
 #vue

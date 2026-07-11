@@ -66,6 +66,6 @@ Example 1:
     = 22
 ```
 
-[[leetcode/array/1475-final-prices-with-a-special-discount-in-a-shop]]
-[[leetcode/array/268-missing-number]]
+[[leetcode/Array/1475-final-prices-with-a-special-discount-in-a-shop]]
+[[leetcode/Array/268-missing-number]]
 #leetcode

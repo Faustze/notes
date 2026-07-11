@@ -196,6 +196,6 @@ Example 1:
     1 unit of total time executing.
 ```
 
-[[leetcode/array/605-can-place-flowers]]
-[[leetcode/array/645-set-mismatch]]
+[[leetcode/Array/605-can-place-flowers]]
+[[leetcode/Array/645-set-mismatch]]
 #leetcode

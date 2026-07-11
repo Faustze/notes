@@ -38,6 +38,6 @@ Example 1:
     Output: [1,2,1,2]
 ```
 
-[[leetcode/array/1441-build-an-array-with-stack-operations]]
-[[leetcode/array/1475-final-prices-with-a-special-discount-in-a-shop]]
+[[leetcode/Array/1441-build-an-array-with-stack-operations]]
+[[leetcode/Array/1475-final-prices-with-a-special-discount-in-a-shop]]
 #leetcode

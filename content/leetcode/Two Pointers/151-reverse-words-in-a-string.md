@@ -42,6 +42,6 @@ Example 1:
 ```
 
 [[leetcode/Two Pointers/index|two-pointers]]
-[[leetcode/two-pointers/125-valid-palindrome]]
-[[leetcode/two-pointers/1768-merge-strings-alternately]]
+[[leetcode/Two-Pointers/125-valid-palindrome]]
+[[leetcode/Two-Pointers/1768-merge-strings-alternately]]
 #leetcode

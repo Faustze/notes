@@ -51,6 +51,6 @@ Example 1:
 ```
 
 [[leetcode/Two Pointers/index|two-pointers]]
-[[leetcode/two-pointers/1768-merge-strings-alternately]]
+[[leetcode/Two-Pointers/1768-merge-strings-alternately]]
 [[leetcode/Two Pointers/392-is-subsequence|392-is-subsequence]]
 #leetcode

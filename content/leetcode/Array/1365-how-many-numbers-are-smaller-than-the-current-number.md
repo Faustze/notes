@@ -48,5 +48,5 @@ Example 1:
     Output: [0,0,0,0]
 ```
 
-[[leetcode/array/1431-kids-with-the-greatest-number-of-candies]]
+[[leetcode/Array/1431-kids-with-the-greatest-number-of-candies]]
 #leetcode

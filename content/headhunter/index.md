@@ -1,5 +1,8 @@
 ---
 title: headhunter
 ---
-[[headhunter/javascript-easy-level]]
-[[headhunter/javascript-middle-level]]
+
+# HeadHunter
+
+- [[headhunter/JavaScript-easy-level|JavaScript — Easy]]
+- [[headhunter/JavaScript-middle-level|JavaScript — Middle]]

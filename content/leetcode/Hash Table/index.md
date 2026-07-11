@@ -1,6 +1,12 @@
 ---
 title: hash-table
 ---
-[[leetcode/index]]
-[[hash-table/141-linked-list-cycle]]
+
+# Hash Table
+
+[[leetcode/index|← LeetCode]]
+
+- [[Hash-Table/141-linked-list-cycle]]
+- [[Hash-Table/242-valid-anagram]]
+
 #leetcode

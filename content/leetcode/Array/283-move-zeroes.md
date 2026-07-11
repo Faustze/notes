@@ -39,6 +39,6 @@ Example 2:
     Output: [0]
 ```
 
-[[leetcode/array/268-missing-number]]
-[[leetcode/array/448-find-all-numbers-disappeared-in-an-array]]
+[[leetcode/Array/268-missing-number]]
+[[leetcode/Array/448-find-all-numbers-disappeared-in-an-array]]
 #leetcode

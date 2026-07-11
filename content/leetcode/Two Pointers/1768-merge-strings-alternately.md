@@ -54,6 +54,6 @@ Example 1:
 ```
 
 [[leetcode/Two Pointers/index|two-pointers]]
-[[leetcode/two-pointers/151-reverse-words-in-a-string]]
-[[leetcode/two-pointers/345-reverse-vowels-of-a-string]]
+[[leetcode/Two-Pointers/151-reverse-words-in-a-string]]
+[[leetcode/Two-Pointers/345-reverse-vowels-of-a-string]]
 #leetcode

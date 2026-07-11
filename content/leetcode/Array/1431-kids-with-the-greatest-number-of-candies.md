@@ -51,7 +51,7 @@ Example 1:
     Input: candies = [4,2,1,1,2], extraCandies = 1
     Output: [true,false,false,false,false]
 
-<!-- [[leetcode/array]] [[leetcode/array/1365-how-many-numbers-are-smaller-than-the-current-number]] [[leetcode/array/1441-build-an-array-with-stack-operations]] -->
+<!-- [[leetcode/array]] [[leetcode/Array/1365-how-many-numbers-are-smaller-than-the-current-number]] [[leetcode/Array/1441-build-an-array-with-stack-operations]] -->
     Explanation: There is only 1 extra candy.
       Kid 1 will always have the greatest number of candies, even if a different
       kid is given the extra candy.
@@ -62,6 +62,6 @@ Example 1:
     Output: [true,false,true]
 ```
 
-[[leetcode/array/1365-how-many-numbers-are-smaller-than-the-current-number]]
-[[leetcode/array/1441-build-an-array-with-stack-operations]]
+[[leetcode/Array/1365-how-many-numbers-are-smaller-than-the-current-number]]
+[[leetcode/Array/1441-build-an-array-with-stack-operations]]
 #leetcode

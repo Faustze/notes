@@ -42,6 +42,6 @@ Example 1:
     Output: [2]
 ```
 
-[[leetcode/array/283-move-zeroes]]
-[[leetcode/array/485-max-consecutive-ones]]
+[[leetcode/Array/283-move-zeroes]]
+[[leetcode/Array/485-max-consecutive-ones]]
 #leetcode

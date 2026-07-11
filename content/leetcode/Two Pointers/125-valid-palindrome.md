@@ -34,6 +34,6 @@ Example 1:
 ```
 
 [[leetcode/Two Pointers/index|two-pointers]]
-[[leetcode/two-pointers/151-reverse-words-in-a-string]]
+[[leetcode/Two-Pointers/151-reverse-words-in-a-string]]
 [[leetcode/RegExp/easy/125-Valid-Palindrome|та же задача через RegExp]]
 #leetcode

@@ -44,7 +44,7 @@ Example 1:
     Explanation: The number 1 appears twice and the number 2 is missing.
 ```
 
-[[leetcode/array/636-exclusive-time-of-functions]]
-[[leetcode/array/739-daily-temperatures]]
+[[leetcode/Array/636-exclusive-time-of-functions]]
+[[leetcode/Array/739-daily-temperatures]]
 [[leetcode/Array/217-contains-duplicate|217 — то же set-семейство]]
 #leetcode

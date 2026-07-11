@@ -2,6 +2,10 @@
 title: string
 ---
 
-[[leetcode/index]]
-[[string/1071-greatest-common-divisor-of-strings]]
+# String
+
+[[leetcode/index|← LeetCode]]
+
+- [[String/1071-greatest-common-divisor-of-strings]]
+
 #leetcode

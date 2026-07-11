@@ -49,5 +49,5 @@ Example 1:
     Output: 2
 ```
 
-[[leetcode/binary-tree/index]]
+[[leetcode/Binary-Tree/index]]
 #leetcode

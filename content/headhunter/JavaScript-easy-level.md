@@ -66,5 +66,5 @@ console.log(0 == false);
 ==-> true==
 
 [[headhunter/index]]
-[[headhunter/javascript-middle-level]]
+[[headhunter/JavaScript-middle-level]]
 #hh

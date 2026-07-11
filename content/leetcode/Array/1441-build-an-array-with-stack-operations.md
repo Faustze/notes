@@ -51,7 +51,7 @@ console.log(buildArray([1, 2], 4))
 console.log(buildArray([1,2,3], 3))
 ```
 
-<!-- [[leetcode/array]] [[leetcode/array/1431-kids-with-the-greatest-number-of-candies]] [[leetcode/array/1470-shuffle-the-array]] -->
+<!-- [[leetcode/array]] [[leetcode/Array/1431-kids-with-the-greatest-number-of-candies]] [[leetcode/Array/1470-shuffle-the-array]] -->
 
 ```md
 Example 1:
@@ -84,6 +84,6 @@ Example 1:
     The answers that read integer 3 from the stream are not accepted.
 ```
 
-[[leetcode/array/1431-kids-with-the-greatest-number-of-candies]]
-[[leetcode/array/1470-shuffle-the-array]]
+[[leetcode/Array/1431-kids-with-the-greatest-number-of-candies]]
+[[leetcode/Array/1470-shuffle-the-array]]
 #leetcode

@@ -44,6 +44,6 @@ Example 1:
     Output: false
 ```
 
-[[leetcode/array/485-max-consecutive-ones]]
-[[leetcode/array/636-exclusive-time-of-functions]]
+[[leetcode/Array/485-max-consecutive-ones]]
+[[leetcode/Array/636-exclusive-time-of-functions]]
 #leetcode

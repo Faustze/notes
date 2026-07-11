@@ -142,5 +142,14 @@ const WORD_BOUNDARY_SPLIT = /\b/;
 - Жадные квантификаторы (`*`, `+`) могут "захватить" больше, чем ожидаешь — проверяй на `lazy` (`*?`, `+?`).
 - Regex не умеет считать вложенность (скобки, теги) — для этого нужен парсер/стек (см. LeetCode 394, 10).
 
-[[leetcode/index]]
+---
+
+[[leetcode/index|← LeetCode]]
+
+## Задачи по сложности
+
+- [[leetcode/RegExp/easy/index|Easy]]
+- [[leetcode/RegExp/medium/index|Medium]]
+- [[leetcode/RegExp/hard/index|Hard]]
+
 #leetcode

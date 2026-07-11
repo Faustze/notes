@@ -41,7 +41,7 @@ Example 1:
     8 is the missing number in the range since it does not appear in nums.
 ```
 
-[[leetcode/array/150-evaluate-reverse-polish-notation]]
-[[leetcode/array/283-move-zeroes]]
+[[leetcode/Array/150-evaluate-reverse-polish-notation]]
+[[leetcode/Array/283-move-zeroes]]
 [[leetcode/Array/217-contains-duplicate|217 — то же set-семейство]]
 #leetcode
