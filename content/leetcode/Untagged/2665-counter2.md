@@ -1,7 +1,6 @@
 # 2665. Counter II (?) (<https://leetcode.com/problems/counter-ii>)
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2637-promise-time-limit]] [[leetcode/untagged/2666-allow-one-fn-call]] -->
-
 > Write a function createCounter.
 > It should accept an initial integer init.
 > It should return an object with three functions.
@@ -10,6 +9,12 @@
 > - reset() sets the current value to init and then returns it.
 
 ```ts
+interface Counter {
+  increment: () => number
+  decrement: () => number
+  reset: () => number
+}
+
 function createCounter(init: number): Counter {
   let value = init
 
@@ -44,4 +49,5 @@ Example 1:
     counter.reset(); // 0
     counter.reset(); // 0
 ```
+
 #leetcode

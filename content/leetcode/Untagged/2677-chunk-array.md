@@ -61,9 +61,9 @@ Example 1:
   Example 4:
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2666-allow-one-fn-call]] [[leetcode/untagged/2693-call-function-with-custom-context]] -->
-
     Input: arr = [], size = 1
     Output: []
     Explanation: There are no elements to be chunked so an empty array is returned.
 ```
+
 #leetcode

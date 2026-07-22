@@ -10,6 +10,23 @@ function isPalindrome(s: string): boolean {
   const lc = s.toLocaleLowerCase().replace(/[^a-zA-Z\d]/g, "");
   return lc === lc.split("").reverse().join("");
 }
+
+// function isPalindrome(s: string): boolean {
+//   const lc = s.toLowerCase().replace(/[^a-z0-9]/g, "");
+//   let i = 0,
+//     j = lc.length - 1;
+//   while (i < j) {
+//     if (lc[i] !== lc[j]) return false;
+//     i++;
+//     j--;
+//   }
+//   return true;
+// }
+
+// Local check:
+console.log(isPalindrome("A man, a plan, a canal: Panama"));
+console.log(isPalindrome("race a car"));
+console.log(isPalindrome(" "));
 ```
 
 ```md

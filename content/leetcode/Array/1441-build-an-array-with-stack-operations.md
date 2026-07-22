@@ -52,7 +52,6 @@ console.log(buildArray([1,2,3], 3))
 ```
 
 <!-- [[leetcode/array]] [[leetcode/Array/1431-kids-with-the-greatest-number-of-candies]] [[leetcode/Array/1470-shuffle-the-array]] -->
-
 ```md
 Example 1:
 

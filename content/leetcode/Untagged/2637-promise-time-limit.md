@@ -7,16 +7,6 @@
 > Constraints: - 0 <= inputs.length <= 10 - 0 <= t <= 1000 - fn returns a promise
 
 ```ts
-function should resolve with the result.
-  - If the execution of fn exceeds the time limit, the time limited function
-    should reject with the string "Time Limit Exceeded".
-
-  Constraints:
-  - 0 <= inputs.length <= 10
-  - 0 <= t <= 1000
-  - fn returns a promise
-*/
-
 type Fn = (...params: any[]) => Promise<any>
 
 function timeLimit(fn: Fn, t: number): Fn {
@@ -62,7 +52,6 @@ Example 1:
     The function resolved 5 * 5 = 25 at t=100ms. The time limit is never reached.
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2631-group-by]] [[leetcode/untagged/2665-counter2]] -->
-
   Example 3:
 
     Input:
@@ -88,4 +77,5 @@ Example 1:
     Explanation:
     The function immediately throws an error.
 ```
+
 #leetcode

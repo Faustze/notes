@@ -53,7 +53,6 @@ Example 1:
     (101) + nums[1] * nums[1] = 105
     (105) + nums[2] * nums[2] = 114
     (114) + nums[3] * nums[3] = 130
-
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2623-memoize]] [[leetcode/untagged/2627-debounce]] -->
     The final answer is 130.
 
@@ -67,4 +66,5 @@ Example 1:
     Explanation:
     For empty arrays, the answer is always init.
 ```
+
 #leetcode

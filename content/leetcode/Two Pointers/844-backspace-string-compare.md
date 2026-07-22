@@ -8,49 +8,52 @@
 
 ```ts
 function backspaceCompare(s: string, t: string): boolean {
-  const process = (str: string) =>
-    str
-      .split("")
-      .reduce<string[]>((stack, ch) => {
-        ch === "#" ? stack.pop() : stack.push(ch);
-        return stack;
-      }, [])
-      .join("");
-  return process(s) === process(t);
+  const process = (str: string) =>
+    str
+      .split("")
+      .reduce<string[]>((stack, ch) => {
+        ch === "#" ? stack.pop() : stack.push(ch);
+        return stack;
+      }, [])
+      .join("");
+
+  return process(s) === process(t);
 }
 
 // interview
 function backspaceCompare2(s: string, t: string): boolean {
-  let i = s.length - 1;
-  let j = t.length - 1;
-  let skipS = 0;
-  let skipT = 0;
+  let i = s.length - 1;
+  let j = t.length - 1;
+  let skipS = 0;
+  let skipT = 0;
 
-  while (i >= 0 || j >= 0) {
-    while (i >= 0) {
-      if (s[i] === "#") {
-        skipS++;
-        i--;
-      } else if (skipS > 0) {
-        skipS--;
-        i--;
-      } else break;
-    }
-    
-    while (j >= 0) {
-      if (t[j] === "#") {
-        skipT++;
-        j--;
-      } else if (skipT > 0) {
-        skipT--;
-        j--;
-      } else break;
-    }
-    if (s[i] !== t[j]) return false;
-    i--;
-    j--;
-  }
-  return true;
+  while (i >= 0 || j >= 0) {
+    while (i >= 0) {
+      if (s[i] === "#") {
+        skipS++;
+        i--;
+      } else if (skipS > 0) {
+        skipS--;
+        i--;
+      } else break;
+    }
+
+    while (j >= 0) {
+      if (t[j] === "#") {
+        skipT++;
+        j--;
+      } else if (skipT > 0) {
+        skipT--;
+        j--;
+      } else break;
+    }
+
+    if (s[i] !== t[j]) return false;
+    i--;
+    j--;
+  }
+
+  return true;
 }
 
 // Local check:
@@ -61,17 +64,22 @@ console.log(backspaceCompare("a#c", "b"));
 
 ```md
 Example 1:
-    Input: s = "ab#c", t = "ad#c"
-    Output: true
-    Explanation: Both s and t become "ac".
-Example 2:
-    Input: s = "ab##", t = "c#d#"
-    Output: true
-    Explanation: Both s and t become "".
-Example 3:
-    Input: s = "a#c", t = "b"
-    Output: false
-    Explanation: s becomes "c" while t becomes "b".
+
+    Input: s = "ab#c", t = "ad#c"
+    Output: true
+    Explanation: Both s and t become "ac".
+
+  Example 2:
+
+    Input: s = "ab##", t = "c#d#"
+    Output: true
+    Explanation: Both s and t become "".
+
+  Example 3:
+
+    Input: s = "a#c", t = "b"
+    Output: false
+    Explanation: s becomes "c" while t becomes "b".
 ```
 
 [[leetcode/Two Pointers/index|two-pointers]]

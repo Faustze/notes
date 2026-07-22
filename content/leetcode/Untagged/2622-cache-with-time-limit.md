@@ -40,6 +40,15 @@ class TimeLimitedCache {
     return this.cache.size
   }
 }
+
+
+const timeLimitedCache = new TimeLimitedCache()
+setTimeout(() => console.log(timeLimitedCache.set(1, 42, 50)), 0) // false
+setTimeout(() => console.log(timeLimitedCache.set(1, 50, 100)), 40) // true
+setTimeout(() => console.log(timeLimitedCache.get(1)), 50) // 50
+setTimeout(() => console.log(timeLimitedCache.get(1)), 120)// 50
+setTimeout(() => console.log(timeLimitedCache.get(1)), 200) // -1
+setTimeout(() => console.log(timeLimitedCache.count()), 250) // 0
 ```
 
 ```md
@@ -70,7 +79,6 @@ Example 1:
     At t=0, the cache is constructed.
     At t=0, a key-value pair (1: 42) is added with a time limit of 50ms.
     The value doesn't exist so false is returned.
-
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2620-counter]] [[leetcode/untagged/2623-memoize]] -->
     At t=40, a key-value pair (1: 50) is added with a time limit of 100ms.
     A non-expired value already existed so true is returned and the old value
@@ -81,4 +89,5 @@ Example 1:
     At t=200, get(1) is called but the cache is empty so -1 is returned.
     At t=250, count() returns 0 because the cache is empty.
 ```
+
 #leetcode

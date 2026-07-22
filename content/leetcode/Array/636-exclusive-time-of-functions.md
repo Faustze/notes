@@ -16,31 +16,6 @@
 > - Each function has an "end" log for each "start" log.
 
 ```ts
-function starts or ends, we write a log with the ID, whether it started or ended, and the timestamp.
-
-  You are given a list logs, where logs[i] represents the ith log message formatted as a string
-  "{function_id}:{"start" | "end"}:{timestamp}". For example, "0:start:3" means a function call
-  with function ID 0 started at the beginning of timestamp 3, and "1:end:2" means a function call
-  with function ID 1 ended at the end of timestamp 2. Note that a function can be called multiple
-  times, possibly recursively.
-
-  A function's exclusive time is the sum of execution times for all function calls in the program.
-  For example, if a function is called twice, one call executing for 2 time units and another call
-  executing for 1 time unit, the exclusive time is 2 + 1 = 3.
-
-  Return the exclusive time of each function in an array, where the value at the ith index
-  represents the exclusive time for the function with ID i.
-
-  Constraints:
-  - 1 <= n <= 100
-  - 2 <= logs.length <= 500
-  - 0 <= function_id < n
-  - 0 <= timestamp <= 10^9
-  - No two start events will happen at the same timestamp.
-  - No two end events will happen at the same timestamp.
-  - Each function has an "end" log for each "start" log.
-*/
-
 function exclusiveTime(n: number, logs: string[]): number[] {
   // Стек хранит ID функций, которые сейчас "в работе" (ещё не завершились).
   // Вершина стека — текущая выполняемая функция.

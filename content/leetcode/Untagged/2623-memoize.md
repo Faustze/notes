@@ -60,7 +60,6 @@ Example 1:
     fnName = "factorial"
     actions = ["call","call","call","getCallCount","call","getCallCount"]
     values = [[2],[3],[2],[],[3],[]]
-
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2622-cache-with-time-limit]] [[leetcode/untagged/2626-array-reduce-transformation]] -->
     Output: [2,6,2,2,6,2]
     Explanation:
@@ -84,4 +83,5 @@ Example 1:
     fib(5) = 8 // "call"
     // "getCallCount" - total call count: 1
 ```
+
 #leetcode

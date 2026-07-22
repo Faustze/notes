@@ -7,17 +7,6 @@
 > Constraints: - -1000 <= x <= 1000 - 0 <= functions.length <= 1000 - all functions accept and return a single integer
 
 ```ts
-function f(x) = x.
-
-  You may assume each function in the array accepts one integer as input and
-  returns one integer as output.
-
-  Constraints:
-  - -1000 <= x <= 1000
-  - 0 <= functions.length <= 1000
-  - all functions accept and return a single integer
-*/
-
 type Fn = (x: number) => number
 
 function compose(functions: Fn[]): Fn {
@@ -53,7 +42,6 @@ Example 1:
     Explanation:
     Evaluating from right to left ...
     10 * 1 = 10
-
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2627-debounce]] [[leetcode/untagged/2631-group-by]] -->
     10 * 10 = 100
     10 * 100 = 1000
@@ -67,4 +55,5 @@ Example 1:
     Explanation:
     The composition of zero functions is the identity function.
 ```
+
 #leetcode

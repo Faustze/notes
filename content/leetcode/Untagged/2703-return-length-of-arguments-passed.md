@@ -1,7 +1,6 @@
 # 2703. Return Length of Arguments Passed (Easy) (<https://leetcode.com/problems/return-length-of-arguments-passed/>)
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2693-call-function-with-custom-context]] [[leetcode/untagged/2715-timeout-cancellation]] -->
-
 > Write a function argumentsLength that returns the count of arguments passed to it.
 > Constraints: - args is a valid JSON array - 0 <= args.length <= 100
 

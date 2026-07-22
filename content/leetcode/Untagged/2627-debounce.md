@@ -33,6 +33,7 @@ log('Hello') // Logged at t=100ms
 ```md
 Example 1:
 
+<!-- [[leetcode/untagged]] [[leetcode/untagged/2626-array-reduce-transformation]] [[leetcode/untagged/2629-function-composition]] -->
     Input:
     t = 50
     calls = [
@@ -60,8 +61,6 @@ Example 1:
 
   Example 3:
 
-<!-- [[leetcode/untagged]] [[leetcode/untagged/2626-array-reduce-transformation]] [[leetcode/untagged/2629-function-composition]] -->
-
     Input:
     t = 150
     calls = [
@@ -75,4 +74,5 @@ Example 1:
     The 2nd call is cancelled by the 3rd call.
     The 3rd call is delayed by 150ms and ran at 450ms. The inputs were (5, 6).
 ```
+
 #leetcode
