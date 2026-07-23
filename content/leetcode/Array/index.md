@@ -29,6 +29,7 @@ title: array
 - [[Array/636-exclusive-time-of-functions]]
 - [[Array/643-maximum-average-subarray-i]]
 - [[Array/645-set-mismatch]]
+- [[Array/704-binary-search]]
 - [[Array/735-asteroid-collision]]
 - [[Array/739-daily-temperatures]]
 - [[Array/853-car-fleet]]
