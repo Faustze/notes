@@ -4,8 +4,7 @@
     "experimentalDecorators": true,
     "module": "esnext",
     "target": "esnext",
-    "moduleResolution": "node",
-    "ignoreDeprecations": "6.0",
+    "moduleResolution": "bundler",
     "strict": true,
     "incremental": true,
     "resolveJsonModule": true,
@@ -16,7 +15,14 @@
     "noUnusedParameters": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+    "paths": {
+      // micromorph's package.json "exports" map has no "types" condition,
+      // so bundler-mode resolution can't find its .d.ts even though it
+      // exists on disk. This only affects type-checking, not the actual
+      // bundled import.
+      "micromorph": ["./node_modules/micromorph/index.d.ts"]
+    }
   },
   "include": ["quartz/**/*.ts", "quartz/**/*.tsx", "*.ts", "*.tsx", "./package.json"],
   "exclude": [
