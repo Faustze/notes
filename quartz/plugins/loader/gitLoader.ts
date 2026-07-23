@@ -357,6 +357,8 @@ function linkPeerDependencies(pluginDir: string): void {
   }
 }
 
+const INSTALL_BUILD_ATTEMPTS = 3
+
 function buildInstalledPlugin(pluginDir: string, name: string, verbose?: boolean): void {
   if (hasPrebuiltDist(pluginDir)) {
     if (verbose) {
@@ -366,41 +368,63 @@ function buildInstalledPlugin(pluginDir: string, name: string, verbose?: boolean
     return
   }
 
-  try {
-    const shouldBuild = needsBuild(pluginDir)
+  const shouldBuild = needsBuild(pluginDir)
+  let lastError: unknown
 
-    if (verbose) {
-      console.log(styleText("cyan", `→`), `${name}: installing dependencies...`)
-    }
-    execSync("npm install --ignore-scripts", {
-      cwd: pluginDir,
-      stdio: verbose ? "inherit" : "pipe",
-      timeout: 120_000,
-    })
-
-    if (shouldBuild) {
-      if (verbose) {
-        console.log(styleText("cyan", `→`), `${name}: building...`)
+  for (let attempt = 1; attempt <= INSTALL_BUILD_ATTEMPTS; attempt++) {
+    try {
+      // A registry hiccup can make npm silently resolve only the production
+      // subtree (missing devDependencies like the build tool itself), so wipe
+      // any partial install before retrying rather than layering on top of it.
+      if (attempt > 1) {
+        if (verbose) {
+          console.log(
+            styleText("yellow", `⟳`),
+            `${name}: retrying install (attempt ${attempt}/${INSTALL_BUILD_ATTEMPTS})...`,
+          )
+        }
+        fs.rmSync(path.join(pluginDir, "node_modules"), { recursive: true, force: true })
       }
-      execSync("npm run build", {
+
+      if (verbose) {
+        console.log(styleText("cyan", `→`), `${name}: installing dependencies...`)
+      }
+      execSync("npm install --ignore-scripts", {
         cwd: pluginDir,
         stdio: verbose ? "inherit" : "pipe",
         timeout: 120_000,
       })
+
+      if (shouldBuild) {
+        if (verbose) {
+          console.log(styleText("cyan", `→`), `${name}: building...`)
+        }
+        execSync("npm run build", {
+          cwd: pluginDir,
+          stdio: verbose ? "inherit" : "pipe",
+          timeout: 120_000,
+        })
+      }
+
+      execSync("npm prune --omit=dev", {
+        cwd: pluginDir,
+        stdio: verbose ? "inherit" : "pipe",
+        timeout: 60_000,
+      })
+
+      linkPeerDependencies(pluginDir)
+      return
+    } catch (error) {
+      lastError = error
     }
-
-    execSync("npm prune --omit=dev", {
-      cwd: pluginDir,
-      stdio: verbose ? "inherit" : "pipe",
-      timeout: 60_000,
-    })
-
-    linkPeerDependencies(pluginDir)
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
-    console.error(styleText("red", `✗`), `${name}: post-install build failed: ${message}`)
-    throw new Error(`Failed to build plugin ${name}: ${message}`)
   }
+
+  const message = lastError instanceof Error ? lastError.message : String(lastError)
+  console.error(
+    styleText("red", `✗`),
+    `${name}: post-install build failed after ${INSTALL_BUILD_ATTEMPTS} attempts: ${message}`,
+  )
+  throw new Error(`Failed to build plugin ${name}: ${message}`)
 }
 
 interface PluginInstallResult {
