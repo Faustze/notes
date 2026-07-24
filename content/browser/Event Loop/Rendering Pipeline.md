@@ -103,5 +103,5 @@ Why this is expensive: layout doesn't just compute geometry for the touched elem
 > `width`/`top` changes cost Layout + Paint on the main thread; `color`/`shadow` changes cost Paint only; `transform`/`opacity` skip both and stay on the compositor thread — that's the entire reason to prefer animating the latter.
 
 [[browser/Event Loop/index|Event Loop & Rendering]]
-[[browser/Event Loop/Event Loop|Event Loop — where render fits into the loop]]
+[[browser/Event Loop/Event Loop, Microtasks, Macrotasks|Event Loop — where render fits into the loop]]
 #browser
