@@ -16,7 +16,7 @@ Layout      → Paint       (pixels: color, text, shadows)
 Paint       → Composite   (GPU assembles layers)
 ```
 
-`element.style.width = '100px'` does **not** trigger layout immediately. The browser just flags the element (and often its subtree) as "dirty" and defers the recalculation to the next natural render point — the step that sits right after the microtask queue drains and rAF callbacks run in the [[browser/Event Loop/Event Loop|Event Loop]].
+`element.style.width = '100px'` does **not** trigger layout immediately. The browser just flags the element (and often its subtree) as "dirty" and defers the recalculation to the next natural render point — the step that sits right after the microtask queue drains and rAF callbacks run in the [[browser/Event Loop, Microtasks, Macrotasks|Event Loop]].
 
 Important distinction: **CSSOM** (parsed rules from `<style>`/stylesheets) and inline `element.style` (a `CSSStyleDeclaration` object tied to one element's `style` attribute) are separate objects. Writing `el.style.width = ...` never touches CSSOM — it only dirties that one element.
 
@@ -53,7 +53,7 @@ Main thread:        JS execution → Style calc → Layout → Paint
 Compositor thread:  Composite (transform/opacity)
 ```
 
-The main thread is where the [[browser/Event Loop/Event Loop|Event Loop]], the call stack, and all JS run — Style, Layout and Paint live there too. If the main thread is blocked (long synchronous JS, forced reflow), everything stalls: scrolling, clicks, and any animation on `width`/`top`.
+The main thread is where the [[browser/Event Loop, Microtasks, Macrotasks|Event Loop]], the call stack, and all JS run — Style, Layout and Paint live there too. If the main thread is blocked (long synchronous JS, forced reflow), everything stalls: scrolling, clicks, and any animation on `width`/`top`.
 
 The compositor thread is separate and isn't blocked by the main thread. By the time Composite runs, DOM/CSSOM no longer matter: Paint (on the main thread) has already turned the element into a rasterized GPU texture. The compositor thread only ever sees finished textures and transform matrices — it never touches the DOM tree. Composite isn't "drawing over an HTML/CSS skeleton" — it's "place already-finished images on screen".
 
@@ -102,6 +102,6 @@ Why this is expensive: layout doesn't just compute geometry for the touched elem
 
 > `width`/`top` changes cost Layout + Paint on the main thread; `color`/`shadow` changes cost Paint only; `transform`/`opacity` skip both and stay on the compositor thread — that's the entire reason to prefer animating the latter.
 
-[[browser/Event Loop/index|Event Loop & Rendering]]
-[[browser/Event Loop/Event Loop, Microtasks, Macrotasks|Event Loop — where render fits into the loop]]
+[[browser/index|Browser]]
+[[browser/Event Loop, Microtasks, Macrotasks|Event Loop — where render fits into the loop]]
 #browser

@@ -83,6 +83,6 @@ So infinite recursion through rAF doesn't block the browser: a render always lan
 
 > The Event Loop's exit condition for the microtask queue is "empty" — a self-refilling queue never reaches it. The rAF queue instead exits by *snapshot*: what gets added during a batch is deferred to the next one no matter how fast it runs.
 
-[[browser/Event Loop/index|Event Loop & Rendering]]
-[[browser/Event Loop/Rendering Pipeline|Rendering Pipeline — what happens after the microtask queue drains]]
+[[browser/index|Browser]]
+[[browser/Rendering Pipeline|Rendering Pipeline — what happens after the microtask queue drains]]
 #browser
