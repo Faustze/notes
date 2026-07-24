@@ -1,10 +1,10 @@
 # 2627. Debounce (Medium) (<https://leetcode.com/problems/debounce/>)
 
-> Дана функция fn и время t в миллисекундах, верните debounce-версию этой функции.
-> Debounce-функция — это функция, выполнение которой откладывается на t миллисекунд и отменяется, если она вызывается снова в течение этого окна времени.
-> Debounce-функция также должна принимать переданные параметры.
-> Например, если t = 50мс, и функция была вызвана в 30мс, 60мс и 100мс, первые 2 вызова функции будут отменены, а 3-й вызов выполнится в 150мс.
-> Решите без использования функции _.debounce() из lodash.
+> Дана функция fn и время в миллисекундах t, верните debounced-версию этой функции.
+> Debounced-функция — это функция, выполнение которой откладывается на t миллисекунд, и выполнение отменяется, если она вызывается снова в течение этого временного окна.
+> Debounced-функция также должна получать переданные параметры.
+> Например, если t = 50ms и функция была вызвана на 30ms, 60ms и 100ms, первые 2 вызова функции будут отменены, а 3-й вызов функции выполнится на 150ms.
+> Пожалуйста, решите без использования функции _.debounce() из lodash.
 > Ограничения: - 0 <= t <= 1000 - 1 <= calls.length <= 10 - 0 <= calls[i].t <= 1000 - 0 <= calls[i].inputs.length <= 10
 
 ```ts
@@ -23,16 +23,17 @@ function debounce(fn: F, t: number): F {
 }
 
 const log = debounce(console.log, 100)
-log("Hello") // cancelled
-console.log("1")
-log("Hello") // cancelled
-console.log("2")
-log("Hello") // Logged at t=100ms
+log('Hello') // cancelled
+console.log('1')
+log('Hello') // cancelled
+console.log('2')
+log('Hello') // Logged at t=100ms
 ```
 
 ```md
-Example 1:
+Пример 1:
 
+<!-- [[leetcode/untagged]] [[leetcode/untagged/2626-array-reduce-transformation]] [[leetcode/untagged/2629-function-composition]] -->
     Input:
     t = 50
     calls = [
@@ -45,7 +46,7 @@ Example 1:
     before 100ms. The 2nd call is delayed by 50ms and executed at 125ms.
     The inputs were (2).
 
-Example 2:
+  Пример 2:
 
     Input:
     t = 20
@@ -58,9 +59,7 @@ Example 2:
     The 1st call is delayed until 70ms. The inputs were (1).
     The 2nd call is delayed until 120ms. The inputs were (2).
 
-Example 3:
-
-<!-- [[leetcode/untagged]] [[leetcode/untagged/2626-array-reduce-transformation]] [[leetcode/untagged/2629-function-composition]] -->
+  Пример 3:
 
     Input:
     t = 150

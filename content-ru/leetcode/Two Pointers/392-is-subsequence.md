@@ -1,9 +1,9 @@
-# 392. Is Subsequence (Easy) (<https://leetcode.com/problems/is-subsequence/>)
+# 392. Является ли подпоследовательностью (Easy) (<https://leetcode.com/problems/is-subsequence/>)
 
-> Даны две строки s и t, верните true, если s является подпоследовательностью t, иначе false.
-> Подпоследовательность строки — это новая строка, полученная из исходной строки удалением некоторых (возможно, ни одного) символов без изменения относительного порядка оставшихся символов.
-> (Например, "ace" — подпоследовательность "abcde", а "aec" — нет).
-> Ограничения: - 0 <= s.length <= 100 - 0 <= t.length <= 10^4 - s и t состоят только из строчных латинских букв.
+> Даны две строки s и t, верните true, если s является подпоследовательностью t, или false в противном случае.
+> Подпоследовательность строки — это новая строка, образованная из исходной строки путём удаления некоторых (возможно, ни одного) символов без нарушения относительного порядка оставшихся символов.
+> (то есть "ace" является подпоследовательностью "abcde", а "aec" — нет).
+> Ограничения: - 0 <= s.length <= 100 - 0 <= t.length <= 10^4 - s и t состоят только из строчных английских букв.
 
 ```ts
 function isSubsequence(s: string, t: string): boolean {
@@ -14,6 +14,7 @@ function isSubsequence(s: string, t: string): boolean {
       sIdx++
     }
   }
+
   return sIdx === s.length
 }
 
@@ -24,11 +25,12 @@ console.log(isSubsequence("axc", "ahbgdc"))
 
 ```md
 Example 1:
-Input: s = "abc", t = "ahbgdc"
-Output: true
-Example 2:
-Input: s = "axc", t = "ahbgdc"
-Output: false
+    Input: s = "abc", t = "ahbgdc"
+    Output: true
+
+  Example 2:
+    Input: s = "axc", t = "ahbgdc"
+    Output: false
 ```
 
 [[leetcode/Two Pointers/index|two-pointers]]

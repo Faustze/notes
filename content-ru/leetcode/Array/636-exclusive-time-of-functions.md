@@ -1,47 +1,21 @@
 # 636. Exclusive Time of Functions (Medium) (<https://leetcode.com/problems/exclusive-time-of-functions/>)
 
-> На однопоточном CPU выполняется программа, содержащая n функций.
-> У каждой функции уникальный ID от 0 до n - 1.
-> Вызовы функций хранятся в стеке вызовов: когда вызов функции начинается, её ID кладётся на стек, а когда вызов завершается, её ID снимается со стека.
-> Функция, чей ID находится на вершине стека — это текущая выполняющаяся функция.
-> Каждый раз, когда функция начинается или заканчивается, записывается лог с её ID, тем, началась она или закончилась, и временной меткой.
-> Дан список logs, где logs[i] представляет i-е сообщение лога в формате строки "{function_id}:{"start" | "end"}:{timestamp}".
-> Например, "0:start:3" означает, что вызов функции с ID 0 начался в начале момента времени 3, а "1:end:2" означает, что вызов функции с ID 1 закончился в конце момента времени 2.
-> Учтите, что функция может вызываться несколько раз, в том числе рекурсивно.
-> Эксклюзивное время функции — это сумма времени выполнения всех вызовов этой функции в программе.
-> Например, если функция вызывается дважды: один вызов выполняется 2 единицы времени, а другой — 1 единицу, эксклюзивное время равно 2 + 1 = 3.
+> На однопоточном процессоре мы выполняем программу, содержащую n функций.
+> Каждая функция имеет уникальный ID от 0 до n - 1.
+> Вызовы функций хранятся в стеке вызовов: когда вызов функции начинается, её ID кладётся на стек, а когда вызов завершается, ID снимается со стека.
+> Функция, чей ID находится на вершине стека, — это функция, выполняемая в данный момент.
+> Каждый раз, когда функция начинается или завершается, записывается лог с ID, признаком начала/завершения и меткой времени.
+> Дан список logs, где logs[i] представляет i-й лог в формате строки "{function_id}:{"start" | "end"}:{timestamp}".
+> Например, "0:start:3" означает, что вызов функции с ID 0 начался в начале момента времени 3, а "1:end:2" означает, что вызов функции с ID 1 завершился в конце момента времени 2.
+> Обратите внимание, что функция может вызываться несколько раз, в том числе рекурсивно.
+> Эксклюзивное время функции — это сумма времени выполнения по всем вызовам этой функции в программе.
+> Например, если функция вызвана дважды, и один вызов выполнялся 2 единицы времени, а другой — 1 единицу, то эксклюзивное время равно 2 + 1 = 3.
 > Верните эксклюзивное время каждой функции в виде массива, где значение по индексу i представляет эксклюзивное время функции с ID i.
-> Ограничения: - 1 <= n <= 100 - 2 <= logs.length <= 500 - 0 <= function_id < n - 0 <= timestamp <= 10^9 - Никакие два события start не произойдут в один и тот же момент времени.
->
-> - Никакие два события end не произойдут в один и тот же момент времени.
-> - У каждой функции есть лог "end" для каждого лога "start".
+> Ограничения: - 1 <= n <= 100 - 2 <= logs.length <= 500 - 0 <= function_id < n - 0 <= timestamp <= 10^9 - Никакие два события "start" не происходят в один и тот же момент времени.
+> - Никакие два события "end" не происходят в один и тот же момент времени.
+> - Для каждого "start" лога есть соответствующий "end" лог.
 
 ```ts
-function starts or ends, we write a log with the ID, whether it started or ended, and the timestamp.
-
-  You are given a list logs, where logs[i] represents the ith log message formatted as a string
-  "{function_id}:{"start" | "end"}:{timestamp}". For example, "0:start:3" means a function call
-  with function ID 0 started at the beginning of timestamp 3, and "1:end:2" means a function call
-  with function ID 1 ended at the end of timestamp 2. Note that a function can be called multiple
-  times, possibly recursively.
-
-  A function's exclusive time is the sum of execution times for all function calls in the program.
-  For example, if a function is called twice, one call executing for 2 time units and another call
-  executing for 1 time unit, the exclusive time is 2 + 1 = 3.
-
-  Return the exclusive time of each function in an array, where the value at the ith index
-  represents the exclusive time for the function with ID i.
-
-  Constraints:
-  - 1 <= n <= 100
-  - 2 <= logs.length <= 500
-  - 0 <= function_id < n
-  - 0 <= timestamp <= 10^9
-  - No two start events will happen at the same timestamp.
-  - No two end events will happen at the same timestamp.
-  - Each function has an "end" log for each "start" log.
-*/
-
 function exclusiveTime(n: number, logs: string[]): number[] {
   // Стек хранит ID функций, которые сейчас "в работе" (ещё не завершились).
   // Вершина стека — текущая выполняемая функция.
@@ -156,45 +130,45 @@ console.log(exclusiveTime2(2, ['0:start:0', '0:start:2', '0:end:5', '1:start:6',
 ```
 
 ```md
-Example 1:
+Пример 1:
 
-    Input: n = 2, logs = ["0:start:0","1:start:2","1:end:5","0:end:6"]
-    Output: [3,4]
-    Explanation:
-    Function 0 starts at the beginning of time 0, then it executes 2 units of time
-    and reaches the end of time 1.
-    Function 1 starts at the beginning of time 2, executes for 4 units of time,
-    and ends at the end of time 5.
-    Function 0 resumes execution at the beginning of time 6 and executes for 1 unit of time.
-    So function 0 spends 2 + 1 = 3 units of total time executing, and function 1 spends
-    4 units of total time executing.
+    Вход: n = 2, logs = ["0:start:0","1:start:2","1:end:5","0:end:6"]
+    Выход: [3,4]
+    Объяснение:
+    Функция 0 начинается в начале времени 0, затем выполняется 2 единицы времени
+    и достигает конца времени 1.
+    Функция 1 начинается в начале времени 2, выполняется 4 единицы времени,
+    и заканчивается в конце времени 5.
+    Функция 0 возобновляет выполнение в начале времени 6 и выполняется 1 единицу времени.
+    Таким образом, функция 0 суммарно тратит на выполнение 2 + 1 = 3 единицы времени, а функция 1 —
+    4 единицы времени.
 
-Example 2:
+  Пример 2:
 
-    Input: n = 1, logs = ["0:start:0","0:start:2","0:end:5","0:start:6","0:end:6","0:end:7"]
-    Output: [8]
-    Explanation:
-    Function 0 starts at the beginning of time 0, executes for 2 units of time, and
-    recursively calls itself.
-    Function 0 (recursive call) starts at the beginning of time 2 and executes for 4 units of time.
-    Function 0 (initial call) resumes execution then immediately calls itself again.
-    Function 0 (2nd recursive call) starts at the beginning of time 6 and executes for 1 unit of time.
-    Function 0 (initial call) resumes execution at the beginning of time 7 and executes for 1 unit of time.
-    So function 0 spends 2 + 4 + 1 + 1 = 8 units of total time executing.
+    Вход: n = 1, logs = ["0:start:0","0:start:2","0:end:5","0:start:6","0:end:6","0:end:7"]
+    Выход: [8]
+    Объяснение:
+    Функция 0 начинается в начале времени 0, выполняется 2 единицы времени и
+    рекурсивно вызывает саму себя.
+    Функция 0 (рекурсивный вызов) начинается в начале времени 2 и выполняется 4 единицы времени.
+    Функция 0 (исходный вызов) возобновляет выполнение и сразу же снова вызывает саму себя.
+    Функция 0 (второй рекурсивный вызов) начинается в начале времени 6 и выполняется 1 единицу времени.
+    Функция 0 (исходный вызов) возобновляет выполнение в начале времени 7 и выполняется 1 единицу времени.
+    Таким образом, функция 0 суммарно тратит на выполнение 2 + 4 + 1 + 1 = 8 единиц времени.
 
-Example 3:
+  Пример 3:
 
-    Input: n = 2, logs = ["0:start:0","0:start:2","0:end:5","1:start:6","1:end:6","0:end:7"]
-    Output: [7,1]
-    Explanation:
-    Function 0 starts at the beginning of time 0, executes for 2 units of time, and
-    recursively calls itself.
-    Function 0 (recursive call) starts at the beginning of time 2 and executes for 4 units of time.
-    Function 0 (initial call) resumes execution then immediately calls function 1.
-    Function 1 starts at the beginning of time 6, executes 1 unit of time, and ends at the end of time 6.
-    Function 0 resumes execution at the beginning of time 7 and executes for 1 unit of time.
-    So function 0 spends 2 + 4 + 1 = 7 units of total time executing, and function 1 spends
-    1 unit of total time executing.
+    Вход: n = 2, logs = ["0:start:0","0:start:2","0:end:5","1:start:6","1:end:6","0:end:7"]
+    Выход: [7,1]
+    Объяснение:
+    Функция 0 начинается в начале времени 0, выполняется 2 единицы времени и
+    рекурсивно вызывает саму себя.
+    Функция 0 (рекурсивный вызов) начинается в начале времени 2 и выполняется 4 единицы времени.
+    Функция 0 (исходный вызов) возобновляет выполнение и сразу же вызывает функцию 1.
+    Функция 1 начинается в начале времени 6, выполняется 1 единицу времени и заканчивается в конце времени 6.
+    Функция 0 возобновляет выполнение в начале времени 7 и выполняется 1 единицу времени.
+    Таким образом, функция 0 суммарно тратит на выполнение 2 + 4 + 1 = 7 единиц времени, а функция 1 —
+    1 единицу времени.
 ```
 
 [[leetcode/Array/605-can-place-flowers]]

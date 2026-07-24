@@ -1,14 +1,14 @@
-# 150. Evaluate Reverse Polish Notation (Medium) (<https://leetcode.com/problems/evaluate-reverse-polish-notation>)
+# 150. Вычисление выражения в обратной польской записи (Medium) (<https://leetcode.com/problems/evaluate-reverse-polish-notation>)
 
-> Дан массив строк tokens, представляющий арифметическое выражение в обратной польской записи.
-> Вычислите выражение.
-> Верните целое число — значение выражения.
-> Учтите, что: • Допустимые операторы: '+', '-', '*' и '/'.
-> • Каждый операнд может быть числом или другим выражением.
-> • Деление двух целых чисел всегда округляется в сторону нуля.
+> Вам дан массив строк tokens, представляющий арифметическое выражение в обратной польской записи.
+> Вычислите значение выражения.
+> Верните целое число, представляющее результат вычисления.
+> Обратите внимание: • Допустимые операторы: '+', '-', '*' и '/'.
+> • Каждый операнд может быть целым числом или другим выражением.
+> • Деление между двумя целыми числами всегда усекается в сторону нуля.
 > • Деления на ноль не будет.
 > • Входные данные представляют собой корректное арифметическое выражение в обратной польской записи.
-> • Ответ и все промежуточные вычисления можно представить 32-битным целым числом.
+> • Ответ и все промежуточные вычисления могут быть представлены 32-битным целым числом.
 
 ```ts
 const ops: Record<string, (a: number, b: number) => number> = {
@@ -16,27 +16,44 @@ const ops: Record<string, (a: number, b: number) => number> = {
   "-": (a, b) => a - b,
   "*": (a, b) => a * b,
   "/": (a, b) => Math.trunc(a / b),
-}
+};
 function evalRPN(tokens: string[]): number {
-  const stack: number[] = []
+  const stack: number[] = [];
 
   for (const token of tokens) {
     if (token in ops) {
-      const right = stack.pop()!
-      const left = stack.pop()!
-      stack.push(ops[token](left, right))
+      const right = stack.pop()!;
+      const left = stack.pop()!;
+      stack.push(ops[token](left, right));
     } else {
-      stack.push(Number(token))
+      stack.push(Number(token));
     }
   }
 
-  return stack[0]
+  return stack[0];
 }
 
 // Local check:
-console.log(evalRPN(["2", "1", "+", "3", "*"])) // 9
-console.log(evalRPN(["4", "13", "5", "/", "+"])) // 6
-console.log(evalRPN(["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"])) // 22
+console.log(evalRPN(["1", "2", "+", "3", "*", "4", "-"])); // 5
+console.log(evalRPN(["2", "1", "+", "3", "*"])); // 9
+console.log(evalRPN(["4", "13", "5", "/", "+"])); // 6
+console.log(
+  evalRPN([
+    "10",
+    "6",
+    "9",
+    "3",
+    "+",
+    "-11",
+    "*",
+    "/",
+    "*",
+    "17",
+    "+",
+    "5",
+    "+",
+  ]),
+); // 22
 ```
 
 ```md
@@ -46,13 +63,13 @@ Example 1:
     Output: 9
     Explanation: ((2 + 1) * 3) = 9
 
-Example 2:
+  Example 2:
 
     Input: tokens = ["4","13","5","/","+"]
     Output: 6
     Explanation: (4 + (13 / 5)) = 6
 
-Example 3:
+  Example 3:
 
     Input: tokens = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]
     Output: 22

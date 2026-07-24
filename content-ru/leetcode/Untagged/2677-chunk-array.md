@@ -1,11 +1,11 @@
 # 2677. Chunk Array (Easy) (<https://leetcode.com/problems/chunk-array/>)
 
-> Дан массив arr и размер чанка size, верните массив, разбитый на чанки.
-> Разбитый на чанки массив содержит исходные элементы arr, но состоит из подмассивов длиной size каждый.
+> Дан массив arr и размер чанка size, верните разбитый на чанки массив.
+> Разбитый на чанки массив содержит исходные элементы из arr, но состоит из подмассивов, каждый длиной size.
 > Длина последнего подмассива может быть меньше size, если arr.length не делится на size без остатка.
-> Можно считать, что массив — результат JSON.parse.
+> Можно считать, что массив является результатом JSON.parse.
 > Другими словами, это валидный JSON.
-> Решите без использования функции _.chunk из lodash.
+> Пожалуйста, решите без использования функции _.chunk из lodash.
 > Ограничения: arr — валидный JSON-массив 2 <= JSON.stringify(arr).length <= 10^5 1 <= size <= arr.length + 1
 
 ```ts
@@ -18,7 +18,7 @@ function chunk(arr: Obj[], size: number): Obj[][] {
     result.push(arr.slice(i, i + size))
   }
   return result
-}
+};
 
 // function chunk(arr: Obj[], size: number): Obj[][] {
 //   return arr.reduce<Obj[][]>((acc, item, index) => {
@@ -46,22 +46,21 @@ Example 1:
     Output: [[1],[2],[3],[4],[5]]
     Explanation: The arr has been split into subarrays each with 1 element.
 
-Example 2:
+  Example 2:
 
     Input: arr = [1,9,6,3,2], size = 3
     Output: [[1,9,6],[3,2]]
     Explanation: The arr has been split into subarrays with 3 elements. However, only two elements are left for the 2nd subarray.
 
-Example 3:
+  Example 3:
 
     Input: arr = [8,5,3,2,6], size = 6
     Output: [[8,5,3,2,6]]
     Explanation: Size is greater than arr.length thus all elements are in the first subarray.
 
-Example 4:
+  Example 4:
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2666-allow-one-fn-call]] [[leetcode/untagged/2693-call-function-with-custom-context]] -->
-
     Input: arr = [], size = 1
     Output: []
     Explanation: There are no elements to be chunked so an empty array is returned.

@@ -2,22 +2,11 @@
 
 > Дана асинхронная функция fn и время t в миллисекундах, верните новую версию входной функции с ограничением по времени.
 > fn принимает аргументы, переданные функции с ограничением по времени.
-> Функция с ограничением по времени должна следовать этим правилам: - Если fn завершится в пределах лимита времени t миллисекунд, функция с ограничением по времени должна резолвиться с результатом.
->
-> - Если выполнение fn превышает лимит времени, функция с ограничением по времени должна реджектиться со строкой "Time Limit Exceeded".
->   Ограничения: - 0 <= inputs.length <= 10 - 0 <= t <= 1000 - fn возвращает promise
+> Функция с ограничением по времени должна следовать этим правилам: - Если fn завершается в пределах лимита времени t миллисекунд, функция с ограничением по времени должна разрешиться (resolve) с результатом.
+> - Если выполнение fn превышает лимит времени, функция с ограничением по времени должна отклониться (reject) со строкой "Time Limit Exceeded".
+> Ограничения: - 0 <= inputs.length <= 10 - 0 <= t <= 1000 - fn возвращает promise
 
 ```ts
-function should resolve with the result.
-  - If the execution of fn exceeds the time limit, the time limited function
-    should reject with the string "Time Limit Exceeded".
-
-  Constraints:
-  - 0 <= inputs.length <= 10
-  - 0 <= t <= 1000
-  - fn returns a promise
-*/
-
 type Fn = (...params: any[]) => Promise<any>
 
 function timeLimit(fn: Fn, t: number): Fn {
@@ -49,7 +38,7 @@ Example 1:
     The provided function is set to resolve after 100ms. However, the time limit
     is set to 50ms. It rejects at t=50ms because the time limit was reached.
 
-Example 2:
+  Example 2:
 
     Input:
     fn = async (n) => {
@@ -62,9 +51,7 @@ Example 2:
     Explanation:
     The function resolved 5 * 5 = 25 at t=100ms. The time limit is never reached.
 
-<!-- [[leetcode/untagged]] [[leetcode/untagged/2631-group-by]] [[leetcode/untagged/2665-counter2]] -->
-
-Example 3:
+  Example 3:
 
     Input:
     fn = async (a, b) => {
@@ -77,7 +64,7 @@ Example 3:
     Explanation:
     The function resolved 5 + 10 = 15 at t=120ms. The time limit is never reached.
 
-Example 4:
+  Example 4:
 
     Input:
     fn = async () => {

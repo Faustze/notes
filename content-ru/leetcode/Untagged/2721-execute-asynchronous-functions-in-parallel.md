@@ -1,16 +1,15 @@
-# 2721. Execute Asynchronous Functions in Parallel (Medium) (<https://leetcode.com/problems/execute-asynchronous-functions-in-parallel/>)
+# 2721. Выполнение асинхронных функций параллельно (Medium) (<https://leetcode.com/problems/execute-asynchronous-functions-in-parallel/>)
 
 > Дан массив асинхронных функций functions, верните новый promise.
-> Каждая функция массива не принимает аргументов и возвращает promise.
-> Все promise должны выполняться параллельно.
-> Итоговый promise резолвится: - Когда все promise, возвращённые functions, были успешно зарезолвены.
->
-> - Значением резолва должен быть массив всех зарезолвленных значений в том же порядке, в котором они были в functions.
-> - Он должен резолвиться, когда все асинхронные функции завершили выполнение параллельно.
->   Итоговый promise реджектится: - Когда любой из promise, возвращённых functions, был реджекнут.
-> - Он должен реджектиться с причиной первого реджекта.
->   Решите без использования встроенной функции Promise.all.
->   Ограничения: - functions — массив функций, возвращающих promise - 1 <= functions.length <= 10
+> Каждая функция в массиве не принимает аргументов и возвращает promise.
+> Все promise'ы должны выполняться параллельно.
+> Promise разрешается: - когда все promise'ы, возвращённые из functions, успешно разрешились.
+> - Разрешённое значение должно быть массивом всех разрешённых значений в том же порядке, в каком они были в functions.
+> - Он должен разрешаться, когда все асинхронные функции завершили выполнение параллельно.
+> Promise отклоняется: - когда любой promise, возвращённый из functions, был отклонён.
+> - Он должен отклоняться с причиной первого отклонения.
+> Пожалуйста, решите без использования встроенной функции Promise.all.
+> Ограничения: - functions — массив функций, возвращающих promise'ы - 1 <= functions.length <= 10
 
 ```ts
 type Fn<T> = () => Promise<T>
@@ -21,19 +20,18 @@ function promiseAll<T>(functions: Fn<T>[]): Promise<T[]> {
     let completed = 0
 
     functions.map(async (fn, i) => {
-      await fn()
-        .then((res) => {
-          results[i] = res
-          completed++
-        })
-        .catch((err) => {
-          reject(err)
-        })
+      await fn().then((res) => {
+        results[i] = res
+        completed++
+      }).catch((err) => {
+        reject(err)
+      })
 
-      if (completed === functions.length) resolve(results)
+      if (completed === functions.length)
+        resolve(results)
     })
   })
-}
+};
 
 // for (let i = 0; i < functions.length; i++) {
 //   functions[i]()
@@ -50,49 +48,47 @@ function promiseAll<T>(functions: Fn<T>[]): Promise<T[]> {
 //     })
 // }
 
-const promise = promiseAll([() => new Promise((res) => res(42))])
+const promise = promiseAll([() => new Promise(res => res(42))])
 promise.then(console.log)
 ```
 
 ```md
-Example 1:
+Пример 1:
 
-    Input:
+    Ввод:
     functions = [
       () => new Promise(resolve => setTimeout(() => resolve(5), 200))
     ]
-    Output: {"t": 200, "resolved": [5]}
-
+    Вывод: {"t": 200, "resolved": [5]}
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2715-timeout-cancellation]] [[leetcode/untagged/2723-add-two-promises]] -->
-
-    Explanation:
+    Объяснение:
     promiseAll(functions).then(console.log) // [5]
-    The single function was resolved at 200ms with a value of 5.
+    Единственная функция разрешилась на 200мс со значением 5.
 
-Example 2:
+  Пример 2:
 
-    Input:
+    Ввод:
     functions = [
       () => new Promise(resolve => setTimeout(() => resolve(1), 200)),
       () => new Promise((resolve, reject) => setTimeout(() => reject("Error"), 100))
     ]
-    Output: {"t": 100, "rejected": "Error"}
-    Explanation:
-    Since one of the promises rejected, the returned promise also rejected with
-    the same error at the same time.
+    Вывод: {"t": 100, "rejected": "Error"}
+    Объяснение:
+    Поскольку один из promise'ов отклонился, возвращённый promise также
+    отклонился с той же ошибкой в то же время.
 
-Example 3:
+  Пример 3:
 
-    Input:
+    Ввод:
     functions = [
       () => new Promise(resolve => setTimeout(() => resolve(4), 50)),
       () => new Promise(resolve => setTimeout(() => resolve(10), 150)),
       () => new Promise(resolve => setTimeout(() => resolve(16), 100))
     ]
-    Output: {"t": 150, "resolved": [4, 10, 16]}
-    Explanation:
-    All promises resolved with a value. The returned promise resolved when the
-    last promise resolved.
+    Вывод: {"t": 150, "resolved": [4, 10, 16]}
+    Объяснение:
+    Все promise'ы разрешились со значением. Возвращённый promise разрешился,
+    когда разрешился последний promise.
 ```
 
 #leetcode

@@ -1,9 +1,8 @@
 # 2620. Counter (?) (<https://leetcode.com/problems/counter>)
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2622-cache-with-time-limit]] -->
-
 > Дано целое число n, верните функцию-счётчик.
-> Эта функция-счётчик изначально возвращает n, а затем при каждом следующем вызове возвращает на 1 больше предыдущего значения (n, n + 1, n + 2 и т.д.).
+> Эта функция-счётчик изначально возвращает n, а затем при каждом последующем вызове возвращает значение на 1 больше предыдущего (n, n + 1, n + 2 и т.д.).
 
 ```ts
 function createCounter(n: number): () => number {
@@ -25,7 +24,7 @@ Example 1:
     counter() = 11 // Returns 1 more than the previous time.
     counter() = 12 // Returns 1 more than the previous time.
 
-Example 2:
+  Example 2:
 
     Input:
     n = -2

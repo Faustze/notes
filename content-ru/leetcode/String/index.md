@@ -1,11 +1,11 @@
 ---
-title: string
+title: Строка
 ---
 
-# String
+# Строка
 
 [[leetcode/index|← LeetCode]]
 
-- [[String/1071-greatest-common-divisor-of-strings]]
+- [[String/20-valid-parentheses]]
 
 #leetcode

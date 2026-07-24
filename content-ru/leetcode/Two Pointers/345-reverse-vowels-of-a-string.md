@@ -1,13 +1,13 @@
 # 345. Reverse Vowels of a String (Easy) (<https://leetcode.com/problems/reverse-vowels-of-a-string/>)
 
-> Дана строка s, разверните только гласные в строке и верните её.
-> Гласные — это 'a', 'e', 'i', 'o' и 'u', они могут встречаться и в нижнем, и в верхнем регистре, а также многократно.
-> Ограничения: 1 <= s.length <= 3 * 10^5 s состоит из печатаемых символов ASCII.
+> Дана строка s, нужно перевернуть в ней только гласные буквы и вернуть результат.
+> Гласные — это 'a', 'e', 'i', 'o' и 'u', они могут встречаться как в нижнем, так и в верхнем регистре, и более одного раза.
+> Ограничения: 1 <= s.length <= 3 * 10^5, s состоит из печатаемых ASCII-символов.
 
 ```ts
 function reverseVowels(s: string): string {
-  const chars = s.split("")
-  const vowels = "aeiouAEIOU"
+  const chars = s.split('')
+  const vowels = 'aeiouAEIOU'
 
   for (let left = 0, right = chars.length - 1; left < right;) {
     if (!vowels.includes(chars[left])) {
@@ -28,26 +28,26 @@ function reverseVowels(s: string): string {
     right--
   }
 
-  return chars.join("")
+  return chars.join('')
 }
 
-// Local check:
-console.log(reverseVowels("IceCreAm"))
-console.log(reverseVowels("leetcode"))
+// Локальная проверка:
+console.log(reverseVowels('IceCreAm'))
+console.log(reverseVowels('leetcode'))
 ```
 
 ```md
-Example 1:
+Пример 1:
 
-    Input: s = "IceCreAm"
-    Output: "AceCreIm"
-    Explanation: The vowels in s are ['I', 'e', 'e', 'A']. On reversing the
-    vowels, s becomes "AceCreIm".
+    Вход: s = "IceCreAm"
+    Выход: "AceCreIm"
+    Объяснение: гласные в s — ['I', 'e', 'e', 'A']. После переворота
+    гласных s становится "AceCreIm".
 
-Example 2:
+  Пример 2:
 
-    Input: s = "leetcode"
-    Output: "leotcede"
+    Вход: s = "leetcode"
+    Выход: "leotcede"
 ```
 
 [[leetcode/Two Pointers/index|two-pointers]]
