@@ -1,7 +1,7 @@
-# 1470. Shuffle the Array (Easy) (<https://leetcode.com/problems/shuffle-the-array/>)
+# 1470. Перемешать массив (Easy) (<https://leetcode.com/problems/shuffle-the-array/>)
 
-> Дан массив nums из 2n элементов в форме [x1,x2,...,xn,y1,y2,...,yn].
-> Верните массив в форме [x1,y1,x2,y2,...,xn,yn].
+> Дан массив nums, состоящий из 2n элементов в виде [x1,x2,...,xn,y1,y2,...,yn].
+> Верните массив в виде [x1,y1,x2,y2,...,xn,yn].
 > Ограничения: 1 <= n <= 500 nums.length == 2 * n 1 <= nums[i] <= 10^3
 
 ```ts

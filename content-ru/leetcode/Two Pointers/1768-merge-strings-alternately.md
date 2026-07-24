@@ -1,10 +1,10 @@
-# 1768. Merge Strings Alternately (Easy) (<https://leetcode.com/problems/merge-strings-alternately/>)
+# 1768. Слияние строк через одну (Лёгкая) (<https://leetcode.com/problems/merge-strings-alternately/>)
 
 > Даны две строки word1 и word2.
-> Слейте строки, добавляя буквы в чередующемся порядке, начиная с word1.
-> Если одна строка длиннее другой, добавьте оставшиеся буквы в конец итоговой строки.
-> Верните итоговую строку.
-> Ограничения: 1 <= word1.length, word2.length <= 100 word1 и word2 состоят из строчных латинских букв.
+> Объедините строки, добавляя буквы в чередующемся порядке, начиная с word1.
+> Если одна строка длиннее другой, добавьте оставшиеся буквы в конец объединённой строки.
+> Верните объединённую строку.
+> Ограничения: 1 <= word1.length, word2.length <= 100 word1 и word2 состоят из строчных английских букв.
 
 ```ts
 function mergeAlternately(word1: string, word2: string): string {
@@ -16,36 +16,36 @@ function mergeAlternately(word1: string, word2: string): string {
   return result.join("")
 }
 
-// Local check:
+// Локальная проверка:
 console.log(mergeAlternately("abc", "pqr"))
 console.log(mergeAlternately("ab", "pqrs"))
 console.log(mergeAlternately("abcd", "pq"))
 ```
 
 ```md
-Example 1:
+Пример 1:
 
-    Input: word1 = "abc", word2 = "pqr"
-    Output: "apbqcr"
-    Explanation: The merged string will be merged as so:
+    Ввод: word1 = "abc", word2 = "pqr"
+    Вывод: "apbqcr"
+    Объяснение: Объединённая строка формируется так:
       word1:  a   b   c
       word2:    p   q   r
       merged: a p b q c r
 
-Example 2:
+Пример 2:
 
-    Input: word1 = "ab", word2 = "pqrs"
-    Output: "apbqrs"
-    Explanation: Notice that as word2 is longer, "rs" is appended to the end.
+    Ввод: word1 = "ab", word2 = "pqrs"
+    Вывод: "apbqrs"
+    Объяснение: Обратите внимание, что так как word2 длиннее, "rs" добавляется в конец.
       word1:  a   b
       word2:    p   q   r   s
       merged: a p b q   r   s
 
-Example 3:
+Пример 3:
 
-    Input: word1 = "abcd", word2 = "pq"
-    Output: "apbqcd"
-    Explanation: Notice that as word1 is longer, "cd" is appended to the end.
+    Ввод: word1 = "abcd", word2 = "pq"
+    Вывод: "apbqcd"
+    Объяснение: Обратите внимание, что так как word1 длиннее, "cd" добавляется в конец.
       word1:  a   b   c   d
       word2:    p   q
       merged: a p b q c   d

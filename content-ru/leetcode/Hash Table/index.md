@@ -1,12 +1,12 @@
 ---
-title: hash-table
+title: хеш-таблица
 ---
 
-# Hash Table
+# Хеш-таблица
 
 [[leetcode/index|← LeetCode]]
 
-- [[Hash-Table/141-linked-list-cycle]]
-- [[Hash-Table/242-valid-anagram]]
+- [[Hash Table/141-linked-list-cycle]]
+- [[Hash Table/242-valid-anagram]]
 
 #leetcode

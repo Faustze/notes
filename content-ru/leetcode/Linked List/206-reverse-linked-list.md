@@ -1,10 +1,10 @@
 # 206. Reverse Linked List (Easy) (<https://leetcode.com/problems/reverse-linked-list/>)
 
-> Дана голова head односвязного списка, разверните список и верните развёрнутый список.
-> Ограничения: - количество узлов в списке находится в диапазоне [0, 5000].
+> Given the head of a singly linked list, reverse the list, and return the reversed list.
+> Constraints: - The number of nodes in the list is in the range [0, 5000].
 >
-> - -5000 <= Node.val <= 5000 Дополнительно: связный список можно развернуть итеративно или рекурсивно.
->   Сможете ли вы реализовать оба варианта?
+> - -5000 <= Node.val <= 5000 Follow up: A linked list can be reversed either iteratively or recursively.
+>   Could you implement both?
 
 ```ts
 class ListNode {
@@ -18,15 +18,17 @@ class ListNode {
 
 function reverseList(head: ListNode | null): ListNode | null {
   if (head === null) return null
+
   let prev: ListNode | null = null
-  let current = head
+  let current: ListNode | null = head
 
   while (current !== null) {
-    const next = current.next // запоминаем следующий узел
+    const next: ListNode | null = current.next // запоминаем следующий узел
     current.next = prev // разворачиваем ссылку
     prev = current // двигаем prev
     current = next // переходим дальше
   }
+
   return prev
 }
 
@@ -42,14 +44,19 @@ console.log(reverseList(null)) // []
 
 ```md
 Example 1:
-Input: head = [1,2,3,4,5]
-Output: [5,4,3,2,1]
+
+    Input: head = [1,2,3,4,5]
+    Output: [5,4,3,2,1]
+
 Example 2:
-Input: head = [1,2]
-Output: [2,1]
+
+    Input: head = [1,2]
+    Output: [2,1]
+
 Example 3:
-Input: head = []
-Output: []
+
+    Input: head = []
+    Output: []
 ```
 
 [[leetcode/Linked List/index|linked-list]]

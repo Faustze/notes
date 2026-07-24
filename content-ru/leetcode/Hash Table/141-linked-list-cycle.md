@@ -1,15 +1,15 @@
 # 141. Linked List Cycle (Easy) (<https://leetcode.com/problems/linked-list-cycle/description/>)
 
-> Дан head — голова связного списка, определите, есть ли в списке цикл.
-> Цикл в связном списке есть, если существует узел, до которого можно снова дойти, постоянно следуя по указателю next.
-> Внутренне pos используется для обозначения индекса узла, к которому подключён указатель next хвоста.
-> Учтите, что pos не передаётся как параметр.
+> Дан head — голова связного списка. Определите, содержит ли связный список цикл.
+> В связном списке есть цикл, если существует узел, к которому можно снова прийти, непрерывно следуя по указателю next.
+> Внутренне используется pos для обозначения индекса узла, к которому подключён указатель next хвостового узла.
+> Обратите внимание, что pos не передаётся как параметр.
 > Верните true, если в связном списке есть цикл.
-> Иначе верните false.
-> Ограничения: - количество узлов в списке находится в диапазоне [0, 10^4].
+> В противном случае верните false.
+> Ограничения: - Количество узлов в списке находится в диапазоне [0, 10^4].
 >
-> - -10^5 <= Node.val <= 10^5 - pos равно -1 или является валидным индексом в связном списке.
->   Дополнительно: сможете ли вы решить это за O(1) (то есть
+> - -10^5 <= Node.val <= 10^5 - pos равен -1 или является допустимым индексом в связном списке.
+>   Дополнительное задание: Сможете ли вы решить эту задачу, используя O(1) (то есть
 >   константную) память?
 
 ```ts
@@ -39,7 +39,6 @@ function hasCycle(head: ListNode | null): boolean {
 function toList(arr: number[], pos: number): ListNode | null {
   if (arr.length === 0) return null
   const nodes = arr.map((v) => new ListNode(v))
-
   for (let i = 0; i < nodes.length - 1; i++) {
     nodes[i].next = nodes[i + 1]
   }
@@ -49,7 +48,7 @@ function toList(arr: number[], pos: number): ListNode | null {
   return nodes[0]
 }
 
-// Local check:
+// Локальная проверка:
 console.log(hasCycle(toList([3, 2, 0, -4], 1))) // true
 console.log(hasCycle(toList([1, 2], 0))) // true
 console.log(hasCycle(toList([1], -1))) // false
@@ -59,18 +58,23 @@ console.log(hasCycle(toList([1, 2, 3, 4, 5], 4))) // true (tail → last node it
 ```
 
 ```md
-Example 1:
-Input: head = [3,2,0,-4], pos = 1
-Output: true
-Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
-Example 2:
-Input: head = [1,2], pos = 0
-Output: true
-Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
-Example 3:
-Input: head = [1], pos = -1
-Output: false
-Explanation: There is no cycle in the linked list.
+Пример 1:
+
+    Вход: head = [3,2,0,-4], pos = 1
+    Выход: true
+    Объяснение: В связном списке есть цикл, где хвост соединяется с 1-м узлом (индексация с 0).
+
+Пример 2:
+
+    Вход: head = [1,2], pos = 0
+    Выход: true
+    Объяснение: В связном списке есть цикл, где хвост соединяется с 0-м узлом.
+
+Пример 3:
+
+    Вход: head = [1], pos = -1
+    Выход: false
+    Объяснение: В связном списке нет цикла.
 ```
 
 [[leetcode/Hash Table/index|hash-table]]

@@ -1,7 +1,7 @@
-# 876. Middle of the Linked List (Easy) (<https://leetcode.com/problems/middle-of-the-linked-list/>)
+# 876. Середина связного списка (Easy) (<https://leetcode.com/problems/middle-of-the-linked-list/>)
 
-> Дана голова head односвязного списка, верните средний узел связного списка.
-> Если средних узлов два, верните второй из них.
+> Дана голова односвязного списка, нужно вернуть средний узел связного списка.
+> Если есть два средних узла, вернуть второй из них.
 
 ```ts
 class ListNode {
@@ -14,6 +14,7 @@ class ListNode {
 }
 
 function middleNode(head: ListNode | null): ListNode | null {
+  // Floyd's slow/fast pointers
   let slow = head
   let fast = head
 
@@ -21,6 +22,7 @@ function middleNode(head: ListNode | null): ListNode | null {
     slow = slow!.next
     fast = fast.next.next
   }
+
   return slow
 }
 
@@ -51,13 +53,16 @@ console.log(toArray(middleNode(toList([1, 2, 3, 4, 5, 6]))))
 
 ```md
 Example 1:
-Input: head = [1,2,3,4,5]
-Output: [3,4,5]
-Explanation: The middle node of the list is node 3.
+
+    Input: head = [1,2,3,4,5]
+    Output: [3,4,5]
+    Explanation: The middle node of the list is node 3.
+
 Example 2:
-Input: head = [1,2,3,4,5,6]
-Output: [4,5,6]
-Explanation: Since the list has two middle nodes with values 3 and 4, we return the second one.
+
+    Input: head = [1,2,3,4,5,6]
+    Output: [4,5,6]
+    Explanation: Since the list has two middle nodes with values 3 and 4, we return the second one.
 ```
 
 [[leetcode/Linked List/index|linked-list]]

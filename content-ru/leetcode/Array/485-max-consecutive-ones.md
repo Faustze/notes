@@ -1,7 +1,7 @@
 # 485. Max Consecutive Ones (Easy) (<https://leetcode.com/problems/max-consecutive-ones/>)
 
-> Дан бинарный массив nums, верните максимальное количество подряд идущих единиц в массиве.
-> Ограничения: 1 <= nums.length <= 10^5 nums[i] равно 0 или 1.
+> Дан бинарный массив nums, верните максимальное количество последовательных единиц в массиве.
+> Ограничения: 1 <= nums.length <= 10^5 nums[i] равен либо 0, либо 1.
 
 ```ts
 function findMaxConsecutiveOnes(nums: number[]): number {

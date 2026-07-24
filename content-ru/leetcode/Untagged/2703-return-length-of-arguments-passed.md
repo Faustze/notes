@@ -1,9 +1,9 @@
-# 2703. Return Length of Arguments Passed (Easy) (<https://leetcode.com/problems/return-length-of-arguments-passed/>)
+# 2703. Верните количество переданных аргументов (Легко) (<https://leetcode.com/problems/return-length-of-arguments-passed/>)
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2693-call-function-with-custom-context]] [[leetcode/untagged/2715-timeout-cancellation]] -->
 
-> Напишите функцию argumentsLength, возвращающую количество переданных ей аргументов.
-> Ограничения: - args — валидный JSON-массив - 0 <= args.length <= 100
+> Напишите функцию argumentsLength, которая возвращает количество переданных ей аргументов.
+> Ограничения: - args является валидным JSON-массивом - 0 <= args.length <= 100
 
 ```ts
 type JSONValue = null | boolean | number | string | JSONValue[] | { [key: string]: JSONValue }
@@ -21,23 +21,23 @@ console.log(argumentsLength({}, null, "3")) // 3
 ```
 
 ```md
-Example 1:
+Пример 1:
 
-    Input: args = [5]
-    Output: 1
-    Explanation:
+    Ввод: args = [5]
+    Вывод: 1
+    Объяснение:
     argumentsLength(5); // 1
 
-    One value was passed to the function so it should return 1.
+    В функцию было передано одно значение, поэтому она должна вернуть 1.
 
-Example 2:
+Пример 2:
 
-    Input: args = [{}, null, "3"]
-    Output: 3
-    Explanation:
+    Ввод: args = [{}, null, "3"]
+    Вывод: 3
+    Объяснение:
     argumentsLength({}, null, "3"); // 3
 
-    Three values were passed to the function so it should return 3.
+    В функцию было передано три значения, поэтому она должна вернуть 3.
 ```
 
 #leetcode

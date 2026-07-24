@@ -1,4 +1,4 @@
-# 2693. Call Function with Custom Context (Medium) (<https://leetcode.com/problems/call-function-with-custom-context/>)
+# 2693. Вызов функции с пользовательским контекстом (Medium) (<https://leetcode.com/problems/call-function-with-custom-context/>)
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2677-chunk-array]] [[leetcode/untagged/2703-return-length-of-arguments-passed]] -->
 
@@ -6,7 +6,7 @@
 > Метод принимает объект obj в качестве первого параметра и любое количество дополнительных аргументов.
 > obj становится контекстом this для функции.
 > Дополнительные аргументы передаются в функцию, которой принадлежит метод callPolyfill.
-> Решите без использования встроенного метода Function.call.
+> Решите задачу без использования встроенного метода Function.call.
 > Ограничения: - typeof args[0] == "object" и args[0] != null - 1 <= args.length <= 100 - 2 <= JSON.stringify(args[0]).length <= 10^5
 
 ```ts
@@ -15,6 +15,25 @@ type JSONValue = null | boolean | number | string | JSONValue[] | { [key: string
 interface Function {
   callPolyfill: (context: Record<string, JSONValue>, ...args: JSONValue[]) => JSONValue
 }
+
+/* Временно делаем функцию методом объекта */
+Function.prototype.callPolyfill = function (context, ...args): JSONValue {
+  let object = { ...context } as any
+  let symbol = Symbol("context")
+  // this здесь — это функция
+  object[symbol] = this
+  // Вызываем add как метод object
+  return object[symbol](...args)
+}
+
+// Локальная проверка:
+function add(this: { a: number }, b: number) {
+  return this.a + b
+}
+
+console.log(add.callPolyfill({ a: 5 }, 7)) // 12
+
+export {}
 ```
 
 ```md

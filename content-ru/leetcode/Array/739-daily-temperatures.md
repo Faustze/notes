@@ -1,8 +1,8 @@
 # 739. Daily Temperatures (Medium) (<https://leetcode.com/problems/daily-temperatures/>)
 
-> Дан массив целых чисел temperatures, представляющий дневные температуры; верните массив answer такой, что answer[i] — количество дней, которые нужно подождать после i-го дня, чтобы получить более тёплую температуру.
+> Дан массив целых чисел temperatures, представляющий дневные температуры. Верните массив answer такой, что answer[i] — это количество дней, которые нужно подождать после i-го дня, чтобы получить более тёплую температуру.
 > Если такого будущего дня не существует, оставьте answer[i] == 0.
-> git@github.com:Faustze/frontend-study-lab.git Ограничения: - 1 <= temperatures.length <= 10^5 - 30 <= temperatures[i] <= 100
+> Ограничения: - 1 <= temperatures.length <= 10^5 - 30 <= temperatures[i] <= 100
 
 ```ts
 function dailyTemperatures(temperatures: number[]): number[] {
@@ -26,6 +26,24 @@ function dailyTemperatures(temperatures: number[]): number[] {
 console.log(dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73])) // [1,1,4,2,1,1,0,0]
 console.log(dailyTemperatures([30, 40, 50, 60])) // [1,1,1,0]
 console.log(dailyTemperatures([30, 60, 90])) // [1,1,0]
+
+// function dailyTemperatures(temperatures: number[]): number[] {
+//   const answer: number[] = [];
+
+//   for (let i = 0; i < temperatures.length; i++) {
+//     let j = i + 1;
+//     let cnt = 1;
+
+//     while (j < temperatures.length && temperatures[i] >= temperatures[j]) {
+//       cnt++;
+//       j++;
+//     }
+
+//     answer.push(j < temperatures.length ? cnt : 0);
+//   }
+
+//   return answer;
+// }
 ```
 
 ```md

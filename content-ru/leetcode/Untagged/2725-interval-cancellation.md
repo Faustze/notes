@@ -1,7 +1,7 @@
-# 2725. Interval Cancellation (Easy) (<https://leetcode.com/problems/interval-cancellation/>)
+# 2725. Отмена интервала (Easy) (<https://leetcode.com/problems/interval-cancellation/>)
 
-> Дана функция fn, массив аргументов args и интервал t, верните функцию отмены cancelFn.
-> После задержки в cancelTimeMs возвращённая функция отмены cancelFn будет вызвана: setTimeout(cancelFn, cancelTimeMs) Функция fn должна быть вызвана с args немедленно, а затем повторно вызываться каждые t миллисекунд, пока cancelFn не будет вызвана на отметке cancelTimeMs мс.
+> Дана функция fn, массив аргументов args и интервал времени t, нужно вернуть функцию отмены cancelFn.
+> После задержки в cancelTimeMs миллисекунд возвращённая функция отмены cancelFn будет вызвана: setTimeout(cancelFn, cancelTimeMs). Функция fn должна быть вызвана с args немедленно, а затем повторно вызываться каждые t миллисекунд, пока в момент времени cancelTimeMs мс не будет вызвана cancelFn.
 > Ограничения: - fn — функция - args — валидный JSON-массив - 1 <= args.length <= 10 - 30 <= t <= 100 - 10 <= cancelTimeMs <= 500
 
 ```ts
@@ -14,7 +14,7 @@ function cancellable(fn: Fn, args: JSONValue[], t: number): Function {
   return () => clearInterval(timeoutId)
 }
 
-// Local check
+// Локальная проверка
 const result: { time: number; returned: JSONValue }[] = []
 const fn = (...values: JSONValue[]) => Number(values[0]) * 2
 const args: JSONValue[] = [4]
@@ -33,7 +33,7 @@ setTimeout(() => console.log(result), cancelTimeMs + t)
 ```
 
 ```md
-Example 1:
+Пример 1:
 
     Input: fn = (x) => x * 2, args = [4], t = 35
     Output:
@@ -59,7 +59,7 @@ Example 1:
     6th fn call is at 175ms. fn(4) returns 8.
     Cancelled at 190ms.
 
-Example 2:
+Пример 2:
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2724-sort-by]] [[leetcode/untagged/2726-calculator-with-method-chaining]] -->
 
@@ -87,7 +87,7 @@ Example 2:
     6th fn call is at 150ms.
     Cancelled at 165ms.
 
-Example 3:
+Пример 3:
 
     Input: fn = (x1, x2, x3) => (x1 + x2 + x3), args = [5, 1, 3], t = 50
     Output:

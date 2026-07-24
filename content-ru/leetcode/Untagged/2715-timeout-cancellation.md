@@ -1,9 +1,9 @@
-# 2715. Timeout Cancellation (Easy) (<https://leetcode.com/problems/timeout-cancellation/>)
+# 2715. Отмена таймаута (Easy) (<https://leetcode.com/problems/timeout-cancellation/>)
 
-> Дана функция fn, массив аргументов args и таймаут t в миллисекундах, верните функцию отмены cancelFn.
-> После задержки в cancelTimeMs возвращённая функция отмены cancelFn будет вызвана: setTimeout(cancelFn, cancelTimeMs) Изначально выполнение fn должно быть отложено на t миллисекунд.
-> Если cancelFn вызывается до истечения задержки t миллисекунд, она должна отменить отложенное выполнение fn.
-> Иначе fn должна быть выполнена с args в качестве аргументов.
+> Дана функция fn, массив аргументов args и таймаут t в миллисекундах, необходимо вернуть функцию отмены cancelFn.
+> После задержки в cancelTimeMs миллисекунд будет вызвана возвращённая функция отмены cancelFn: setTimeout(cancelFn, cancelTimeMs) Изначально выполнение fn должно быть отложено на t миллисекунд.
+> Если cancelFn будет вызвана до истечения задержки в t миллисекунд, она должна отменить отложенное выполнение fn.
+> В противном случае fn должна быть вызвана с аргументами args.
 > Ограничения: - fn — функция - args — валидный JSON-массив - 1 <= args.length <= 10 - 20 <= t <= 1000 - 10 <= cancelTimeMs <= 1000
 
 ```ts
@@ -34,43 +34,43 @@ setTimeout(() => {
 ```
 
 ```md
-Example 1:
+Пример 1:
 
-    Input: fn = (x) => x * 5, args = [2], t = 20
-    Output: [{"time": 20, "returned": 10}]
-    Explanation:
+    Ввод: fn = (x) => x * 5, args = [2], t = 20
+    Вывод: [{"time": 20, "returned": 10}]
+    Объяснение:
     const cancelTimeMs = 50;
     const cancelFn = cancellable((x) => x * 5, [2], 20);
     setTimeout(cancelFn, cancelTimeMs);
 
-    The cancellation was scheduled to occur after a delay of cancelTimeMs (50ms),
-    which happened after the execution of fn(2) at 20ms.
+    Отмена была запланирована после задержки cancelTimeMs (50 мс),
+    что произошло после выполнения fn(2) в момент 20 мс.
 
-Example 2:
+Пример 2:
 
-    Input: fn = (x) => x**2, args = [2], t = 100
-    Output: []
-    Explanation:
+    Ввод: fn = (x) => x**2, args = [2], t = 100
+    Вывод: []
+    Объяснение:
     const cancelTimeMs = 50;
     const cancelFn = cancellable((x) => x**2, [2], 100);
     setTimeout(cancelFn, cancelTimeMs);
 
-    The cancellation was scheduled to occur after a delay of cancelTimeMs (50ms),
-    which happened before the execution of fn(2) at 100ms, resulting in fn(2) never being called.
+    Отмена была запланирована после задержки cancelTimeMs (50 мс),
+    что произошло до выполнения fn(2) в момент 100 мс, в результате fn(2) так и не была вызвана.
 
-Example 3:
+Пример 3:
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2703-return-length-of-arguments-passed]] [[leetcode/untagged/2721-execute-asynchronous-functions-in-parallel]] -->
 
-    Input: fn = (x1, x2) => x1 * x2, args = [2,4], t = 30
-    Output: [{"time": 30, "returned": 8}]
-    Explanation:
+    Ввод: fn = (x1, x2) => x1 * x2, args = [2,4], t = 30
+    Вывод: [{"time": 30, "returned": 8}]
+    Объяснение:
     const cancelTimeMs = 100;
     const cancelFn = cancellable((x1, x2) => x1 * x2, [2,4], 30);
     setTimeout(cancelFn, cancelTimeMs);
 
-    The cancellation was scheduled to occur after a delay of cancelTimeMs (100ms),
-    which happened after the execution of fn(2,4) at 30ms.
+    Отмена была запланирована после задержки cancelTimeMs (100 мс),
+    что произошло после выполнения fn(2,4) в момент 30 мс.
 ```
 
 #leetcode

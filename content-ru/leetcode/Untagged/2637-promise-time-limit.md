@@ -2,22 +2,12 @@
 
 > Дана асинхронная функция fn и время t в миллисекундах, верните новую версию входной функции с ограничением по времени.
 > fn принимает аргументы, переданные функции с ограничением по времени.
-> Функция с ограничением по времени должна следовать этим правилам: - Если fn завершится в пределах лимита времени t миллисекунд, функция с ограничением по времени должна резолвиться с результатом.
+> Функция с ограничением по времени должна следовать этим правилам: - Если fn завершается в пределах лимита времени t миллисекунд, функция с ограничением по времени должна разрешиться (resolve) с результатом.
 >
-> - Если выполнение fn превышает лимит времени, функция с ограничением по времени должна реджектиться со строкой "Time Limit Exceeded".
+> - Если выполнение fn превышает лимит времени, функция с ограничением по времени должна отклониться (reject) со строкой "Time Limit Exceeded".
 >   Ограничения: - 0 <= inputs.length <= 10 - 0 <= t <= 1000 - fn возвращает promise
 
 ```ts
-function should resolve with the result.
-  - If the execution of fn exceeds the time limit, the time limited function
-    should reject with the string "Time Limit Exceeded".
-
-  Constraints:
-  - 0 <= inputs.length <= 10
-  - 0 <= t <= 1000
-  - fn returns a promise
-*/
-
 type Fn = (...params: any[]) => Promise<any>
 
 function timeLimit(fn: Fn, t: number): Fn {
@@ -25,12 +15,12 @@ function timeLimit(fn: Fn, t: number): Fn {
     return Promise.race([
       fn(...args),
       // eslint-disable-next-line prefer-promise-reject-errors
-      new Promise((_, reject) => setTimeout(() => reject('Time Limit Exceeded'), t)),
+      new Promise((_, reject) => setTimeout(() => reject("Time Limit Exceeded"), t)),
     ])
   }
-};
+}
 
-const limited = timeLimit(t => new Promise(res => setTimeout(res, t)), 100)
+const limited = timeLimit((t) => new Promise((res) => setTimeout(res, t)), 100)
 limited(150).catch(console.log) // "Time Limit Exceeded" at t=100ms
 ```
 
@@ -61,8 +51,6 @@ Example 2:
     Output: {"resolved":25,"time":100}
     Explanation:
     The function resolved 5 * 5 = 25 at t=100ms. The time limit is never reached.
-
-<!-- [[leetcode/untagged]] [[leetcode/untagged/2631-group-by]] [[leetcode/untagged/2665-counter2]] -->
 
 Example 3:
 
