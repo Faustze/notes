@@ -1,4 +1,3 @@
-```markdown
 # 📦 HTTP-заголовки и кэширование
 
 ## 💡 Основная идея
@@ -61,4 +60,3 @@
 [[browser/Network/TCP & TLS Handshake|TCP & TLS Handshake — что позволяет пропустить кэширование]]
 [[browser/Network/CORS|CORS — ещё один сетевой шлюз на стороне браузера]]
 #browser
-```

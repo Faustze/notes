@@ -17,7 +17,7 @@ Layout      → Paint       (пиксели: цвет, текст, тени)
 Paint       → Composite   (GPU собирает слои)
 ```
 
-`element.style.width = '100px'` **не** триггерит layout немедленно. Браузер просто помечает элемент (и часто его поддерево) как "грязный" и откладывает пересчёт до следующей естественной точки рендера — шага, который идёт сразу после того, как очередь микрозадач опустеет и отработают колбэки rAF в [[browser/Event Loop/Event Loop|Event Loop]].
+`element.style.width = '100px'` **не** триггерит layout немедленно. Браузер просто помечает элемент (и часто его поддерево) как "грязный" и откладывает пересчёт до следующей естественной точки рендера — шага, который идёт сразу после того, как очередь микрозадач опустеет и отработают колбэки rAF в [[browser/Event Loop, Microtasks, Macrotasks|Event Loop]].
 
 Важное различие: **CSSOM** (распарсенные правила из `<style>`/стилшитов) и инлайновый `element.style` (объект `CSSStyleDeclaration`, привязанный к атрибуту `style` одного элемента) — разные объекты. Запись `el.style.width = ...` никогда не трогает CSSOM — она помечает "грязным" только этот один элемент.
 
@@ -56,7 +56,7 @@ Main thread:        выполнение JS → Style calc → Layout → Paint
 Compositor thread:  Composite (transform/opacity)
 ```
 
-Main thread — это место, где живут [[browser/Event Loop/Event Loop|Event Loop]], стек вызовов и весь JS — Style, Layout и Paint тоже находятся там. Если main thread заблокирован (долгий синхронный JS, forced reflow), всё останавливается: скролл, клики и любая анимация на `width`/`top`.
+Main thread — это место, где живут [[browser/Event Loop, Microtasks, Macrotasks|Event Loop]], стек вызовов и весь JS — Style, Layout и Paint тоже находятся там. Если main thread заблокирован (долгий синхронный JS, forced reflow), всё останавливается: скролл, клики и любая анимация на `width`/`top`.
 
 Compositor thread отдельный и не блокируется main thread'ом. К моменту выполнения Composite DOM/CSSOM уже не имеют значения: Paint (на main thread) уже превратил элемент в отрастеризованную GPU-текстуру. Compositor thread видит только готовые текстуры и матрицы трансформаций — он никогда не трогает дерево DOM. Composite — это не "рисование поверх HTML/CSS-скелета", это "размещение уже готовых изображений на экране".
 
@@ -111,6 +111,6 @@ items.forEach((item) => {
 
 > Изменения `width`/`top` стоят Layout + Paint на main thread; изменения `color`/`shadow` стоят только Paint; `transform`/`opacity` пропускают оба этих шага и остаются на compositor thread — в этом вся причина предпочитать анимировать именно их.
 
-[[browser/Event Loop/index|Event Loop & Rendering]]
-[[browser/Event Loop/Event Loop, Microtasks, Macrotasks|Event Loop — как рендер встраивается в цикл]]
+[[browser/index|Browser]]
+[[browser/Event Loop, Microtasks, Macrotasks|Event Loop — как рендер встраивается в цикл]]
 #browser

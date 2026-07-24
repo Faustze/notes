@@ -88,6 +88,6 @@ requestAnimationFrame(animate)
 
 > Условие выхода Event Loop для очереди микротасков — «пусто», а самопополняющаяся очередь никогда его не достигает. Очередь rAF же выходит через _снимок_: всё, что добавляется во время батча, откладывается на следующий, независимо от скорости выполнения.
 
-[[browser/Event Loop/index|Event Loop & Rendering]]
-[[browser/Event Loop/Rendering Pipeline|Rendering Pipeline — что происходит после опустошения очереди микротасков]]
+[[browser/index|Browser]]
+[[browser/Rendering Pipeline|Rendering Pipeline — что происходит после опустошения очереди микротасков]]
 #browser
