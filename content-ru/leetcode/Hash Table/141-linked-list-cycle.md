@@ -7,53 +7,54 @@
 > Верните true, если в связном списке есть цикл.
 > В противном случае верните false.
 > Ограничения: - Количество узлов в списке находится в диапазоне [0, 10^4].
+>
 > - -10^5 <= Node.val <= 10^5 - pos равен -1 или является допустимым индексом в связном списке.
-> Дополнительное задание: Сможете ли вы решить эту задачу, используя O(1) (то есть
-> константную) память?
+>   Дополнительное задание: Сможете ли вы решить эту задачу, используя O(1) (то есть
+>   константную) память?
 
 ```ts
 class ListNode {
-  val: number;
-  next: ListNode | null;
+  val: number
+  next: ListNode | null
   constructor(val?: number, next?: ListNode | null) {
-    this.val = val === undefined ? 0 : val;
-    this.next = next === undefined ? null : next;
+    this.val = val === undefined ? 0 : val
+    this.next = next === undefined ? null : next
   }
 }
 
 function hasCycle(head: ListNode | null): boolean {
   // Floyd's Cycle Detection
-  let slow: ListNode | null = head;
-  let fast: ListNode | null = head;
+  let slow: ListNode | null = head
+  let fast: ListNode | null = head
 
   while (fast !== null && fast.next !== null) {
-    slow = slow!.next;
-    fast = fast.next.next;
-    if (fast === slow) return true;
+    slow = slow!.next
+    fast = fast.next.next
+    if (fast === slow) return true
   }
 
-  return false;
+  return false
 }
 
 function toList(arr: number[], pos: number): ListNode | null {
-  if (arr.length === 0) return null;
-  const nodes = arr.map((v) => new ListNode(v));
+  if (arr.length === 0) return null
+  const nodes = arr.map((v) => new ListNode(v))
   for (let i = 0; i < nodes.length - 1; i++) {
-    nodes[i].next = nodes[i + 1];
+    nodes[i].next = nodes[i + 1]
   }
   if (pos >= 0 && pos < nodes.length) {
-    nodes[nodes.length - 1].next = nodes[pos];
+    nodes[nodes.length - 1].next = nodes[pos]
   }
-  return nodes[0];
+  return nodes[0]
 }
 
 // Локальная проверка:
-console.log(hasCycle(toList([3, 2, 0, -4], 1))); // true
-console.log(hasCycle(toList([1, 2], 0))); // true
-console.log(hasCycle(toList([1], -1))); // false
-console.log(hasCycle(toList([], -1))); // false
-console.log(hasCycle(toList([1, 2, 3, 4, 5], -1))); // false
-console.log(hasCycle(toList([1, 2, 3, 4, 5], 4))); // true (tail → last node itself)
+console.log(hasCycle(toList([3, 2, 0, -4], 1))) // true
+console.log(hasCycle(toList([1, 2], 0))) // true
+console.log(hasCycle(toList([1], -1))) // false
+console.log(hasCycle(toList([], -1))) // false
+console.log(hasCycle(toList([1, 2, 3, 4, 5], -1))) // false
+console.log(hasCycle(toList([1, 2, 3, 4, 5], 4))) // true (tail → last node itself)
 ```
 
 ```md
@@ -63,13 +64,13 @@ console.log(hasCycle(toList([1, 2, 3, 4, 5], 4))); // true (tail → last node i
     Выход: true
     Объяснение: В связном списке есть цикл, где хвост соединяется с 1-м узлом (индексация с 0).
 
-  Пример 2:
+Пример 2:
 
     Вход: head = [1,2], pos = 0
     Выход: true
     Объяснение: В связном списке есть цикл, где хвост соединяется с 0-м узлом.
 
-  Пример 3:
+Пример 3:
 
     Вход: head = [1], pos = -1
     Выход: false

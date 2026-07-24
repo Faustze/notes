@@ -24,8 +24,7 @@ Array.prototype.groupBy = function <T>(this: T[], fn: (item: T) => string): Reco
 
     if (key in result) {
       result[key].push(item)
-    }
-    else {
+    } else {
       result[key] = [item]
     }
   }
@@ -34,10 +33,15 @@ Array.prototype.groupBy = function <T>(this: T[], fn: (item: T) => string): Reco
 }
 
 // Локальная проверка:
-console.log([{ id: '1' }, { id: '1' }, { id: '2' }].groupBy(item => item.id))
-console.log([[1, 2, 3], [1, 3, 5], [1, 5, 9]].groupBy(list => String(list[0])))
-console.log([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].groupBy(n => String(n > 5)))
-
+console.log([{ id: "1" }, { id: "1" }, { id: "2" }].groupBy((item) => item.id))
+console.log(
+  [
+    [1, 2, 3],
+    [1, 3, 5],
+    [1, 5, 9],
+  ].groupBy((list) => String(list[0])),
+)
+console.log([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].groupBy((n) => String(n > 5)))
 
 export {}
 ```
@@ -66,13 +70,15 @@ Example 1:
     the first array. There is one object with an "id" of 2. That object is put
     in the second array.
 
-  Example 2:
+Example 2:
 
     Input:
     array = [
       [1, 2, 3],
       [1, 3, 5],
+
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2629-function-composition]] [[leetcode/untagged/2637-promise-time-limit]] -->
+
       [1, 5, 9]
     ]
     fn = function (list) {
@@ -87,7 +93,7 @@ Example 1:
     the key as being the first element in the array. All the arrays have 1 as
     their first element so they are grouped together.
 
-  Example 3:
+Example 3:
 
     Input:
     array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]

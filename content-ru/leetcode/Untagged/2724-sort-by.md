@@ -1,6 +1,7 @@
 # 2724. Сортировка по (Easy) (<https://leetcode.com/problems/sort-by/>)
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2723-add-two-promises]] [[leetcode/untagged/2725-interval-cancellation]] -->
+
 > Дан массив arr и функция fn, верните отсортированный массив sortedArr.
 > Можно считать, что fn возвращает только числа, и эти числа определяют порядок сортировки sortedArr.
 > sortedArr должен быть отсортирован по возрастанию значений, возвращаемых fn.
@@ -17,9 +18,18 @@ function sortBy(arr: JSONValue[], fn: Fn): JSONValue[] {
 }
 
 // Local check:
-console.log(sortBy([5, 4, 1, 2, 3], x => x as number)) // [1, 2, 3, 4, 5]
-console.log(sortBy([{ x: 1 }, { x: 0 }, { x: -1 }], d => (d as { x: number }).x)) // [{ x: -1 }, { x: 0 }, { x: 1 }]
-console.log(sortBy([[3, 4], [5, 2], [10, 1]], x => (x as number[])[1])) // [[10, 1], [5, 2], [3, 4]]
+console.log(sortBy([5, 4, 1, 2, 3], (x) => x as number)) // [1, 2, 3, 4, 5]
+console.log(sortBy([{ x: 1 }, { x: 0 }, { x: -1 }], (d) => (d as { x: number }).x)) // [{ x: -1 }, { x: 0 }, { x: 1 }]
+console.log(
+  sortBy(
+    [
+      [3, 4],
+      [5, 2],
+      [10, 1],
+    ],
+    (x) => (x as number[])[1],
+  ),
+) // [[10, 1], [5, 2], [3, 4]]
 ```
 
 ```md
@@ -30,14 +40,14 @@ console.log(sortBy([[3, 4], [5, 2], [10, 1]], x => (x as number[])[1])) // [[10,
     Объяснение:
     fn просто возвращает переданное ей число, поэтому массив сортируется по возрастанию.
 
-  Пример 2:
+Пример 2:
 
     Вход: arr = [{"x": 1}, {"x": 0}, {"x": -1}], fn = (d) => d.x
     Выход: [{"x": -1}, {"x": 0}, {"x": 1}]
     Объяснение:
     fn возвращает значение ключа "x". Поэтому массив сортируется по этому значению.
 
-  Пример 3:
+Пример 3:
 
     Вход: arr = [[3, 4], [5, 2], [10, 1]], fn = (x) => x[1]
     Выход: [[10, 1], [5, 2], [3, 4]]

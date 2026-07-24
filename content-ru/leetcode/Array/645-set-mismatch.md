@@ -15,8 +15,7 @@ function findErrorNums(nums: number[]): number[] {
   const seen = new Set<number>()
 
   for (const n of nums) {
-    if (seen.has(n))
-      dupSum = n
+    if (seen.has(n)) dupSum = n
     seen.add(n)
     actualSum += n
   }
@@ -37,7 +36,7 @@ Example 1:
     Output: [2,3]
     Explanation: The number 2 appears twice and the number 3 is missing.
 
-  Example 2:
+Example 2:
 
     Input: nums = [1,1]
     Output: [1,2]

@@ -25,12 +25,12 @@ console.log(isSubsequence("axc", "ahbgdc"))
 
 ```md
 Example 1:
-    Input: s = "abc", t = "ahbgdc"
-    Output: true
+Input: s = "abc", t = "ahbgdc"
+Output: true
 
-  Example 2:
-    Input: s = "axc", t = "ahbgdc"
-    Output: false
+Example 2:
+Input: s = "axc", t = "ahbgdc"
+Output: false
 ```
 
 [[leetcode/Two Pointers/index|two-pointers]]

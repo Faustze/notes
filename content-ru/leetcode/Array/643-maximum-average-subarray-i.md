@@ -7,30 +7,30 @@
 
 ```ts
 function findMaxAverage(nums: number[], k: number): number {
-  let maxSum = nums.slice(0, k).reduce((acc, cur) => acc + cur, 0);
-  let curSum = maxSum;
+  let maxSum = nums.slice(0, k).reduce((acc, cur) => acc + cur, 0)
+  let curSum = maxSum
 
   for (let i = 0; i < nums.length - k; i++) {
     curSum = curSum - nums[i] + nums[i + k]
     maxSum = curSum > maxSum ? curSum : maxSum
   }
 
-  return maxSum / k;
+  return maxSum / k
 }
 
-console.log(findMaxAverage([1, 12, -5, -6, 50, 3], 4)); // 12.75
-console.log(findMaxAverage([5], 1)); // 5.0
+console.log(findMaxAverage([1, 12, -5, -6, 50, 3], 4)) // 12.75
+console.log(findMaxAverage([5], 1)) // 5.0
 ```
 
 ```md
 Пример 1:
-    Ввод: nums = [1,12,-5,-6,50,3], k = 4
-    Вывод: 12.75
-    Объяснение: Максимальное среднее равно (12 - 5 - 6 + 50) / 4 = 51 / 4 = 12.75
+Ввод: nums = [1,12,-5,-6,50,3], k = 4
+Вывод: 12.75
+Объяснение: Максимальное среднее равно (12 - 5 - 6 + 50) / 4 = 51 / 4 = 12.75
 
-  Пример 2:
-    Ввод: nums = [5], k = 1
-    Вывод: 5.00000
+Пример 2:
+Ввод: nums = [5], k = 1
+Вывод: 5.00000
 ```
 
 [[leetcode/Array/index|array]]

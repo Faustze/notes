@@ -40,7 +40,7 @@ console.log(reduce([], () => 0, 25)) // 25
     (6) + nums[3] = 10
     Итоговый ответ — 10.
 
-  Пример 2:
+Пример 2:
 
     Вход:
     nums = [1,2,3,4]
@@ -53,10 +53,12 @@ console.log(reduce([], () => 0, 25)) // 25
     (101) + nums[1] * nums[1] = 105
     (105) + nums[2] * nums[2] = 114
     (114) + nums[3] * nums[3] = 130
+
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2623-memoize]] [[leetcode/untagged/2627-debounce]] -->
+
     Итоговый ответ — 130.
 
-  Пример 3:
+Пример 3:
 
     Вход:
     nums = []

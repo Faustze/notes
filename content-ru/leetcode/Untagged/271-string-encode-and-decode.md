@@ -3,19 +3,18 @@
 > Разработайте алгоритм для кодирования списка строк в одну строку.
 > Закодированная строка затем декодируется обратно в исходный список строк.
 > Ограничения / Примечания: - Входные строки могут содержать любые символы.
+>
 > - Необходимо обеспечить однозначную обратимость кодирования.
 
 ```ts
 class Codec {
-  constructor() {
-
-  }
+  constructor() {}
 
   encode(strs: string[]): string {
     // [length] + "#" + [data]
-    let encoded_string = ''
+    let encoded_string = ""
     for (const word of strs) {
-      encoded_string += word.length + '#' + word
+      encoded_string += word.length + "#" + word
     }
     return encoded_string
   }
@@ -25,8 +24,8 @@ class Codec {
     let idx = 0
 
     while (idx < s.length) {
-      let length: string = ''
-      while (idx < s.length && s[idx] !== '#') {
+      let length: string = ""
+      while (idx < s.length && s[idx] !== "#") {
         length += s[idx]
         idx += 1
       }
@@ -37,7 +36,6 @@ class Codec {
     return decoded
   }
 }
-
 
 // Local check:
 const codec = new Codec()
@@ -55,7 +53,7 @@ console.log(codec.decode(codec.encode([""])))
     Объяснение:
       После кодирования и последующего декодирования мы получаем обратно исходный массив.
 
-  Пример 2:
+Пример 2:
 
     Вход: ["lint","code","love","you"]
     Выход: ["lint","code","love","you"]

@@ -3,6 +3,7 @@
 > Дан корень бинарного дерева, верните его максимальную глубину.
 > Максимальная глубина бинарного дерева — это количество узлов вдоль самого длинного пути от корневого узла до самого дальнего листового узла.
 > Ограничения: - Количество узлов в дереве находится в диапазоне [0, 10^4].
+>
 > - -100 <= Node.val <= 100
 
 ```ts
@@ -11,9 +12,9 @@ class TreeNode {
   left: TreeNode | null
   right: TreeNode | null
   constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
-    this.val = (val === undefined ? 0 : val)
-    this.left = (left === undefined ? null : left)
-    this.right = (right === undefined ? null : right)
+    this.val = val === undefined ? 0 : val
+    this.left = left === undefined ? null : left
+    this.right = right === undefined ? null : right
   }
 }
 
@@ -26,11 +27,7 @@ function maxDepth(root: TreeNode | null): number {
 }
 
 // Local check:
-const root = new TreeNode(
-  3,
-  new TreeNode(9),
-  new TreeNode(20, new TreeNode(15), new TreeNode(7)),
-)
+const root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)))
 console.log(maxDepth(root)) // 3
 
 const root2 = new TreeNode(1, null, new TreeNode(2))
@@ -43,7 +40,7 @@ console.log(maxDepth(root2)) // 2
     Ввод: root = [3,9,20,null,null,15,7]
     Вывод: 3
 
-  Пример 2:
+Пример 2:
 
     Ввод: root = [1,null,2]
     Вывод: 2

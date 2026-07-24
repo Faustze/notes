@@ -8,18 +8,19 @@
 > В возвращённой строке слова должны быть разделены ровно одним пробелом.
 > Не включайте лишние пробелы.
 > Ограничения: - 1 <= s.length <= 10^4 - s содержит английские буквы (верхнего и нижнего регистра), цифры и пробелы ' '.
+>
 > - В s есть хотя бы одно слово.
-> Дополнительный вопрос: если тип данных строки в вашем языке изменяемый, сможете ли вы решить задачу на месте с O(1) дополнительной памяти?
+>   Дополнительный вопрос: если тип данных строки в вашем языке изменяемый, сможете ли вы решить задачу на месте с O(1) дополнительной памяти?
 
 ```ts
 function reverseWords(s: string): string {
-  return s.trim().split(/\s+/).reverse().join(" ");
+  return s.trim().split(/\s+/).reverse().join(" ")
 }
 
 // Local check:
-console.log(reverseWords("the sky is blue"));
-console.log(reverseWords("  hello world  "));
-console.log(reverseWords("a good   example"));
+console.log(reverseWords("the sky is blue"))
+console.log(reverseWords("  hello world  "))
+console.log(reverseWords("a good   example"))
 ```
 
 ```md
@@ -28,13 +29,13 @@ Example 1:
     Input: s = "the sky is blue"
     Output: "blue is sky the"
 
-  Example 2:
+Example 2:
 
     Input: s = "  hello world  "
     Output: "world hello"
     Explanation: Your reversed string should not contain leading or trailing spaces.
 
-  Example 3:
+Example 3:
 
     Input: s = "a good   example"
     Output: "example good a"

@@ -7,8 +7,8 @@
 
 ```ts
 function isPalindrome(s: string): boolean {
-  const lc = s.toLocaleLowerCase().replace(/[^a-zA-Z\d]/g, "");
-  return lc === lc.split("").reverse().join("");
+  const lc = s.toLocaleLowerCase().replace(/[^a-zA-Z\d]/g, "")
+  return lc === lc.split("").reverse().join("")
 }
 
 // function isPalindrome(s: string): boolean {
@@ -24,9 +24,9 @@ function isPalindrome(s: string): boolean {
 // }
 
 // Локальная проверка:
-console.log(isPalindrome("A man, a plan, a canal: Panama"));
-console.log(isPalindrome("race a car"));
-console.log(isPalindrome(" "));
+console.log(isPalindrome("A man, a plan, a canal: Panama"))
+console.log(isPalindrome("race a car"))
+console.log(isPalindrome(" "))
 ```
 
 ```md
@@ -36,13 +36,13 @@ Example 1:
     Output: true
     Explanation: "amanaplanacanalpanama" is a palindrome.
 
-  Example 2:
+Example 2:
 
     Input: s = "race a car"
     Output: false
     Explanation: "raceacar" is not a palindrome.
 
-  Example 3:
+Example 3:
 
     Input: s = " "
     Output: true

@@ -16,7 +16,7 @@ function smallerNumbersThanCurrent(nums: number[]): number[] {
     }
   }
 
-  return nums.map(n => firstIndex.get(n)!)
+  return nums.map((n) => firstIndex.get(n)!)
 }
 
 // Локальная проверка:
@@ -37,12 +37,12 @@ console.log(smallerNumbersThanCurrent([7, 7, 7, 7]))
       Для nums[3]=2 существует одно число меньше него (1).
       Для nums[4]=3 существует три числа меньше него (1, 2 и 2).
 
-  Пример 2:
+Пример 2:
 
     Вход: nums = [6,5,4,8]
     Выход: [2,1,0,3]
 
-  Пример 3:
+Пример 3:
 
     Вход: nums = [7,7,7,7]
     Выход: [0,0,0,0]

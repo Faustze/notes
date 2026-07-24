@@ -19,10 +19,10 @@ function topKFrequent(nums: number[], k: number): number[] {
 }
 
 // Local check:
-console.log(topKFrequent([1,1,1,2,2,3], 2))
-console.log(topKFrequent([7,7], 1))
+console.log(topKFrequent([1, 1, 1, 2, 2, 3], 2))
+console.log(topKFrequent([7, 7], 1))
 console.log(topKFrequent([1], 1))
-console.log(topKFrequent([1,2,1,2,1,2,3,1,3,2], 2))
+console.log(topKFrequent([1, 2, 1, 2, 1, 2, 3, 1, 3, 2], 2))
 ```
 
 ```md
@@ -32,12 +32,12 @@ Example 1:
     Output: [1,2]
     Explanation: The values 1 and 2 appear most frequently.
 
-  Example 2:
+Example 2:
 
     Input: nums = [1], k = 1
     Output: [1]
 
-  Example 3:
+Example 3:
 
     Input: nums = [1,2,1,2,1,2,3,1,3,2], k = 2
     Output: [1,2]

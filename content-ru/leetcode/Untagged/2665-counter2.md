@@ -1,10 +1,12 @@
 # 2665. Counter II (?) (<https://leetcode.com/problems/counter-ii>)
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2637-promise-time-limit]] [[leetcode/untagged/2666-allow-one-fn-call]] -->
+
 > Напишите функцию createCounter.
 > Она должна принимать начальное целое число init.
 > Она должна возвращать объект с тремя функциями.
 > Эти три функции: - increment() увеличивает текущее значение на 1 и возвращает его.
+>
 > - decrement() уменьшает текущее значение на 1 и возвращает его.
 > - reset() устанавливает текущее значение равным init и возвращает его.
 
@@ -23,7 +25,7 @@ function createCounter(init: number): Counter {
     decrement: () => --value,
     reset: () => (value = init),
   }
-};
+}
 ```
 
 ```md
@@ -37,7 +39,7 @@ Example 1:
     counter.reset(); // 5
     counter.decrement(); // 4
 
-  Example 2:
+Example 2:
 
     Input: init = 0, calls = ["increment","increment","decrement","reset","reset"]
     Output: [1,2,1,0,0]

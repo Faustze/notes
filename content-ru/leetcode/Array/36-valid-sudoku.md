@@ -2,44 +2,37 @@
 
 > Определите, является ли доска 9 x 9 для судоку допустимой.
 > Проверять нужно только заполненные ячейки согласно следующим правилам: 1.
-> Каждая строка должна содержать цифры 1-9 без повторений.
-> 2.
-> Каждый столбец должен содержать цифры 1-9 без повторений.
-> 3.
+> Каждая строка должна содержать цифры 1-9 без повторений. 2.
+> Каждый столбец должен содержать цифры 1-9 без повторений. 3.
 > Каждый из девяти квадратов 3 x 3 сетки должен содержать цифры 1-9 без повторений.
 > Примечание: - Доска судоку (частично заполненная) может быть допустимой, но не обязательно разрешимой.
+>
 > - Проверять по указанным правилам нужно только заполненные ячейки.
-> Ограничения: - board.length == 9 - board[i].length == 9 - board[i][j] это цифра 1-9 или '.'.
+>   Ограничения: - board.length == 9 - board[i].length == 9 - board[i][j] это цифра 1-9 или '.'.
 
 ```ts
 function isValidSudoku(board: string[][]): boolean {
-  const rowSet = new Set<string>();
-  const colSets: Set<string>[] = Array.from(
-    { length: 9 },
-    () => new Set<string>(),
-  );
-  const squareSets: Set<string>[] = Array.from(
-    { length: 9 },
-    () => new Set<string>(),
-  );
+  const rowSet = new Set<string>()
+  const colSets: Set<string>[] = Array.from({ length: 9 }, () => new Set<string>())
+  const squareSets: Set<string>[] = Array.from({ length: 9 }, () => new Set<string>())
 
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board[i].length; j++) {
-      if (board[i][j] === ".") continue;
+      if (board[i][j] === ".") continue
       // column
-      if (colSets[j].has(board[i][j])) return false;
-      colSets[j].add(board[i][j]);
+      if (colSets[j].has(board[i][j])) return false
+      colSets[j].add(board[i][j])
       // row
-      if (rowSet.has(board[i][j])) return false;
-      rowSet.add(board[i][j]);
+      if (rowSet.has(board[i][j])) return false
+      rowSet.add(board[i][j])
       // square
-      const squareIndex = Math.floor(i / 3) * 3 + Math.floor(j / 3);
-      if (squareSets[squareIndex].has(board[i][j])) return false;
-      squareSets[squareIndex].add(board[i][j]);
+      const squareIndex = Math.floor(i / 3) * 3 + Math.floor(j / 3)
+      if (squareSets[squareIndex].has(board[i][j])) return false
+      squareSets[squareIndex].add(board[i][j])
     }
-    rowSet.clear();
+    rowSet.clear()
   }
-  return true;
+  return true
 }
 
 // Локальная проверка:
@@ -55,7 +48,7 @@ console.log(
     [".", ".", ".", "4", "1", "9", ".", ".", "5"],
     [".", ".", ".", ".", "8", ".", ".", "7", "9"],
   ]),
-); // true
+) // true
 
 console.log(
   isValidSudoku([
@@ -69,7 +62,7 @@ console.log(
     [".", ".", ".", "4", "1", "9", ".", ".", "5"],
     [".", ".", ".", ".", "8", ".", ".", "7", "9"],
   ]),
-); // false
+) // false
 ```
 
 ```md
@@ -78,7 +71,7 @@ console.log(
     Ввод: board = [["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]
     Вывод: true
 
-  Пример 2:
+Пример 2:
 
     Ввод: board = [["8","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]
     Вывод: false

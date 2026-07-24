@@ -4,12 +4,13 @@
 > Каждая функция в массиве не принимает аргументов и возвращает promise.
 > Все promise'ы должны выполняться параллельно.
 > Promise разрешается: - когда все promise'ы, возвращённые из functions, успешно разрешились.
+>
 > - Разрешённое значение должно быть массивом всех разрешённых значений в том же порядке, в каком они были в functions.
 > - Он должен разрешаться, когда все асинхронные функции завершили выполнение параллельно.
-> Promise отклоняется: - когда любой promise, возвращённый из functions, был отклонён.
+>   Promise отклоняется: - когда любой promise, возвращённый из functions, был отклонён.
 > - Он должен отклоняться с причиной первого отклонения.
-> Пожалуйста, решите без использования встроенной функции Promise.all.
-> Ограничения: - functions — массив функций, возвращающих promise'ы - 1 <= functions.length <= 10
+>   Пожалуйста, решите без использования встроенной функции Promise.all.
+>   Ограничения: - functions — массив функций, возвращающих promise'ы - 1 <= functions.length <= 10
 
 ```ts
 type Fn<T> = () => Promise<T>
@@ -20,18 +21,19 @@ function promiseAll<T>(functions: Fn<T>[]): Promise<T[]> {
     let completed = 0
 
     functions.map(async (fn, i) => {
-      await fn().then((res) => {
-        results[i] = res
-        completed++
-      }).catch((err) => {
-        reject(err)
-      })
+      await fn()
+        .then((res) => {
+          results[i] = res
+          completed++
+        })
+        .catch((err) => {
+          reject(err)
+        })
 
-      if (completed === functions.length)
-        resolve(results)
+      if (completed === functions.length) resolve(results)
     })
   })
-};
+}
 
 // for (let i = 0; i < functions.length; i++) {
 //   functions[i]()
@@ -48,7 +50,7 @@ function promiseAll<T>(functions: Fn<T>[]): Promise<T[]> {
 //     })
 // }
 
-const promise = promiseAll([() => new Promise(res => res(42))])
+const promise = promiseAll([() => new Promise((res) => res(42))])
 promise.then(console.log)
 ```
 
@@ -60,12 +62,14 @@ promise.then(console.log)
       () => new Promise(resolve => setTimeout(() => resolve(5), 200))
     ]
     Вывод: {"t": 200, "resolved": [5]}
+
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2715-timeout-cancellation]] [[leetcode/untagged/2723-add-two-promises]] -->
+
     Объяснение:
     promiseAll(functions).then(console.log) // [5]
     Единственная функция разрешилась на 200мс со значением 5.
 
-  Пример 2:
+Пример 2:
 
     Ввод:
     functions = [
@@ -77,7 +81,7 @@ promise.then(console.log)
     Поскольку один из promise'ов отклонился, возвращённый promise также
     отклонился с той же ошибкой в то же время.
 
-  Пример 3:
+Пример 3:
 
     Ввод:
     functions = [

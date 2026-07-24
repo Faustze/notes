@@ -5,14 +5,14 @@
 
 ```ts
 function containsDuplicate(nums: number[]): boolean {
-    const st = new Set<number>()
-    for (const num of nums) {
-        if (st.has(num)) {
-            return true
-        }
-        st.add(num)
+  const st = new Set<number>()
+  for (const num of nums) {
+    if (st.has(num)) {
+      return true
     }
-    return false
+    st.add(num)
+  }
+  return false
 }
 
 // Локальная проверка:
@@ -28,13 +28,13 @@ Example 1:
     Output: true
     Explanation: The element 1 occurs at the indices 0 and 3.
 
-  Example 2:
+Example 2:
 
     Input: nums = [1,2,3,4]
     Output: false
     Explanation: All elements are distinct.
 
-  Example 3:
+Example 3:
 
     Input: nums = [1,1,1,3,3,4,3,2,4,2]
     Output: true

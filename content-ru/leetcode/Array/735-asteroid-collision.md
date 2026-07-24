@@ -12,48 +12,48 @@
 
 ```ts
 function asteroidCollision(asteroids: number[]): number[] {
-  const stack: number[] = [];
+  const stack: number[] = []
 
   for (let i = 0; i < asteroids.length; i++) {
-    const curr = asteroids[i];
+    const curr = asteroids[i]
     if (stack.length === 0 || (stack.at(-1)! > 0 && curr > 0)) {
-      stack.push(curr);
-      continue;
+      stack.push(curr)
+      continue
     }
 
     if (stack.at(-1)! < 0 && curr > 0) {
-      stack.push(curr);
-      continue;
+      stack.push(curr)
+      continue
     }
 
-    let currAlive = true;
+    let currAlive = true
     while (stack.at(-1)! > 0 && curr < 0) {
       if (Math.abs(curr) > Math.abs(stack.at(-1)!)) {
-        stack.pop();
+        stack.pop()
       } else if (Math.abs(curr) < Math.abs(stack.at(-1)!)) {
-        currAlive = false;
-        break;
+        currAlive = false
+        break
       } else {
-        currAlive = false;
-        stack.pop();
-        break;
+        currAlive = false
+        stack.pop()
+        break
       }
     }
 
     if (currAlive) {
-      stack.push(curr);
+      stack.push(curr)
     }
   }
 
-  return stack;
+  return stack
 }
 
 // Локальная проверка:
-console.log(asteroidCollision([10, -2]));
-console.log(asteroidCollision([5, 10, -5]));
-console.log(asteroidCollision([8, -8]));
-console.log(asteroidCollision([10, 2, -5]));
-console.log(asteroidCollision([3, 5, -6, 2, -1, 4]));
+console.log(asteroidCollision([10, -2]))
+console.log(asteroidCollision([5, 10, -5]))
+console.log(asteroidCollision([8, -8]))
+console.log(asteroidCollision([10, 2, -5]))
+console.log(asteroidCollision([3, 5, -6, 2, -1, 4]))
 ```
 
 ```md
@@ -63,19 +63,19 @@ console.log(asteroidCollision([3, 5, -6, 2, -1, 4]));
     Выход: [5,10]
     Объяснение: 10 и -5 сталкиваются, в результате остаётся 10. 5 и 10 никогда не сталкиваются.
 
-  Пример 2:
+Пример 2:
 
     Вход: asteroids = [8,-8]
     Выход: []
     Объяснение: 8 и -8 сталкиваются, взрывая друг друга.
 
-  Пример 3:
+Пример 3:
 
     Вход: asteroids = [10,2,-5]
     Выход: [10]
     Объяснение: 2 и -5 сталкиваются, в результате остаётся -5. 10 и -5 сталкиваются, в результате остаётся 10.
 
-  Пример 4:
+Пример 4:
 
     Вход: asteroids = [3,5,-6,2,-1,4]
     Выход: [-6,2,4]

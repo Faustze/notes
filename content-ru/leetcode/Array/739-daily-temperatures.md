@@ -6,26 +6,26 @@
 
 ```ts
 function dailyTemperatures(temperatures: number[]): number[] {
-  const n = temperatures.length;
-  const answer: number[] = new Array(n).fill(0); // по умолчанию 0
-  const stack: number[] = []; // храним ИНДЕКСЫ
+  const n = temperatures.length
+  const answer: number[] = new Array(n).fill(0) // по умолчанию 0
+  const stack: number[] = [] // храним ИНДЕКСЫ
 
   for (let i = 0; i < n; i++) {
     // Пока стек не пуст И текущая температура ВЫШЕ температуры на верхушке
     while (stack.length > 0 && temperatures[i] > temperatures[stack.at(-1)!]) {
-      const topIdx = stack.pop()!;
-      answer[topIdx] = i - topIdx; // расстояние между индексами
+      const topIdx = stack.pop()!
+      answer[topIdx] = i - topIdx // расстояние между индексами
     }
-    stack.push(i);
+    stack.push(i)
   }
 
-  return answer;
+  return answer
 }
 
 // Local check:
-console.log(dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73])); // [1,1,4,2,1,1,0,0]
-console.log(dailyTemperatures([30, 40, 50, 60])); // [1,1,1,0]
-console.log(dailyTemperatures([30, 60, 90])); // [1,1,0]
+console.log(dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73])) // [1,1,4,2,1,1,0,0]
+console.log(dailyTemperatures([30, 40, 50, 60])) // [1,1,1,0]
+console.log(dailyTemperatures([30, 60, 90])) // [1,1,0]
 
 // function dailyTemperatures(temperatures: number[]): number[] {
 //   const answer: number[] = [];
@@ -61,12 +61,12 @@ Example 1:
     Day 6 (76): no warmer day -> 0
     Day 7 (73): no warmer day -> 0
 
-  Example 2:
+Example 2:
 
     Input: temperatures = [30,40,50,60]
     Output: [1,1,1,0]
 
-  Example 3:
+Example 3:
 
     Input: temperatures = [30,60,90]
     Output: [1,1,0]

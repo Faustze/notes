@@ -46,7 +46,7 @@ setTimeout(() => {
     Отмена была запланирована после задержки cancelTimeMs (50 мс),
     что произошло после выполнения fn(2) в момент 20 мс.
 
-  Пример 2:
+Пример 2:
 
     Ввод: fn = (x) => x**2, args = [2], t = 100
     Вывод: []
@@ -58,9 +58,10 @@ setTimeout(() => {
     Отмена была запланирована после задержки cancelTimeMs (50 мс),
     что произошло до выполнения fn(2) в момент 100 мс, в результате fn(2) так и не была вызвана.
 
-  Пример 3:
+Пример 3:
 
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2703-return-length-of-arguments-passed]] [[leetcode/untagged/2721-execute-asynchronous-functions-in-parallel]] -->
+
     Ввод: fn = (x1, x2) => x1 * x2, args = [2,4], t = 30
     Вывод: [{"time": 30, "returned": 8}]
     Объяснение:

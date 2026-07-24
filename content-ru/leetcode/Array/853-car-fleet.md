@@ -8,28 +8,29 @@
 > Если машина догоняет автопарк ровно на отметке target, она всё равно считается частью этого автопарка.
 > Верните количество автопарков, которые прибудут к месту назначения.
 > Ограничения: - n == position.length == speed.length - 1 <= n <= 10^5 - 0 < target <= 10^6 - 0 <= position[i] < target - Все значения position уникальны.
+>
 > - 0 < speed[i] <= 10^6
 
 ```ts
 function carFleet(target: number, position: number[], speed: number[]): number {
-  let time = 0;
-  let fleets = 0;
-  const cars = position.map((p, i) => [p, speed[i]]);
-  cars.sort((a, b) => b[0] - a[0]);
+  let time = 0
+  let fleets = 0
+  const cars = position.map((p, i) => [p, speed[i]])
+  cars.sort((a, b) => b[0] - a[0])
   for (let i = 0; i < cars.length; i++) {
-    const currentTime = (target - cars[i][0]) / cars[i][1];
+    const currentTime = (target - cars[i][0]) / cars[i][1]
     if (currentTime > time) {
-      fleets += 1;
-      time = currentTime;
+      fleets += 1
+      time = currentTime
     }
   }
-  return fleets;
+  return fleets
 }
 
 // Local check:
-console.log(carFleet(12, [10, 8, 0, 5, 3], [2, 4, 1, 1, 3])); // 3
-console.log(carFleet(10, [3], [3])); // 1
-console.log(carFleet(100, [0, 2, 4], [4, 2, 1])); // 1
+console.log(carFleet(12, [10, 8, 0, 5, 3], [2, 4, 1, 1, 3])) // 3
+console.log(carFleet(10, [3], [3])) // 1
+console.log(carFleet(100, [0, 2, 4], [4, 2, 1])) // 1
 ```
 
 ```md
@@ -46,13 +47,13 @@ console.log(carFleet(100, [0, 2, 4], [4, 2, 1])); // 1
     встречаясь друг с другом на отметке 6. Автопарк движется со скоростью 1, пока не достигнет
     target.
 
-  Пример 2:
+Пример 2:
 
     Ввод: target = 10, position = [3], speed = [3]
     Вывод: 1
     Объяснение: Есть только одна машина, следовательно, есть только один автопарк.
 
-  Пример 3:
+Пример 3:
 
     Ввод: target = 100, position = [0,2,4], speed = [4,2,1]
     Вывод: 1

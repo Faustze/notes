@@ -10,29 +10,29 @@
 ```ts
 function maxArea(height: number[]): number {
   let left = 0,
-    right = height.length - 1;
-  let area = 0;
+    right = height.length - 1
+  let area = 0
 
   while (left < right) {
     const leftValue = height[left],
-      rightValue = height[right];
-    area = Math.max(area, Math.min(leftValue, rightValue) * (right - left));
+      rightValue = height[right]
+    area = Math.max(area, Math.min(leftValue, rightValue) * (right - left))
 
     if (leftValue < rightValue) {
-      left++;
+      left++
     } else {
-      right--;
+      right--
     }
   }
 
-  return area;
+  return area
 }
 
 // Локальная проверка:
-console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7])); // 49
-console.log(maxArea([1, 7, 2, 5, 4, 7, 3, 6])); // 36
-console.log(maxArea([1, 1])); // 1
-console.log(maxArea([2, 2, 2])); // 4
+console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7])) // 49
+console.log(maxArea([1, 7, 2, 5, 4, 7, 3, 6])) // 36
+console.log(maxArea([1, 1])) // 1
+console.log(maxArea([2, 2, 2])) // 4
 ```
 
 ```md
@@ -43,7 +43,7 @@ console.log(maxArea([2, 2, 2])); // 4
     Объяснение: Вышеуказанные вертикальные линии представлены массивом [1,8,6,2,5,4,8,3,7].
     В этом случае максимальная площадь воды (синяя область), которую может удержать контейнер, равна 49.
 
-  Пример 2:
+Пример 2:
 
     Ввод: height = [1,1]
     Вывод: 1

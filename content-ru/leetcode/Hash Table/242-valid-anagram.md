@@ -6,22 +6,22 @@
 
 ```ts
 function isAnagram(s: string, t: string): boolean {
-    if (s.length !== t.length) return false
+  if (s.length !== t.length) return false
 
-    const mp: Map<string, number> = new Map();
+  const mp: Map<string, number> = new Map()
 
-    for (const ch of s) {
-        mp.set(ch, (mp.get(ch) || 0) + 1)
-    }
+  for (const ch of s) {
+    mp.set(ch, (mp.get(ch) || 0) + 1)
+  }
 
-    for (const ch of t) {
-        const curr = mp.get(ch)
-        if (!curr) return false
-        if (curr === 1) mp.delete(ch)
-        else mp.set(ch, curr - 1)
-    }
+  for (const ch of t) {
+    const curr = mp.get(ch)
+    if (!curr) return false
+    if (curr === 1) mp.delete(ch)
+    else mp.set(ch, curr - 1)
+  }
 
-    return true
+  return true
 }
 
 // Local check:
@@ -36,7 +36,7 @@ Example 1:
     Output: true
     Explanation: "nagaram" is an anagram of "anagram".
 
-  Example 2:
+Example 2:
 
     Input: s = "rat", t = "car"
     Output: false

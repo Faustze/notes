@@ -5,50 +5,50 @@
 
 ```ts
 class ListNode {
-  val: number;
-  next: ListNode | null;
+  val: number
+  next: ListNode | null
   constructor(val?: number, next?: ListNode | null) {
-    this.val = val === undefined ? 0 : val;
-    this.next = next === undefined ? null : next;
+    this.val = val === undefined ? 0 : val
+    this.next = next === undefined ? null : next
   }
 }
 
 function middleNode(head: ListNode | null): ListNode | null {
   // Floyd's slow/fast pointers
-  let slow = head;
-  let fast = head;
+  let slow = head
+  let fast = head
 
   while (fast !== null && fast.next !== null) {
-    slow = slow!.next;
-    fast = fast.next.next;
+    slow = slow!.next
+    fast = fast.next.next
   }
 
-  return slow;
+  return slow
 }
 
 // Local check:
 function toList(arr: number[]): ListNode | null {
-  if (arr.length === 0) return null;
-  const head = new ListNode(arr[0]);
-  let cur = head;
+  if (arr.length === 0) return null
+  const head = new ListNode(arr[0])
+  let cur = head
   for (let i = 1; i < arr.length; i++) {
-    cur.next = new ListNode(arr[i]);
-    cur = cur.next;
+    cur.next = new ListNode(arr[i])
+    cur = cur.next
   }
-  return head;
+  return head
 }
 
 function toArray(node: ListNode | null): number[] {
-  const out: number[] = [];
+  const out: number[] = []
   while (node !== null) {
-    out.push(node.val);
-    node = node.next;
+    out.push(node.val)
+    node = node.next
   }
-  return out;
+  return out
 }
 
-console.log(toArray(middleNode(toList([1, 2, 3, 4, 5]))));
-console.log(toArray(middleNode(toList([1, 2, 3, 4, 5, 6]))));
+console.log(toArray(middleNode(toList([1, 2, 3, 4, 5]))))
+console.log(toArray(middleNode(toList([1, 2, 3, 4, 5, 6]))))
 ```
 
 ```md
@@ -58,7 +58,7 @@ Example 1:
     Output: [3,4,5]
     Explanation: The middle node of the list is node 3.
 
-  Example 2:
+Example 2:
 
     Input: head = [1,2,3,4,5,6]
     Output: [4,5,6]

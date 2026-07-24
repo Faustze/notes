@@ -12,6 +12,7 @@
 > Например, если функция вызвана дважды, и один вызов выполнялся 2 единицы времени, а другой — 1 единицу, то эксклюзивное время равно 2 + 1 = 3.
 > Верните эксклюзивное время каждой функции в виде массива, где значение по индексу i представляет эксклюзивное время функции с ID i.
 > Ограничения: - 1 <= n <= 100 - 2 <= logs.length <= 500 - 0 <= function_id < n - 0 <= timestamp <= 10^9 - Никакие два события "start" не происходят в один и тот же момент времени.
+>
 > - Никакие два события "end" не происходят в один и тот же момент времени.
 > - Для каждого "start" лога есть соответствующий "end" лог.
 
@@ -31,11 +32,11 @@ function exclusiveTime(n: number, logs: string[]): number[] {
 
   for (let i = 0; i < logs.length; i++) {
     // Парсим лог: "function_id:start_or_end:timestamp"
-    const [idStr, op, tsStr] = logs[i].split(':')
+    const [idStr, op, tsStr] = logs[i].split(":")
     const id = Number(idStr)
     const ts = Number(tsStr)
 
-    if (op === 'start') {
+    if (op === "start") {
       // Новая функция стартует → старая функция (на вершине стека) ЗАМИРАЕТ.
       // Время от prevTs до ts принадлежит замороженной функции.
       if (stack.length > 0) {
@@ -45,8 +46,7 @@ function exclusiveTime(n: number, logs: string[]): number[] {
       stack.push(id)
       // Запоминаем timestamp этого события для следующей итерации.
       prevTs = ts
-    }
-    else {
+    } else {
       // Функция завершается. Она работала от prevTs до ts ВКЛЮЧИТЕЛЬНО.
       // +1 потому что "end:5" означает конец единицы 5 (единица 5 полностью отработана).
       result[id] += ts - prevTs + 1
@@ -63,12 +63,16 @@ function exclusiveTime(n: number, logs: string[]): number[] {
 }
 
 // Local check:
-console.log(exclusiveTime(2, ['0:start:0', '1:start:2', '1:end:5', '0:end:6']))
-console.log(exclusiveTime(1, ['0:start:0', '0:start:2', '0:end:5', '0:start:6', '0:end:6', '0:end:7']))
-console.log(exclusiveTime(2, ['0:start:0', '0:start:2', '0:end:5', '1:start:6', '1:end:6', '0:end:7']))
+console.log(exclusiveTime(2, ["0:start:0", "1:start:2", "1:end:5", "0:end:6"]))
+console.log(
+  exclusiveTime(1, ["0:start:0", "0:start:2", "0:end:5", "0:start:6", "0:end:6", "0:end:7"]),
+)
+console.log(
+  exclusiveTime(2, ["0:start:0", "0:start:2", "0:end:5", "1:start:6", "1:end:6", "0:end:7"]),
+)
 
 // Альтернативное решение
-type Status = 'start' | 'end'
+type Status = "start" | "end"
 
 interface Log {
   id: number
@@ -90,7 +94,7 @@ function exclusiveTime2(n: number, logs: string[]): number[] {
     const log = parseLog(logs[i]!)
     const call = calls.at(-1)
 
-    if (call && call.id === log.id && log.status === 'end') {
+    if (call && call.id === log.id && log.status === "end") {
       const totalDuration = log.timestamp - call.start + 1
       const selfDuration = totalDuration - call.childrenDuration
 
@@ -102,8 +106,7 @@ function exclusiveTime2(n: number, logs: string[]): number[] {
       durations[log.id]! += selfDuration
 
       calls.pop()
-    }
-    else {
+    } else {
       calls.push({
         id: log.id,
         start: log.timestamp,
@@ -116,7 +119,7 @@ function exclusiveTime2(n: number, logs: string[]): number[] {
 }
 
 function parseLog(log: string): Log {
-  const logData = log.split(':') as [string, string, string]
+  const logData = log.split(":") as [string, string, string]
   const id = Number(logData[0])
   const status = logData[1] as Status
   const timestamp = Number(logData[2])
@@ -124,9 +127,13 @@ function parseLog(log: string): Log {
   return { id, status, timestamp }
 }
 
-console.log(exclusiveTime2(2, ['0:start:0', '1:start:2', '1:end:5', '0:end:6']))
-console.log(exclusiveTime2(1, ['0:start:0', '0:start:2', '0:end:5', '0:start:6', '0:end:6', '0:end:7']))
-console.log(exclusiveTime2(2, ['0:start:0', '0:start:2', '0:end:5', '1:start:6', '1:end:6', '0:end:7']))
+console.log(exclusiveTime2(2, ["0:start:0", "1:start:2", "1:end:5", "0:end:6"]))
+console.log(
+  exclusiveTime2(1, ["0:start:0", "0:start:2", "0:end:5", "0:start:6", "0:end:6", "0:end:7"]),
+)
+console.log(
+  exclusiveTime2(2, ["0:start:0", "0:start:2", "0:end:5", "1:start:6", "1:end:6", "0:end:7"]),
+)
 ```
 
 ```md
@@ -143,7 +150,7 @@ console.log(exclusiveTime2(2, ['0:start:0', '0:start:2', '0:end:5', '1:start:6',
     Таким образом, функция 0 суммарно тратит на выполнение 2 + 1 = 3 единицы времени, а функция 1 —
     4 единицы времени.
 
-  Пример 2:
+Пример 2:
 
     Вход: n = 1, logs = ["0:start:0","0:start:2","0:end:5","0:start:6","0:end:6","0:end:7"]
     Выход: [8]
@@ -156,7 +163,7 @@ console.log(exclusiveTime2(2, ['0:start:0', '0:start:2', '0:end:5', '1:start:6',
     Функция 0 (исходный вызов) возобновляет выполнение в начале времени 7 и выполняется 1 единицу времени.
     Таким образом, функция 0 суммарно тратит на выполнение 2 + 4 + 1 + 1 = 8 единиц времени.
 
-  Пример 3:
+Пример 3:
 
     Вход: n = 2, logs = ["0:start:0","0:start:2","0:end:5","1:start:6","1:end:6","0:end:7"]
     Выход: [7,1]

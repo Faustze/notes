@@ -16,44 +16,28 @@ const ops: Record<string, (a: number, b: number) => number> = {
   "-": (a, b) => a - b,
   "*": (a, b) => a * b,
   "/": (a, b) => Math.trunc(a / b),
-};
+}
 function evalRPN(tokens: string[]): number {
-  const stack: number[] = [];
+  const stack: number[] = []
 
   for (const token of tokens) {
     if (token in ops) {
-      const right = stack.pop()!;
-      const left = stack.pop()!;
-      stack.push(ops[token](left, right));
+      const right = stack.pop()!
+      const left = stack.pop()!
+      stack.push(ops[token](left, right))
     } else {
-      stack.push(Number(token));
+      stack.push(Number(token))
     }
   }
 
-  return stack[0];
+  return stack[0]
 }
 
 // Local check:
-console.log(evalRPN(["1", "2", "+", "3", "*", "4", "-"])); // 5
-console.log(evalRPN(["2", "1", "+", "3", "*"])); // 9
-console.log(evalRPN(["4", "13", "5", "/", "+"])); // 6
-console.log(
-  evalRPN([
-    "10",
-    "6",
-    "9",
-    "3",
-    "+",
-    "-11",
-    "*",
-    "/",
-    "*",
-    "17",
-    "+",
-    "5",
-    "+",
-  ]),
-); // 22
+console.log(evalRPN(["1", "2", "+", "3", "*", "4", "-"])) // 5
+console.log(evalRPN(["2", "1", "+", "3", "*"])) // 9
+console.log(evalRPN(["4", "13", "5", "/", "+"])) // 6
+console.log(evalRPN(["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"])) // 22
 ```
 
 ```md
@@ -63,13 +47,13 @@ Example 1:
     Output: 9
     Explanation: ((2 + 1) * 3) = 9
 
-  Example 2:
+Example 2:
 
     Input: tokens = ["4","13","5","/","+"]
     Output: 6
     Explanation: (4 + (13 / 5)) = 6
 
-  Example 3:
+Example 3:
 
     Input: tokens = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]
     Output: 22

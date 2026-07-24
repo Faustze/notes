@@ -12,7 +12,7 @@
 
 ```ts
 class TimeLimitedCache {
-  cache: Map<number, { value: number, timerId: ReturnType<typeof setTimeout> }>
+  cache: Map<number, { value: number; timerId: ReturnType<typeof setTimeout> }>
 
   constructor() {
     this.cache = new Map()
@@ -41,12 +41,11 @@ class TimeLimitedCache {
   }
 }
 
-
 const timeLimitedCache = new TimeLimitedCache()
 setTimeout(() => console.log(timeLimitedCache.set(1, 42, 50)), 0) // false
 setTimeout(() => console.log(timeLimitedCache.set(1, 50, 100)), 40) // true
 setTimeout(() => console.log(timeLimitedCache.get(1)), 50) // 50
-setTimeout(() => console.log(timeLimitedCache.get(1)), 120)// 50
+setTimeout(() => console.log(timeLimitedCache.get(1)), 120) // 50
 setTimeout(() => console.log(timeLimitedCache.get(1)), 200) // -1
 setTimeout(() => console.log(timeLimitedCache.count()), 250) // 0
 ```
@@ -68,7 +67,7 @@ setTimeout(() => console.log(timeLimitedCache.count()), 250) // 0
     В момент t=100 ключ=1 истекает.
     В момент t=150 вызывается get(1), но возвращается -1, потому что кэш пуст.
 
-  Пример 2:
+Пример 2:
 
     Ввод:
     actions = ["TimeLimitedCache", "set", "set", "get", "get", "get", "count"]
@@ -79,7 +78,9 @@ setTimeout(() => console.log(timeLimitedCache.count()), 250) // 0
     В момент t=0 кэш создаётся.
     В момент t=0 добавляется пара ключ-значение (1: 42) с ограничением по времени 50мс.
     Значение не существует, поэтому возвращается false.
+
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2620-counter]] [[leetcode/untagged/2623-memoize]] -->
+
     В момент t=40 добавляется пара ключ-значение (1: 50) с ограничением по времени 100мс.
     Неистёкшее значение уже существовало, поэтому возвращается true, а старое значение
     было перезаписано.

@@ -6,21 +6,21 @@
 
 ```ts
 function groupAnagrams(strs: string[]): string[][] {
-    if (strs.length === 1) return [strs]
+  if (strs.length === 1) return [strs]
 
-    const group = new Map<string, string[]>()
+  const group = new Map<string, string[]>()
 
-    for (const ch of strs) {
-        const curr = ch.split('').sort().join('')
-        const currVal: string[] | undefined = group.get(curr)
-        if (currVal === undefined) {
-            group.set(curr, [ch])
-        } else {
-            currVal.push(ch)
-            group.set(curr, currVal)
-        }
+  for (const ch of strs) {
+    const curr = ch.split("").sort().join("")
+    const currVal: string[] | undefined = group.get(curr)
+    if (currVal === undefined) {
+      group.set(curr, [ch])
+    } else {
+      currVal.push(ch)
+      group.set(curr, currVal)
     }
-    return Array.from(group.values())
+  }
+  return Array.from(group.values())
 }
 
 // by charCode [O(n)]
@@ -48,9 +48,9 @@ function groupAnagrams(strs: string[]): string[][] {
 // }
 
 // Local check:
-console.log(groupAnagrams(['eat','tea','tan','ate','nat','bat']));
-console.log(groupAnagrams(['']));
-console.log(groupAnagrams(['a']));
+console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+console.log(groupAnagrams([""]))
+console.log(groupAnagrams(["a"]))
 ```
 
 ```md
@@ -59,15 +59,15 @@ Example 1:
     Output: [['bat'],['nat','tan'],['eat','tea','ate']]
     Explanation: ...
 
-  Example 2:
-    Input: ['']
-    Output: [['']]
-    Explanation: ...
+Example 2:
+Input: ['']
+Output: [['']]
+Explanation: ...
 
-  Example 3:
-    Input: ['a']
-    Output: [['a']]
-    Explanation: ...
+Example 3:
+Input: ['a']
+Output: [['a']]
+Explanation: ...
 ```
 
 [[leetcode/Array/index|array]]

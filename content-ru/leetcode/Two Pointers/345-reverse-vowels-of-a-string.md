@@ -6,8 +6,8 @@
 
 ```ts
 function reverseVowels(s: string): string {
-  const chars = s.split('')
-  const vowels = 'aeiouAEIOU'
+  const chars = s.split("")
+  const vowels = "aeiouAEIOU"
 
   for (let left = 0, right = chars.length - 1; left < right;) {
     if (!vowels.includes(chars[left])) {
@@ -28,12 +28,12 @@ function reverseVowels(s: string): string {
     right--
   }
 
-  return chars.join('')
+  return chars.join("")
 }
 
 // Локальная проверка:
-console.log(reverseVowels('IceCreAm'))
-console.log(reverseVowels('leetcode'))
+console.log(reverseVowels("IceCreAm"))
+console.log(reverseVowels("leetcode"))
 ```
 
 ```md
@@ -44,7 +44,7 @@ console.log(reverseVowels('leetcode'))
     Объяснение: гласные в s — ['I', 'e', 'e', 'A']. После переворота
     гласных s становится "AceCreIm".
 
-  Пример 2:
+Пример 2:
 
     Вход: s = "leetcode"
     Выход: "leotcede"

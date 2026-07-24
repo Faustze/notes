@@ -2,17 +2,18 @@
 
 > Даны две двоичные строки a и b, нужно вернуть их сумму в виде двоичной строки.
 > Ограничения: - 1 <= a.length, b.length <= 10^4 - a и b состоят только из символов '0' или '1'.
+>
 > - Каждая строка не содержит ведущих нулей, кроме самого нуля.
 
 ```ts
 function addBinary(a: string, b: string): string {
-  const sum = BigInt("0b" + a) + BigInt("0b" + b);
-  return sum.toString(2);
+  const sum = BigInt("0b" + a) + BigInt("0b" + b)
+  return sum.toString(2)
 }
 
 // Local check:
-console.log(addBinary("11", "1")); // "100"
-console.log(addBinary("1010", "1011")); // "10101"
+console.log(addBinary("11", "1")) // "100"
+console.log(addBinary("1010", "1011")) // "10101"
 
 // function addBinary(a: string, b: string): string {
 //   let i = a.length - 1;
@@ -44,7 +45,7 @@ Example 1:
     Output: "100"
     Explanation: 11 (binary) = 3, 1 (binary) = 1, 3 + 1 = 4 = 100 (binary)
 
-  Example 2:
+Example 2:
 
     Input: a = "1010", b = "1011"
     Output: "10101"

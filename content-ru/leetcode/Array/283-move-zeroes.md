@@ -6,27 +6,27 @@
 
 ```ts
 function moveZeroes(nums: number[]): void {
-  let left = 0;
-  let right = left;
+  let left = 0
+  let right = left
   while (right !== nums.length) {
     if (nums[right] !== 0) {
       if (right !== left) {
-        const temp = nums[left];
-        nums[left] = nums[right];
-        nums[right] = temp;
+        const temp = nums[left]
+        nums[left] = nums[right]
+        nums[right] = temp
       }
-      right++;
-      left++;
+      right++
+      left++
     } else {
-      right++;
+      right++
     }
   }
 }
 
 // Local check:
-console.log(moveZeroes([0, 1, 0, 3, 12]));
-console.log(moveZeroes([0]));
-console.log(moveZeroes([0, 1, 2, 3, 0]));
+console.log(moveZeroes([0, 1, 0, 3, 12]))
+console.log(moveZeroes([0]))
+console.log(moveZeroes([0, 1, 2, 3, 0]))
 ```
 
 ```md
@@ -35,7 +35,7 @@ Example 1:
     Input: nums = [0,1,0,3,12]
     Output: [1,3,12,0,0]
 
-  Example 2:
+Example 2:
 
     Input: nums = [0]
     Output: [0]

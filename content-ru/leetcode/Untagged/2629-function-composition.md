@@ -15,7 +15,7 @@ function compose(functions: Fn[]): Fn {
   }
 }
 
-const fn = compose([x => x + 1, x => 2 * x])
+const fn = compose([(x) => x + 1, (x) => 2 * x])
 console.log(fn(4)) // 9
 ```
 
@@ -33,7 +33,7 @@ Example 1:
     8 * 8 = 64
     64 + 1 = 65
 
-  Example 2:
+Example 2:
 
     Input:
     functions = [x => 10 * x, x => 10 * x, x => 10 * x]
@@ -42,11 +42,13 @@ Example 1:
     Explanation:
     Evaluating from right to left ...
     10 * 1 = 10
+
 <!-- [[leetcode/untagged]] [[leetcode/untagged/2627-debounce]] [[leetcode/untagged/2631-group-by]] -->
+
     10 * 10 = 100
     10 * 100 = 1000
 
-  Example 3:
+Example 3:
 
     Input:
     functions = []
