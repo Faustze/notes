@@ -32,6 +32,7 @@ title: array
 - [[Array/704-binary-search]]
 - [[Array/735-asteroid-collision]]
 - [[Array/739-daily-temperatures]]
+- [[Array/74-search-a-2d-matrix]]
 - [[Array/853-car-fleet]]
 - [[Array/977-squares-of-a-sorted-array]]
 
