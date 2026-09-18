@@ -17,11 +17,12 @@ jobs:
         os: [windows-latest, macos-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@v7
@@ -36,18 +37,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Cache Quartz plugins
-        uses: actions/cache@v6
-        with:
-          path: .quartz/plugins
-          key: ${{ runner.os }}-plugins-${{ hashFiles('quartz.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-plugins-
+      - run: npm ci
 
-      - run: npm install
-
+      # quartz.lock.json was dropped in the npm-specifier migration, so
+      # `quartz plugin install` is a no-op; this regenerates .quartz/plugins.
       - name: Install Quartz plugins
-        run: npx quartz plugin install
+        run: npm run install-plugins
+        env:
+          NODE_OPTIONS: "--no-warnings --experimental-require-module"
 
       - name: Check types and style
         run: npm run check

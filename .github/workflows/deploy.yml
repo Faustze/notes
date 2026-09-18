@@ -10,12 +10,12 @@ on:
   schedule:
     - cron: "0 3 * * *"
 
-# Разрешения для GitHub Pages
+# Минимальные права GITHUB_TOKEN: пуш sync-коммита идёт через PAT_TOKEN,
+# поэтому contents: write здесь не нужен.
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
-  pull-requests: write
 
 # Одновременно только один деплой
 concurrency:
@@ -32,7 +32,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          token: ${{ secrets.PAT_TOKEN }}
+          # Не сохраняем токен в .git/config: дальше запускается сторонний код
+          # (npm-пакеты, Quartz-плагины), который мог бы его прочитать.
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -54,11 +56,17 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin "https://x-access-token:${PAT_TOKEN}@github.com/${{ github.repository }}.git"
           git add content/
           if ! git diff --cached --quiet; then
             git commit -m "sync: update vault notes [skip ci]"
-            git push origin main
+            # Токен передаётся только этой команде через env и не попадает
+            # ни в .git/config, ни в аргументы процесса.
+            AUTH=$(printf 'x-access-token:%s' "$PAT_TOKEN" | base64 -w0)
+            echo "::add-mask::$AUTH"
+            GIT_CONFIG_COUNT=1 \
+            GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
+            GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $AUTH" \
+              git push "https://github.com/${GITHUB_REPOSITORY}.git" HEAD:main
           else
             echo "No changes to commit"
           fi
