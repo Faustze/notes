@@ -20,16 +20,19 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Синк заметок и пуш sync-коммита вынесены в отдельный job, где не запускается
-  # никакой сторонний код (ни npm ci, ни Quartz-плагины): только git, rsync и
-  # наш shell-скрипт. Поэтому токену с правом записи здесь нечего опасаться,
-  # а job сборки ниже вообще не получает прав на запись в репозиторий.
-  sync:
+  # Ruleset "Protect main branch" пускает изменения в main только через PR,
+  # поэтому sync-коммит не пушится в main, а уходит в ветку sync/vault с PR,
+  # который мерджится вручную. Сайт при этом не ждёт мерджа: job deploy сам
+  # синкает vault перед сборкой, так что опубликованы всегда свежие заметки.
+  #
+  # Здесь не запускается никакой сторонний код (ни npm ci, ни Quartz-плагины):
+  # только git, rsync, gh и наш shell-скрипт — поэтому токену с правом записи
+  # здесь нечего опасаться.
+  sync-pr:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    outputs:
-      sha: ${{ steps.push.outputs.sha }}
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -42,34 +45,40 @@ jobs:
           OBSIDIAN_VAULT_TOKEN: ${{ secrets.OBSIDIAN_VAULT_TOKEN }}
         run: bash scripts/sync-obsidian-notes.sh
 
-      - name: Commit synced notes
-        id: push
+      - name: Open or update sync PR
         env:
-          GH_PUSH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: sync/vault
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # add -A: rsync --delete удаляет заметки, их удаление тоже коммитим.
           git add -A content/
-          if ! git diff --cached --quiet; then
-            # core.hooksPath=/dev/null: в CI хуки не нужны, и чужой код не
-            # должен исполняться рядом с токеном.
-            git -c core.hooksPath=/dev/null commit -m "sync: update vault notes [skip ci]"
-            # Токен передаётся только этой команде через env и не попадает
-            # ни в .git/config, ни в аргументы процесса.
-            AUTH=$(printf 'x-access-token:%s' "$GH_PUSH_TOKEN" | base64 -w0)
-            echo "::add-mask::$AUTH"
-            GIT_CONFIG_COUNT=1 \
-            GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
-            GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $AUTH" \
-              git -c core.hooksPath=/dev/null push "https://github.com/${GITHUB_REPOSITORY}.git" HEAD:main
-          else
-            echo "No changes to commit"
+          if git diff --cached --quiet; then
+            echo "content/ уже совпадает с vault — PR не нужен"
+            exit 0
           fi
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          # core.hooksPath=/dev/null: в CI хуки не нужны.
+          git -c core.hooksPath=/dev/null commit -m "sync: update vault notes"
+          # Токен передаётся только этой команде через env и не попадает
+          # ни в .git/config, ни в аргументы процесса.
+          AUTH=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$AUTH"
+          # Ветка каждый раз пересобирается от свежего main, поэтому --force:
+          # это служебная ветка бота, руками в неё не коммитят.
+          GIT_CONFIG_COUNT=1 \
+          GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
+          GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $AUTH" \
+            git -c core.hooksPath=/dev/null push --force "https://github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/${BRANCH}"
+          if [ -z "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')" ]; then
+            gh pr create --head "$BRANCH" --base main \
+              --title "sync: update vault notes" \
+              --body "Автоматический синк \`content/\` из Obsidian-vault. На сайте эти изменения уже опубликованы — PR лишь фиксирует их в репозитории. После мерджа запусти локально \`npm run translate\`, если CI предупредил об устаревшем \`content-ru/\`."
+          else
+            echo "PR из ${BRANCH} уже открыт — обновлён force-push'ем"
+          fi
 
   deploy:
-    needs: sync
     permissions:
       contents: read
       pages: write
@@ -82,11 +91,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          # Собираем ровно тот коммит, который получился после синка.
-          ref: ${{ needs.sync.outputs.sha }}
           # Не сохраняем токен в .git/config: дальше запускается сторонний код
           # (npm-пакеты, Quartz-плагины), который мог бы его прочитать.
           persist-credentials: false
+
+      # До npm ci: пока не запущен сторонний код, токен vault (read-only)
+      # живёт только в env этого шага.
+      - name: Sync Obsidian Notes
+        env:
+          OBSIDIAN_VAULT_TOKEN: ${{ secrets.OBSIDIAN_VAULT_TOKEN }}
+        run: bash scripts/sync-obsidian-notes.sh
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
