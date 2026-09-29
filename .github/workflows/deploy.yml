@@ -10,12 +10,9 @@ on:
   schedule:
     - cron: "0 3 * * *"
 
-# Минимальные права GITHUB_TOKEN: пуш sync-коммита идёт через PAT_TOKEN,
-# поэтому contents: write здесь не нужен.
+# По умолчанию — только чтение; каждый job добирает ровно те права, что ему нужны.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 # Одновременно только один деплой
 concurrency:
@@ -23,7 +20,60 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Синк заметок и пуш sync-коммита вынесены в отдельный job, где не запускается
+  # никакой сторонний код (ни npm ci, ни Quartz-плагины): только git, rsync и
+  # наш shell-скрипт. Поэтому токену с правом записи здесь нечего опасаться,
+  # а job сборки ниже вообще не получает прав на запись в репозиторий.
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      sha: ${{ steps.push.outputs.sha }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # Токен нужен только шагу пуша — передаём его туда явно.
+          persist-credentials: false
+
+      - name: Sync Obsidian Notes
+        env:
+          OBSIDIAN_VAULT_TOKEN: ${{ secrets.OBSIDIAN_VAULT_TOKEN }}
+        run: bash scripts/sync-obsidian-notes.sh
+
+      - name: Commit synced notes
+        id: push
+        env:
+          GH_PUSH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # add -A: rsync --delete удаляет заметки, их удаление тоже коммитим.
+          git add -A content/
+          if ! git diff --cached --quiet; then
+            # core.hooksPath=/dev/null: в CI хуки не нужны, и чужой код не
+            # должен исполняться рядом с токеном.
+            git -c core.hooksPath=/dev/null commit -m "sync: update vault notes [skip ci]"
+            # Токен передаётся только этой команде через env и не попадает
+            # ни в .git/config, ни в аргументы процесса.
+            AUTH=$(printf 'x-access-token:%s' "$GH_PUSH_TOKEN" | base64 -w0)
+            echo "::add-mask::$AUTH"
+            GIT_CONFIG_COUNT=1 \
+            GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
+            GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $AUTH" \
+              git -c core.hooksPath=/dev/null push "https://github.com/${GITHUB_REPOSITORY}.git" HEAD:main
+          else
+            echo "No changes to commit"
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
   deploy:
+    needs: sync
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -32,6 +82,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
+          # Собираем ровно тот коммит, который получился после синка.
+          ref: ${{ needs.sync.outputs.sha }}
           # Не сохраняем токен в .git/config: дальше запускается сторонний код
           # (npm-пакеты, Quartz-плагины), который мог бы его прочитать.
           persist-credentials: false
@@ -39,54 +91,32 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version-file: ".node-version"
           cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Sync Obsidian Notes
-        env:
-          OBSIDIAN_VAULT_TOKEN: ${{ secrets.OBSIDIAN_VAULT_TOKEN }}
-        run: bash scripts/sync-obsidian-notes.sh
-
-      - name: Commit synced notes
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      # content-ru/ переводится локально (через Claude Code) и коммитится вручную;
+      # CI только предупреждает, если свежий синк принёс непереведённые заметки.
+      - name: Check RU translations are fresh
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add content/
-          if ! git diff --cached --quiet; then
-            git commit -m "sync: update vault notes [skip ci]"
-            # Токен передаётся только этой команде через env и не попадает
-            # ни в .git/config, ни в аргументы процесса.
-            AUTH=$(printf 'x-access-token:%s' "$PAT_TOKEN" | base64 -w0)
-            echo "::add-mask::$AUTH"
-            GIT_CONFIG_COUNT=1 \
-            GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
-            GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $AUTH" \
-              git push "https://github.com/${GITHUB_REPOSITORY}.git" HEAD:main
-          else
-            echo "No changes to commit"
+          if ! npm run --silent translate:check; then
+            echo "::warning title=content-ru устарел::Есть непереведённые заметки — запусти 'npm run translate' локально и закоммить content-ru/."
           fi
 
-      # content-ru/ is translated by hand (via Claude Code) and committed to the
-      # repo directly, same as content/ — CI never calls a translation API, it
-      # just builds whatever RU content is currently committed.
       - name: Install Quartz plugins
-        run: npx tsx ./quartz/plugins/loader/install-plugins.ts
+        run: npm run install-plugins
         env:
           NODE_OPTIONS: "--no-warnings --experimental-require-module"
 
       - name: Build Quartz (EN)
         run: npx quartz build
 
+      # Без continue-on-error: если RU-сборка упала, лучше не деплоить вовсе,
+      # чем молча выкатить сайт с 404 на /ru/.
       - name: Build Quartz (RU)
-        continue-on-error: true
-        run: |
-          mkdir -p content-ru
-          npm run build:ru
+        run: npm run build:ru
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
