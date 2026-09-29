@@ -53,13 +53,26 @@ echo "📋 Копирую содержимое public/ в $CONTENT_DIR/..."
 mkdir -p "$CONTENT_DIR"
 
 # Если внутри public/ есть только папка obsidian-notes, копируем её содержимое напрямую
+SOURCE_DIR="$TEMP_DIR/public"
 if [ -d "$TEMP_DIR/public/obsidian-notes" ] && [ ! -d "$TEMP_DIR/public/hh" ]; then
     echo "   Найдена папка obsidian-notes/, копирую содержимое напрямую..."
-    cp -r "$TEMP_DIR"/public/obsidian-notes/* "$CONTENT_DIR"/ 2>/dev/null || true
-else
-    # Копируем всё содержимое public/ (без самой папки public)
-    cp -r "$TEMP_DIR"/public/* "$CONTENT_DIR"/ 2>/dev/null || true
+    SOURCE_DIR="$TEMP_DIR/public/obsidian-notes"
 fi
+
+# rsync --delete зеркалит vault: заметки, удалённые или переименованные в vault,
+# удаляются и из content/, иначе они навсегда остаются опубликованными.
+# Защита: если в источнике нет ни одной заметки (сломанный клон, переезд папки),
+# не зеркалим пустоту — это стёрло бы весь content/.
+if [ -z "$(find "$SOURCE_DIR" -type f -name '*.md' -print -quit)" ]; then
+    echo "❌ В $SOURCE_DIR нет ни одной .md-заметки — отказываюсь синхронизировать, чтобы не стереть $CONTENT_DIR/"
+    exit 1
+fi
+
+# '.*' повторяет прежнее поведение cp с glob (dot-файлы не копировались) и
+# заодно защищает content/.gitkeep от удаления.
+# '/index.md' — главная страница сайта живёт только в этом репозитории, не в vault.
+rsync -a --delete --exclude='.*' --exclude='/index.md' \
+    "$SOURCE_DIR"/ "$CONTENT_DIR"/
 
 echo "✅ Синхронизация завершена!"
 echo "   Не забудьте закоммитить изменения:"

@@ -12,10 +12,9 @@ on:
 jobs:
   build-and-test:
     if: ${{ github.repository == 'Faustze/notes' }}
-    strategy:
-      matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+    # Сайт собирается и деплоится только на Linux — матрица из трёх ОС лишь
+    # утраивала время CI без пользы для этого репозитория.
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
@@ -27,15 +26,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 24
-
-      - name: Cache dependencies
-        uses: actions/cache@v6
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          # Та же версия, что и в deploy.yml, — проверяем то, что деплоим.
+          node-version-file: ".node-version"
+          cache: "npm"
 
       - run: npm ci
 
