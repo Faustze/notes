@@ -77,7 +77,6 @@ function translateViaClaude(original) {
     "claude",
     [
       "-p",
-      PROMPT + original,
       "--output-format",
       "text",
       "--no-session-persistence",
@@ -89,7 +88,14 @@ function translateViaClaude(original) {
       "--tools",
       "",
     ],
-    { encoding: "utf8", timeout: CLAUDE_TIMEOUT_MS, maxBuffer: 16 * 1024 * 1024 },
+    {
+      // Prompt goes through stdin: a single argv string is capped at 128 KiB on
+      // Linux (MAX_ARG_STRLEN), which a long note would exceed.
+      input: PROMPT + original,
+      encoding: "utf8",
+      timeout: CLAUDE_TIMEOUT_MS,
+      maxBuffer: 16 * 1024 * 1024,
+    },
   )
 }
 
@@ -153,9 +159,13 @@ async function run() {
 
   // Drop translated files whose source note was renamed or deleted, so content-ru/
   // never serves a page that no longer exists in content/.
+  // Compared against the source file list, not nextManifest: a note whose
+  // translation failed this run is missing from nextManifest (so it is retried
+  // next time), but its previous translation must survive until then.
+  const sourcePaths = new Set(files.map((file) => path.relative(CONTENT_DIR, file)))
   const outputFiles = await collectMarkdownFiles(OUTPUT_DIR).catch(() => [])
   const staleOutputs = outputFiles.filter(
-    (file) => !(path.relative(OUTPUT_DIR, file) in nextManifest),
+    (file) => !sourcePaths.has(path.relative(OUTPUT_DIR, file)),
   )
   await Promise.all(staleOutputs.map((file) => rm(file)))
 
